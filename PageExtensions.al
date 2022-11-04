@@ -468,6 +468,18 @@ pageextension 50121 ProdBomList extends "Production BOM List"
                     commit;
                 end;
             }
+
+            action("Open Lines")
+            {
+                ApplicationArea = Basic, Suite;
+
+                trigger OnAction()
+                var
+                    prodBomLines: Page "Prod. BOM Lines";
+                begin
+                    prodBomLines.RunModal();
+                end;
+            }
         }
     }
 }
@@ -1165,6 +1177,18 @@ pageextension 50140 purchOrdersExt extends "Purchase Lines"
 
 pageextension 50141 firmPlanProdOrdersExt extends "Firm Planned Prod. Orders"
 {
+    layout
+    {
+        addafter("Routing No.")
+        {
+            field("Planned Order No."; Rec."Planned Order No.")
+            {
+                ApplicationArea = All;
+                Caption = 'Orig Prod No.';
+                Visible = true;
+            }
+        }
+    }
     actions
     {
         addbefore("Change &Status")
@@ -1289,4 +1313,19 @@ pageextension 50142 PurchOrderListExt extends "Purchase Order List"
         }
     }
 
+}
+
+pageextension 50143 FirmPlannedProdOrderLineExt extends "Firm Planned Prod. Order Lines"
+{
+    layout
+    {
+        addbefore("Due Date")
+        {
+            field(ComponentCount; Rec.ComponentCount)
+            {
+                ApplicationArea = All;
+                Visible = true;
+            }
+        }
+    }
 }
