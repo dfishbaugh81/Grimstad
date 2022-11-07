@@ -1329,3 +1329,33 @@ pageextension 50143 FirmPlannedProdOrderLineExt extends "Firm Planned Prod. Orde
         }
     }
 }
+
+pageextension 50144 ProdOrdCompLineListExt extends "Prod. Order Comp. Line List"
+{
+    layout
+    {
+        addafter("Prod. Order Line No.")
+        {
+            field("Line No."; Rec."Line No.")
+            {
+                ApplicationArea = All;
+                Visible = true;
+            }
+        }
+    }
+}
+
+pageextension 50145 FirmPlanProdOrdExt extends "Firm Planned Prod. Order"
+{
+    layout
+    {
+        addafter("Source No.")
+        {
+            field("Planned Order No."; Rec."Planned Order No.")
+            {
+                ApplicationArea = All;
+                Visible = true;
+            }
+        }
+    }
+}
