@@ -58,9 +58,15 @@ tableextension 50112 SalesHeader extends "Sales Header"
     procedure GetUserNameFromSecurityId(userSecurityID: Guid): Code[50]
     var
         User: Record User;
+        UserName: Text;
     begin
-        User.Get(userSecurityID);
-        exit(User."User Name");
+        UserName := '';
+        if userSecurityID <> '{00000000-0000-0000-0000-000000000000}' then begin
+            User.Get(userSecurityID);
+            UserName := User."User Name";
+        end;
+
+        exit(UserName);
     end;
 }
 
