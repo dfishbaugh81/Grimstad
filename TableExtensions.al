@@ -35,6 +35,13 @@ tableextension 50111 BomLines extends "Production BOM Line"
             CalcFormula = lookup(Item."Description 2" where("No." = field("No.")));
 
         }
+
+        field(50101; "Component Count"; Integer)
+        {
+            Caption = 'Component Count';
+            FieldClass = FlowField;
+            CalcFormula = count("Production BOM Line" where("Production BOM No." = field("No.")));
+        }
     }
 }
 

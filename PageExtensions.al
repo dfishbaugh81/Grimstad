@@ -295,6 +295,14 @@ pageextension 50115 BomLinesExt extends "Production BOM Lines"
                 ToolTip = 'Specifies information in addition to the description.';
                 Visible = true;
             }
+
+            field("Component Count"; Rec."Component Count")
+            {
+                ApplicationArea = Manufacturing;
+                Importance = Additional;
+                ToolTip = 'Indicates the number of components if sub-assembly.';
+                Visible = true;
+            }
         }
     }
 }
@@ -1227,7 +1235,7 @@ pageextension 50141 firmPlanProdOrdersExt extends "Firm Planned Prod. Orders"
                 end;
             }
 
-            action("Releasae All")
+            action("Release All")
             {
                 ApplicationArea = All;
                 Image = EntriesList;
@@ -1248,7 +1256,7 @@ pageextension 50141 firmPlanProdOrdersExt extends "Firm Planned Prod. Orders"
                 end;
             }
 
-            action("Releasae All & Pick")
+            action("Release All & Pick")
             {
                 ApplicationArea = All;
                 Image = EntriesList;
@@ -1312,7 +1320,6 @@ pageextension 50142 PurchOrderListExt extends "Purchase Order List"
             }
         }
     }
-
 }
 
 pageextension 50143 FirmPlannedProdOrderLineExt extends "Firm Planned Prod. Order Lines"
@@ -1326,6 +1333,13 @@ pageextension 50143 FirmPlannedProdOrderLineExt extends "Firm Planned Prod. Orde
                 ApplicationArea = All;
                 Visible = true;
             }
+        }
+        modify("Description 2")
+        {
+
+            ApplicationArea = All;
+            Visible = true;
+
         }
     }
 }
@@ -1355,6 +1369,24 @@ pageextension 50145 FirmPlanProdOrdExt extends "Firm Planned Prod. Order"
             {
                 ApplicationArea = All;
                 Visible = true;
+            }
+        }
+    }
+
+    actions
+    {
+        addafter("Plannin&g")
+        {
+            action("Open Lines")
+            {
+                ApplicationArea = Basic, Suite;
+
+                trigger OnAction()
+                var
+                    prodOrdLines: Page "Prod. Order Lines";
+                begin
+                    prodOrdLines.RunModal();
+                end;
             }
         }
     }
