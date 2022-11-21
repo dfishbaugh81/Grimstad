@@ -602,6 +602,25 @@ pageextension 50127 SalesOrder extends "Sales Order"
             }
         }
 
+        addafter("Requested Delivery Date")
+        {
+            field("Applies-to Doc. Type"; Rec."Applies-to Doc. Type")
+            {
+                ApplicationArea = All;
+                Importance = Standard;
+                ToolTip = 'Applies-to Type';
+                Visible = false;
+            }
+
+            field("Applies-to Doc. No."; Rec."Applies-to Doc. No.")
+            {
+                ApplicationArea = All;
+                Importance = Standard;
+                ToolTip = 'Applies-to Doc No.';
+                Visible = false;
+            }
+        }
+
         addbefore(ApprovalFactBox)
         {
             part(SalesInvLines; "Sales Item History FactBox")
