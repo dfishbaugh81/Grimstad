@@ -84,4 +84,138 @@ codeunit 50102 toDoMgmt
             commit;
         end
     end;
+
+    procedure AddItemTextToSalesCommentLine(DocType: Enum "Sales Document Type"; DocNo: Code[29]; DocLineNo: Integer; DocLineDate: Date; Comment: Text[100])
+    var
+        SalesCommLine: Record "Sales Comment Line";
+        CurrLineNo: Integer;
+    begin
+        clear(CurrLineNo);
+        SalesCommLine.Reset;
+        SalesCommLine.SetRange("Document Type", DocType);
+        SalesCommLine.SetRange("No.", DocNo);
+        SalesCommLine.SetRange("Document Line No.", DocLineNo);
+        if SalesCommLine.FindLast() then begin
+            CurrLineNo := SalesCommLine."Line No." + 10000;
+            SalesCommLine.Init;
+            SalesCommLine.Validate("Document Type", DocType);
+            SalesCommLine.Validate("No.", DocNo);
+            SalesCommLine.Validate("Document Line No.", DocLineNo);
+            SalesCommLine.Validate("Line No.", CurrLineNo);
+            SalesCommLine.Validate(Date, DocLineDate);
+            if StrLen(Comment) > 80 then begin
+                SalesCommLine.Validate(Comment, CopyStr(Comment, 1, 80));
+                SalesCommLine.Insert(true);
+                Commit;
+                CurrLineNo := CurrLineNo + 10000;
+                SalesCommLine.Init;
+                SalesCommLine.Validate("Document Type", DocType);
+                SalesCommLine.Validate("No.", DocNo);
+                SalesCommLine.Validate("Document Line No.", DocLineNo);
+                SalesCommLine.Validate("Line No.", CurrLineNo);
+                SalesCommLine.Validate(Date, DocLineDate);
+                SalesCommLine.Validate(Comment, CopyStr(Comment, 81));
+                SalesCommLine.Insert(true);
+                Commit;
+            end else begin
+                SalesCommLine.Validate(Comment, Comment);
+                SalesCommLine.Insert(true);
+                Commit;
+            end;
+        end else begin
+            CurrLineNo := CurrLineNo + 10000;
+            SalesCommLine.Init;
+            SalesCommLine.Validate("Document Type", DocType);
+            SalesCommLine.Validate("No.", DocNo);
+            SalesCommLine.Validate("Document Line No.", DocLineNo);
+            SalesCommLine.Validate("Line No.", CurrLineNo);
+            SalesCommLine.Validate(Date, DocLineDate);
+            if StrLen(Comment) > 80 then begin
+                SalesCommLine.Validate(Comment, CopyStr(Comment, 1, 80));
+                SalesCommLine.Insert(true);
+                Commit;
+                CurrLineNo := CurrLineNo + 10000;
+                SalesCommLine.Init;
+                SalesCommLine.Validate("Document Type", DocType);
+                SalesCommLine.Validate("No.", DocNo);
+                SalesCommLine.Validate("Document Line No.", DocLineNo);
+                SalesCommLine.Validate("Line No.", CurrLineNo);
+                SalesCommLine.Validate(Date, DocLineDate);
+                SalesCommLine.Validate(Comment, CopyStr(Comment, 81));
+                SalesCommLine.Insert(true);
+                Commit;
+            end else begin
+                SalesCommLine.Validate(Comment, Comment);
+                SalesCommLine.Insert(true);
+                Commit;
+            end;
+        end;
+    end;
+
+    procedure AddItemTextToPurchCommentLine(DocType: Enum "Purchase Document Type"; DocNo: Code[29]; DocLineNo: Integer; DocLineDate: Date; Comment: Text[100])
+    var
+        PurchCommLine: Record "Purch. Comment Line";
+        CurrLineNo: Integer;
+    begin
+        clear(CurrLineNo);
+        PurchCommLine.Reset;
+        PurchCommLine.SetRange("Document Type", DocType);
+        PurchCommLine.SetRange("No.", DocNo);
+        PurchCommLine.SetRange("Document Line No.", DocLineNo);
+        if PurchCommLine.FindLast() then begin
+            CurrLineNo := PurchCommLine."Line No." + 10000;
+            PurchCommLine.Init;
+            PurchCommLine.Validate("Document Type", DocType);
+            PurchCommLine.Validate("No.", DocNo);
+            PurchCommLine.Validate("Document Line No.", DocLineNo);
+            PurchCommLine.Validate("Line No.", CurrLineNo);
+            PurchCommLine.Validate(Date, DocLineDate);
+            if StrLen(Comment) > 80 then begin
+                PurchCommLine.Validate(Comment, CopyStr(Comment, 1, 80));
+                PurchCommLine.Insert(true);
+                Commit;
+                CurrLineNo := CurrLineNo + 10000;
+                PurchCommLine.Init;
+                PurchCommLine.Validate("Document Type", DocType);
+                PurchCommLine.Validate("No.", DocNo);
+                PurchCommLine.Validate("Document Line No.", DocLineNo);
+                PurchCommLine.Validate("Line No.", CurrLineNo);
+                PurchCommLine.Validate(Date, DocLineDate);
+                PurchCommLine.Validate(Comment, CopyStr(Comment, 81));
+                PurchCommLine.Insert(true);
+                Commit;
+            end else begin
+                PurchCommLine.Validate(Comment, Comment);
+                PurchCommLine.Insert(true);
+                Commit;
+            end;
+        end else begin
+            CurrLineNo := CurrLineNo + 10000;
+            PurchCommLine.Init;
+            PurchCommLine.Validate("Document Type", DocType);
+            PurchCommLine.Validate("No.", DocNo);
+            PurchCommLine.Validate("Document Line No.", DocLineNo);
+            PurchCommLine.Validate("Line No.", CurrLineNo);
+            PurchCommLine.Validate(Date, DocLineDate);
+            if StrLen(Comment) > 80 then begin
+                PurchCommLine.Validate(Comment, CopyStr(Comment, 1, 80));
+                PurchCommLine.Insert(true);
+                Commit;
+                CurrLineNo := CurrLineNo + 10000;
+                PurchCommLine.Init;
+                PurchCommLine.Validate("Document Type", DocType);
+                PurchCommLine.Validate("No.", DocNo);
+                PurchCommLine.Validate("Document Line No.", DocLineNo);
+                PurchCommLine.Validate("Line No.", CurrLineNo);
+                PurchCommLine.Validate(Date, DocLineDate);
+                PurchCommLine.Validate(Comment, CopyStr(Comment, 81));
+                PurchCommLine.Insert(true);
+                Commit;
+            end else begin
+                PurchCommLine.Validate(Comment, Comment);
+                PurchCommLine.Insert(true);
+                Commit;
+            end;
+        end;
+    end;
 }
