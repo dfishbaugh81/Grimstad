@@ -1,0 +1,242 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DataSource">
+      <ConnectionProperties>
+        <DataProvider>SQL</DataProvider>
+        <ConnectString />
+      </ConnectionProperties>
+      <rd:SecurityType>None</rd:SecurityType>
+    </DataSource>
+  </DataSources>
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <Height>2in</Height>
+        <Style />
+      </Body>
+      <Width>6.5in</Width>
+      <Page>
+        <Style />
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <Code>Public Function BlankZero(ByVal Value As Decimal)
+    if Value = 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankPos(ByVal Value As Decimal)
+    if Value &gt; 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankZeroAndPos(ByVal Value As Decimal)
+    if Value &gt;= 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankNeg(ByVal Value As Decimal)
+    if Value &lt; 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankNegAndZero(ByVal Value As Decimal)
+    if Value &lt;= 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+</Code>
+  <Language>=User!Language</Language>
+  <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>0eeb6585-38ae-40f1-885b-8d50088d51b4</rd:ReportID>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Fields>
+        <Field Name="fldProdOrderNo">
+          <DataField>fldProdOrderNo</DataField>
+        </Field>
+        <Field Name="xSection1">
+          <DataField>xSection1</DataField>
+        </Field>
+        <Field Name="fldSectionator">
+          <DataField>fldSectionator</DataField>
+        </Field>
+        <Field Name="Prod_Order_Source_No">
+          <DataField>Prod_Order_Source_No</DataField>
+        </Field>
+        <Field Name="Prod_Order_Shelf_No">
+          <DataField>Prod_Order_Shelf_No</DataField>
+        </Field>
+        <Field Name="Prod_Order_Quantity">
+          <DataField>Prod_Order_Quantity</DataField>
+        </Field>
+        <Field Name="Prod_Order_Est_Weight">
+          <DataField>Prod_Order_Est_Weight</DataField>
+        </Field>
+        <Field Name="Prod_Order_Start_Date">
+          <DataField>Prod_Order_Start_Date</DataField>
+        </Field>
+        <Field Name="Prod_Order_End_Date">
+          <DataField>Prod_Order_End_Date</DataField>
+        </Field>
+        <Field Name="Prod_Order_Description">
+          <DataField>Prod_Order_Description</DataField>
+        </Field>
+        <Field Name="Prod_Order_Description2">
+          <DataField>Prod_Order_Description2</DataField>
+        </Field>
+        <Field Name="fldBarcode">
+          <DataField>fldBarcode</DataField>
+        </Field>
+        <Field Name="Production_Order_Status">
+          <DataField>Production_Order_Status</DataField>
+        </Field>
+        <Field Name="Prod_Order_Line_Line_No">
+          <DataField>Prod_Order_Line_Line_No</DataField>
+        </Field>
+        <Field Name="Prod_Order_Line_Item_No">
+          <DataField>Prod_Order_Line_Item_No</DataField>
+        </Field>
+        <Field Name="fldCOmment">
+          <DataField>fldCOmment</DataField>
+        </Field>
+        <Field Name="xSection2">
+          <DataField>xSection2</DataField>
+        </Field>
+        <Field Name="Prod__Order_Comment_Line_Status">
+          <DataField>Prod__Order_Comment_Line_Status</DataField>
+        </Field>
+        <Field Name="Prod__Order_Comment_Line_Prod__Order_No_">
+          <DataField>Prod__Order_Comment_Line_Prod__Order_No_</DataField>
+        </Field>
+        <Field Name="Prod__Order_Comment_Line_Line_No_">
+          <DataField>Prod__Order_Comment_Line_Line_No_</DataField>
+        </Field>
+        <Field Name="fldRtngComment">
+          <DataField>fldRtngComment</DataField>
+        </Field>
+        <Field Name="Prod__Order_Rtng_Comment_Line_Status">
+          <DataField>Prod__Order_Rtng_Comment_Line_Status</DataField>
+        </Field>
+        <Field Name="Prod__Order_Rtng_Comment_Line_Prod__Order_No_">
+          <DataField>Prod__Order_Rtng_Comment_Line_Prod__Order_No_</DataField>
+        </Field>
+        <Field Name="Prod__Order_Rtng_Comment_Line_Line_No_">
+          <DataField>Prod__Order_Rtng_Comment_Line_Line_No_</DataField>
+        </Field>
+        <Field Name="Prod_Comp_Item_Number">
+          <DataField>Prod_Comp_Item_Number</DataField>
+        </Field>
+        <Field Name="xSection3">
+          <DataField>xSection3</DataField>
+        </Field>
+        <Field Name="Prod_Comp_Description">
+          <DataField>Prod_Comp_Description</DataField>
+        </Field>
+        <Field Name="Prod_Comp_Quantity">
+          <DataField>Prod_Comp_Quantity</DataField>
+        </Field>
+        <Field Name="Prod_Comp_Shelf">
+          <DataField>Prod_Comp_Shelf</DataField>
+        </Field>
+        <Field Name="Prod__Order_Component_Status">
+          <DataField>Prod__Order_Component_Status</DataField>
+        </Field>
+        <Field Name="Prod__Order_Component_Prod__Order_No_">
+          <DataField>Prod__Order_Component_Prod__Order_No_</DataField>
+        </Field>
+        <Field Name="Prod__Order_Component_Prod__Order_Line_No_">
+          <DataField>Prod__Order_Component_Prod__Order_Line_No_</DataField>
+        </Field>
+        <Field Name="Prod__Order_Component_Line_No_">
+          <DataField>Prod__Order_Component_Line_No_</DataField>
+        </Field>
+        <Field Name="xSection4">
+          <DataField>xSection4</DataField>
+        </Field>
+        <Field Name="Prod__Order_Routing_Line__Operation_No__">
+          <DataField>Prod__Order_Routing_Line__Operation_No__</DataField>
+        </Field>
+        <Field Name="Prod_Routing_Work_Center">
+          <DataField>Prod_Routing_Work_Center</DataField>
+        </Field>
+        <Field Name="Prod_Routing_Description">
+          <DataField>Prod_Routing_Description</DataField>
+        </Field>
+        <Field Name="Prod_Routing_Est_Time">
+          <DataField>Prod_Routing_Est_Time</DataField>
+        </Field>
+        <Field Name="Prod_Routing_BarcodeText">
+          <DataField>Prod_Routing_BarcodeText</DataField>
+        </Field>
+        <Field Name="Prod_Routing_SetupBarcodeText">
+          <DataField>Prod_Routing_SetupBarcodeText</DataField>
+        </Field>
+        <Field Name="Prod_Routing_BarcodeBlob">
+          <DataField>Prod_Routing_BarcodeBlob</DataField>
+        </Field>
+        <Field Name="Prod_Routing_SetupBarcodeBlob">
+          <DataField>Prod_Routing_SetupBarcodeBlob</DataField>
+        </Field>
+        <Field Name="Prod__Order_Routing_Line_Status">
+          <DataField>Prod__Order_Routing_Line_Status</DataField>
+        </Field>
+        <Field Name="Prod__Order_Routing_Line_Prod__Order_No_">
+          <DataField>Prod__Order_Routing_Line_Prod__Order_No_</DataField>
+        </Field>
+        <Field Name="Prod__Order_Routing_Line_Routing_Reference_No_">
+          <DataField>Prod__Order_Routing_Line_Routing_Reference_No_</DataField>
+        </Field>
+        <Field Name="Prod__Order_Routing_Line_Routing_No_">
+          <DataField>Prod__Order_Routing_Line_Routing_No_</DataField>
+        </Field>
+        <Field Name="codToolNo">
+          <DataField>codToolNo</DataField>
+        </Field>
+        <Field Name="sToolDescription">
+          <DataField>sToolDescription</DataField>
+        </Field>
+        <Field Name="codPersonNo">
+          <DataField>codPersonNo</DataField>
+        </Field>
+        <Field Name="sPersonDescription">
+          <DataField>sPersonDescription</DataField>
+        </Field>
+        <Field Name="codQualityMeasure">
+          <DataField>codQualityMeasure</DataField>
+        </Field>
+        <Field Name="sQualityDescription">
+          <DataField>sQualityDescription</DataField>
+        </Field>
+        <Field Name="sQualityText">
+          <DataField>sQualityText</DataField>
+        </Field>
+        <Field Name="Oper2BlackBag">
+          <DataField>Oper2BlackBag</DataField>
+        </Field>
+        <Field Name="iIndex">
+          <DataField>iIndex</DataField>
+        </Field>
+        <Field Name="Integer_Number">
+          <DataField>Integer_Number</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+    </DataSet>
+  </DataSets>
+</Report>
