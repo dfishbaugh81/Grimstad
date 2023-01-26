@@ -1140,7 +1140,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!ContactEmail.Value</Value>
+                                  <Value>=Fields!SalesPersonPurchEmail.Value</Value>
                                   <Style>
                                     <FontFamily>Segoe UI</FontFamily>
                                     <FontSize>8pt</FontSize>
@@ -1161,6 +1161,7 @@
                           </Style>
                         </Textbox>
                         <ColSpan>3</ColSpan>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
@@ -3312,7 +3313,7 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DataSet_Result</DataSetName>
-            <Top>0.01965cm</Top>
+            <Top>0.01964cm</Top>
             <Left>0.03819in</Left>
             <Height>6.94869cm</Height>
             <Width>20.18686cm</Width>
@@ -3905,7 +3906,6 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox7</rd:DefaultName>
-              <Top>0in</Top>
               <Height>0.72917in</Height>
               <Width>8in</Width>
               <Style>
@@ -4200,6 +4200,9 @@ eSmc1+33wF/4JB/Df4UxINX0vT/EMioF3TRd/WvoTwF+z/4P+GCKug6FZaaF6eUuK9Sjw/UlrUlY/Gc+
         </Field>
         <Field Name="SalesPurchPersonName">
           <DataField>SalesPurchPersonName</DataField>
+        </Field>
+        <Field Name="SalesPersonPurchEmail">
+          <DataField>SalesPersonPurchEmail</DataField>
         </Field>
         <Field Name="ReferenceText">
           <DataField>ReferenceText</DataField>

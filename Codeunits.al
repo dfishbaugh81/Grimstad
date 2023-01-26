@@ -390,6 +390,23 @@ codeunit 50102 toDoMgmt
 
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Req. Wksh.-Make Order", 'OnInsertPurchOrderLineOnBeforeSalesOrderLineModify', '', true, true)]
+    procedure OnInsertPurchOrderLineOnBeforeSalesOrderLineModify(var PurchOrderLine: Record "Purchase Line"; var RequisitionLine: Record "Requisition Line"; var SalesOrderLine: Record "Sales Line");
+    var
+        pl: Record "Purchase Line";
+        SalesCommentLine: Record "Sales Comment Line";
+    begin
+        SalesCommentLine.Reset;
+        SalesCommentLine.SetRange("Document Type", SalesOrderLine."Document Type");
+        SalesCommentLine.SetRange("No.", SalesOrderLine."Document No.");
+        SalesCommentLine.SetRange("Document Line No.", SalesOrderLine."Line No.");
+        if SalesCommentLine.FindFirst() then
+            repeat
+                AddItemTextToPurchCommentLine(PurchOrderLine."Document Type", PurchOrderLine."Document No.", PurchOrderLine."Line No.", WorkDate(), SalesCommentLine.Comment);
+            until SalesCommentLine.Next() = 0;
+
+    end;
+
     [EventSubscriber(ObjectType::Page, Page::"Req. Worksheet", 'OnBeforeCarryOutActionMsg', '', true, true)]
     procedure OnBeforeCarryOutActionMsg(var IsHandled: Boolean; var RequisitionLine: Record "Requisition Line")
     var
@@ -437,6 +454,24 @@ codeunit 50102 toDoMgmt
         NewReqLine: Record "Requisition Line";
     begin
         NewGetSalesOrder.SetReqWkshLine(RequisitionLine, 1);
+        NewGetSalesOrder.RunModal();
+        Clear(NewGetSalesOrder);
+
+
+        GetSalesOrder.UseRequestPage(false);
+
+
+
+    end;
+
+    [EventSubscriber(ObjectType::Page, Page::"Req. Worksheet", 'OnGetSalesOrderActionOnBeforeGetSalesOrderRunModal', '', true, true)]
+    procedure OnGetSalesOrderActionOnBeforeGetSalesOrderRunModal(var GetSalesOrder: Report "Get Sales Orders"; var RequisitionLine: Record "Requisition Line");
+    var
+        NewGetSalesOrder: Report "New Get Sales Orders";
+        ProbReqLine: Record "Requisition Line";
+        NewReqLine: Record "Requisition Line";
+    begin
+        NewGetSalesOrder.SetReqWkshLine(RequisitionLine, 0);
         NewGetSalesOrder.RunModal();
         Clear(NewGetSalesOrder);
 

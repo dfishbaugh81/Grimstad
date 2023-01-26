@@ -400,6 +400,12 @@ report 50102 "Sales Order Acknowledgement"
             column(ShowWorkDescription; ShowWorkDescription)
             {
             }
+            column(DocCreatedBy; CreatedBy)
+            {
+            }
+            column(SalesHeaderText; SalesHeaderText)
+            {
+            }
             dataitem(Line; "Sales Line")
             {
                 DataItemLink = "Document No." = FIELD("No.");
@@ -460,6 +466,36 @@ report 50102 "Sales Order Acknowledgement"
                 {
                 }
                 column(ItemNo_Line; "No.")
+                {
+                }
+                column(lblComment_1; lblComment[1])
+                {
+                }
+                column(lblComment_2; lblComment[2])
+                {
+                }
+                column(lblComment_3; lblComment[3])
+                {
+                }
+                column(lblComment_4; lblComment[4])
+                {
+                }
+                column(lblComment_5; lblComment[5])
+                {
+                }
+                column(lblComment_6; lblComment[6])
+                {
+                }
+                column(lblComment_7; lblComment[7])
+                {
+                }
+                column(lblComment_8; lblComment[8])
+                {
+                }
+                column(lblComment_9; lblComment[9])
+                {
+                }
+                column(lblComment_10; lblComment[10])
                 {
                 }
                 column(ItemNo_Line_Lbl; FieldCaption("No."))
@@ -567,6 +603,9 @@ report 50102 "Sales Order Acknowledgement"
                 }
 
                 trigger OnAfterGetRecord()
+                var
+                    SalesCommentLine: Record "Sales Comment Line";
+                    iCommCount: Integer;
                 begin
                     clear(SplitText);
                     if Type = Type::"G/L Account" then
@@ -597,6 +636,21 @@ report 50102 "Sales Order Acknowledgement"
                         ItemDescription := Description;
                         DescDescription := '';
                     end;
+
+                    Clear(lblComment);
+                    iCommCount := 0;
+                    SalesCommentLine.Reset;
+                    SalesCommentLine.SetRange("Document Type", Line."Document Type");
+                    SalesCommentLine.SetRange("No.", Line."Document No.");
+                    SalesCommentLine.SetRange("Document Line No.", Line."Line No.");
+                    SalesCommentLine.SetRange("Print On Order Confirmation", true);
+                    if SalesCommentLine.FindFirst() then
+                        repeat
+                            iCommCount := iCommCount + 1;
+                            lblComment[iCommCount] := SalesCommentLine.Comment;
+                        until SalesCommentLine.Next() = 0;
+                    if iCommCount > 0 then
+                        CompressArray(lblComment);
 
                     if "Promised Delivery Date" <> 0D then
                         pDate := "Promised Delivery Date"
@@ -944,6 +998,7 @@ report 50102 "Sales Order Acknowledgement"
                 GeneralLedgerSetup: Record "General Ledger Setup";
                 ArchiveManagement: Codeunit ArchiveManagement;
                 SalesPost: Codeunit "Sales-Post";
+                SalesHeaderComment: Record "Sales Comment Line";
             begin
                 FirstLineHasBeenOutput := false;
                 Clear(Line);
@@ -962,6 +1017,8 @@ report 50102 "Sales Order Acknowledgement"
 
                 CalcFields("Work Description");
                 ShowWorkDescription := "Work Description".HasValue;
+                Clear(CreatedBy);
+                CreatedBy := GetUserNameFromSecurityId(SystemCreatedBy);
 
                 FormatAddr.GetCompanyAddr("Responsibility Center", RespCenter, CompanyInfo, CompanyAddr);
                 FormatAddr.SalesHeaderBillTo(CustAddr, Header);
@@ -996,6 +1053,17 @@ report 50102 "Sales Order Acknowledgement"
                     not CurrReport.UseRequestPage and SalesSetup."Archive Orders")
                 then
                     ArchiveManagement.StoreSalesDocument(Header, LogInteraction);
+
+                clear(SalesHeaderText);
+                SalesHeaderComment.Reset;
+                SalesHeaderComment.SetRange("Document Type", "Document Type");
+                SalesHeaderComment.SetRange("No.", "No.");
+                SalesHeaderComment.SetRange("Document Line No.", 0);
+                SalesHeaderComment.SetRange("Print On Order Confirmation", true);
+                if SalesHeaderComment.FindFirst() then
+                    repeat
+                        SalesHeaderText := SalesHeaderText + ' ' + SalesHeaderComment.Comment;
+                    until SalesHeaderComment.Next() = 0;
 
                 TotalSubTotal := 0;
                 TotalInvDiscAmount := 0;
@@ -1231,6 +1299,10 @@ report 50102 "Sales Order Acknowledgement"
         SalespersonLbl2: Label 'Salesperson';
         CurrCode: Text[10];
         CurrSymbol: Text[10];
+        lblComment: array[10] of text[100];
+        CreatedBy: Code[50];
+        SalesHeaderText: Text;
+
 
     local procedure InitLogInteraction()
     begin

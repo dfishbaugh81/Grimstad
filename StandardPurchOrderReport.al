@@ -206,6 +206,9 @@ report 50104 "Std. Purchase Order"
             column(SalesPurchPersonName; SalespersonPurchaser.Name)
             {
             }
+            column(SalesPersonPurchEmail; SalespersonPurchaser."E-Mail")
+            {
+            }
             column(ReferenceText; ReferenceText)
             {
             }

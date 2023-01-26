@@ -1110,6 +1110,12 @@ pageextension 50137 ReleasedProdOrderExt extends "Released Production Orders"
                 ApplicationArea = All;
                 Visible = true;
             }
+
+            field("Production BOM"; Rec."Production BOM")
+            {
+                ApplicationArea = All;
+                Visible = true;
+            }
         }
 
     }
@@ -1143,12 +1149,35 @@ pageextension 50137 ReleasedProdOrderExt extends "Released Production Orders"
                 var
                     prodOrder: Record "Production Order";
                     prodOrderToRefresh: Record "Production Order";
-                    test: Report "SFI Production Order";
                 begin
                     CurrPage.SetSelectionFilter(prodOrder);
                     prodOrderToRefresh.SetRange("Status", prodOrder.Status);
                     prodOrderToRefresh.SetRange("No.", prodOrder."No.");
                     REPORT.RunModal(REPORT::"Refresh Production Order", false, true, ProdOrderToRefresh);
+                end;
+            }
+
+            action("Production &BOM")
+            {
+                ApplicationArea = All;
+                Image = BOM;
+                Visible = true;
+                ShortcutKey = 'Alt+b';
+
+                trigger OnAction()
+                var
+                    prodBom: Page "Production BOM";
+                    prodBomHeader: Record "Production BOM Header";
+                    item: Record Item;
+                begin
+
+                    if item.Get(Rec."Source No.") then
+                        if prodBomHeader.Get(item."Production BOM No.") then begin
+                            prodBom.SetRecord(prodBomHeader);
+                            prodBom.RunModal();
+                        end;
+
+
                 end;
             }
         }
@@ -1323,6 +1352,11 @@ pageextension 50141 firmPlanProdOrdersExt extends "Firm Planned Prod. Orders"
                 Caption = 'Description';
                 Visible = true;
             }
+            field("Production BOM"; Rec."Production BOM")
+            {
+                ApplicationArea = All;
+                Visible = true;
+            }
         }
         addafter("Assigned User ID")
         {
@@ -1364,7 +1398,7 @@ pageextension 50141 firmPlanProdOrdersExt extends "Firm Planned Prod. Orders"
                 var
                     prodOrder: Record "Production Order";
                     prodOrderToRefresh: Record "Production Order";
-                    test: Report "SFI Production Order";
+                    test: Report "IWX Barcode Generation";
                 begin
                     CurrPage.SetSelectionFilter(prodOrder);
                     prodOrderToRefresh.SetRange("Status", prodOrder.Status);
@@ -1417,6 +1451,30 @@ pageextension 50141 firmPlanProdOrdersExt extends "Firm Planned Prod. Orders"
                             if relProdOrd.FindFirst() then
                                 relProdOrd.CreatePick(UserId, 0, false, false, false);
                         until prodOrder.Next() = 0;
+                end;
+            }
+
+            action("Production &BOM")
+            {
+                ApplicationArea = All;
+                Image = BOM;
+                Visible = true;
+                ShortcutKey = 'Alt+b';
+
+                trigger OnAction()
+                var
+                    prodBom: Page "Production BOM";
+                    prodBomHeader: Record "Production BOM Header";
+                    item: Record Item;
+                begin
+
+                    if item.Get(Rec."Source No.") then
+                        if prodBomHeader.Get(item."Production BOM No.") then begin
+                            prodBom.SetRecord(prodBomHeader);
+                            prodBom.RunModal();
+                        end;
+
+
                 end;
             }
         }
