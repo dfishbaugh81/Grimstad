@@ -301,6 +301,9 @@ report 50107 "Standard Sales Quote"
             column(SalesPersonName; SalespersonPurchaser.Name)
             {
             }
+            column(SellToCon; "Sell-to Contact")
+            {
+            }
             column(SelltoCustomerNo; "Sell-to Customer No.")
             {
             }
@@ -407,6 +410,9 @@ report 50107 "Standard Sales Quote"
             {
             }
             column(LabelBullet3; LabelBullet3)
+            {
+            }
+            column(SalesHeaderText; SalesHeaderText)
             {
             }
             dataitem(Line; "Sales Line")
@@ -1001,6 +1007,7 @@ report 50107 "Standard Sales Quote"
                 GeneralLedgerSetup: Record "General Ledger Setup";
                 ArchiveManagement: Codeunit ArchiveManagement;
                 SalesPost: Codeunit "Sales-Post";
+                SalesHeaderComment: Record "Sales Comment Line";
             begin
                 FirstLineHasBeenOutput := false;
                 Clear(Line);
@@ -1043,6 +1050,18 @@ report 50107 "Standard Sales Quote"
                         CurrCode := GeneralLedgerSetup."LCY Code";
                         CurrSymbol := GeneralLedgerSetup.GetCurrencySymbol();
                     end;
+
+                clear(SalesHeaderText);
+                SalesHeaderComment.Reset;
+                SalesHeaderComment.SetRange("Document Type", "Document Type");
+                SalesHeaderComment.SetRange("No.", "No.");
+                SalesHeaderComment.SetRange("Document Line No.", 0);
+                SalesHeaderComment.SetRange("Print On Quote", true);
+                if SalesHeaderComment.FindFirst() then
+                    repeat
+                        SalesHeaderText := SalesHeaderText + ' ' + SalesHeaderComment.Comment;
+                    until SalesHeaderComment.Next() = 0;
+
 
                 FormatDocumentFields(Header);
                 if SellToContact.Get("Sell-to Contact No.") then;
@@ -1292,6 +1311,7 @@ report 50107 "Standard Sales Quote"
         LabelBullet1: Label 'Ongoing price increases and surcharges may affect the final invoiced cost of this product. Customers will be notified before final shipment.';
         LabelBullet2: Label 'J.M. Grimstad reserves the right to substitute components to meet the requested delivery date. Major component substitution may require customer approval.';
         LabelBullet3: Label 'Quoted delivery is after receipt of signed approval drawings, if applicable.';
+        SalesHeaderText: Text;
 
     local procedure InitLogInteraction()
     begin

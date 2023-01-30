@@ -149,6 +149,8 @@ report 50109 "Picking List - Barcoded"
                     DataItemTableView = SORTING("Activity Type", "No.", "Sorting Sequence No.");
 
                     trigger OnAfterGetRecord()
+                    var
+                        salesHeader: Record "Sales Header";
                     begin
                         if SumUpLines and
                            ("Warehouse Activity Header"."Sorting Method" <>
@@ -185,9 +187,6 @@ report 50109 "Picking List - Barcoded"
                             end;
                         end else
                             Mark(true);
-
-
-
 
                         lcuBarcodeManagement.GenerateQRBarcode(shipBarcode, "Warehouse Activity Line"."Whse. Document No.", 3);
                         lcuBarcodeManagement.Run();
@@ -320,7 +319,7 @@ report 50109 "Picking List - Barcoded"
                         end;
 
                         salesHeader.Reset;
-                        salesHeader.SetRange("Document Type", salesHeader."Document Type");
+                        salesHeader.SetRange("Document Type", salesHeader."Document Type"::Order);
                         salesHeader.SetRange("No.", "Warehouse Activity Line"."Source No.");
                         if salesHeader.FindFirst() then
                             salesPerson := salesHeader."Salesperson Code"

@@ -1398,7 +1398,7 @@ pageextension 50141 firmPlanProdOrdersExt extends "Firm Planned Prod. Orders"
                 var
                     prodOrder: Record "Production Order";
                     prodOrderToRefresh: Record "Production Order";
-                    test: Report "IWX Barcode Generation";
+                    test: Report "DSHIP Bill of Lading";
                 begin
                     CurrPage.SetSelectionFilter(prodOrder);
                     prodOrderToRefresh.SetRange("Status", prodOrder.Status);
