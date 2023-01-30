@@ -852,7 +852,7 @@ report 50107 "Standard Sales Quote"
                         CurrReport.Skip();
                     if not VATClause.Get("VAT Clause Code") then
                         CurrReport.Skip();
-                    VATClause.GetDescription(Header);
+                    VATClause.GetDescriptionText(Header);
                 end;
             }
             dataitem(ReportTotalsLine; "Report Totals Buffer")

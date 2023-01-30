@@ -843,7 +843,7 @@ report 50102 "Sales Order Acknowledgement"
                         CurrReport.Skip();
                     if not VATClause.Get("VAT Clause Code") then
                         CurrReport.Skip();
-                    VATClause.GetDescription(Header);
+                    VATClause.GetDescriptionText(Header);
                 end;
             }
             dataitem(ReportTotalsLine; "Report Totals Buffer")
