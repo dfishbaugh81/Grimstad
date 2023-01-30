@@ -471,6 +471,9 @@ report 50103 "Posted Sales Order Invoice"
             column(ExternalDocumentNo_Lbl; FieldCaption("External Document No."))
             {
             }
+            column(SalesHeaderText; SalesHeaderText)
+            {
+            }
             dataitem(Line; "Sales Invoice Line")
             {
                 DataItemLink = "Document No." = FIELD("No.");
@@ -530,6 +533,36 @@ report 50103 "Posted Sales Order Invoice"
                 {
                 }
                 column(ItemNo_Line; "No.")
+                {
+                }
+                column(lblComment_1; lblComment[1])
+                {
+                }
+                column(lblComment_2; lblComment[2])
+                {
+                }
+                column(lblComment_3; lblComment[3])
+                {
+                }
+                column(lblComment_4; lblComment[4])
+                {
+                }
+                column(lblComment_5; lblComment[5])
+                {
+                }
+                column(lblComment_6; lblComment[6])
+                {
+                }
+                column(lblComment_7; lblComment[7])
+                {
+                }
+                column(lblComment_8; lblComment[8])
+                {
+                }
+                column(lblComment_9; lblComment[9])
+                {
+                }
+                column(lblComment_10; lblComment[10])
                 {
                 }
                 column(ItemNo_Line_Lbl; FieldCaption("No."))
@@ -686,6 +719,9 @@ report 50103 "Posted Sales Order Invoice"
                 }
 
                 trigger OnAfterGetRecord()
+                var
+                    SalesCommentLine: Record "Sales Comment Line";
+                    iCommCount: Integer;
                 begin
                     InitializeShipmentLine;
                     if Type = Type::"G/L Account" then
@@ -709,6 +745,22 @@ report 50103 "Posted Sales Order Invoice"
                     VATAmountLine."Invoice Discount Amount" := "Inv. Discount Amount";
                     VATAmountLine."VAT Clause Code" := "VAT Clause Code";
                     VATAmountLine.InsertLine;
+
+                    Clear(lblComment);
+                    iCommCount := 0;
+                    SalesCommentLine.Reset;
+                    SalesCommentLine.SetRange("Document Type", SalesCommentLine."Document Type"::"Posted Invoice");
+                    SalesCommentLine.SetRange("No.", Line."Document No.");
+                    SalesCommentLine.SetRange("Document Line No.", Line."Line No.");
+                    SalesCommentLine.SetRange("Print On Invoice", true);
+                    if SalesCommentLine.FindFirst() then
+                        repeat
+                            iCommCount := iCommCount + 1;
+                            lblComment[iCommCount] := SalesCommentLine.Comment;
+                        until SalesCommentLine.Next() = 0;
+                    if iCommCount > 0 then
+                        CompressArray(lblComment);
+
 
                     TransHeaderAmount += PrevLineAmount;
                     PrevLineAmount := "Line Amount";
@@ -1167,6 +1219,7 @@ report 50103 "Posted Sales Order Invoice"
                 PaymentServiceSetup: Record "Payment Service Setup";
                 Currency: Record Currency;
                 GeneralLedgerSetup: Record "General Ledger Setup";
+                SalesHeaderComment: Record "Sales Comment Line";
             begin
                 CurrReport.Language := Language.GetLanguageIdOrDefault("Language Code");
 
@@ -1219,6 +1272,17 @@ report 50103 "Posted Sales Order Invoice"
                         RemainingAmountTxt := StrSubstNo(PartiallyPaidLbl, Format(RemainingAmount, 0, '<Precision,2><Standard Format,0>'))
                     else
                         RemainingAmountTxt := '';
+
+                clear(SalesHeaderText);
+                SalesHeaderComment.Reset;
+                SalesHeaderComment.SetRange("Document Type", SalesHeaderComment."Document Type"::"Posted Invoice");
+                SalesHeaderComment.SetRange("No.", "No.");
+                SalesHeaderComment.SetRange("Document Line No.", 0);
+                SalesHeaderComment.SetRange("Print On Invoice", true);
+                if SalesHeaderComment.FindFirst() then
+                    repeat
+                        SalesHeaderText := SalesHeaderText + ' ' + SalesHeaderComment.Comment;
+                    until SalesHeaderComment.Next() = 0;
 
                 FreightAmount := GetFreightAmount();
                 MiscAmount := GetMiscAmount();
@@ -1484,6 +1548,8 @@ report 50103 "Posted Sales Order Invoice"
         LineAmountLbl: Label 'Line Amount';
         CurrCode: Text[10];
         CurrSymbol: Text[10];
+        lblComment: array[10] of text[100];
+        SalesHeaderText: Text;
 
     local procedure InitLogInteraction()
     begin

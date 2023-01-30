@@ -218,6 +218,9 @@ report 50104 "Std. Purchase Order"
             column(BuyFrmVendNo_PurchHeader; "Buy-from Vendor No.")
             {
             }
+            column(Location_Code; "Location Code")
+            {
+            }
             column(BuyFromAddr1; BuyFromAddr[1])
             {
             }
