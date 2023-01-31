@@ -188,7 +188,10 @@ report 50109 "Picking List - Barcoded"
                         end else
                             Mark(true);
 
-                        lcuBarcodeManagement.GenerateQRBarcode(shipBarcode, "Warehouse Activity Line"."Whse. Document No.", 3);
+                        if "Warehouse Activity Line"."Whse. Document No." = '' then
+                            lcuBarcodeManagement.Generate128Barcode(shipBarcode, "Warehouse Activity Line"."Whse. Document No.", 128, 32)
+                        else
+                            lcuBarcodeManagement.Generate128Barcode(shipBarcode, "Warehouse Activity Line"."Source No.", 128, 32);
                         lcuBarcodeManagement.Run();
                     end;
 
@@ -310,7 +313,7 @@ report 50109 "Picking List - Barcoded"
                     var
                         salesHeader: Record "Sales Header";
                     begin
-                        lcuBarcodeManagement.Generate39Barcode(shipRecBarcode, "Warehouse Activity Line"."Whse. Document No.", 44, 12);
+                        lcuBarcodeManagement.Generate128Barcode(shipRecBarcode, "Warehouse Activity Line"."Whse. Document No.", 128, 32);
                         lcuBarcodeManagement.Run();
                         if SumUpLines then begin
                             TempWhseActivLine.Get("Activity Type", "No.", "Line No.");
@@ -343,7 +346,7 @@ report 50109 "Picking List - Barcoded"
 
             trigger OnAfterGetRecord()
             begin
-                lcuBarcodeManagement.GenerateQRBarcode(tbBarcode, "Warehouse Activity Header"."No.", 4);
+                lcuBarcodeManagement.Generate128Barcode(tbBarcode, "Warehouse Activity Header"."No.", 128, 32);
                 lcuBarcodeManagement.Run();
 
                 GetLocation("Location Code");
