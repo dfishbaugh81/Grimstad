@@ -1243,6 +1243,8 @@ pageextension 50138 WhsePickExt extends "Warehouse Pick"
                         dialWindow.Update();
                         if nextActHeadNo = '' then begin
                             whseActHeaderLast.Reset;
+                            whseActHeaderLast.SetRange(Type, whseActHeaderLast.Type::Pick);
+                            whseActHeaderLast.SetRange("No. Series", 'WHPICK');
                             whseActHeaderLast.FindLast();
                             nextActHeadNo := whseActHeaderLast."No.";
                         end;

@@ -19,25 +19,25 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>1.61184cm</Width>
+                  <Width>0.64004in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.6305cm</Width>
+                  <Width>1.04108in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.39096cm</Width>
+                  <Width>0.55308in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.44357cm</Width>
+                  <Width>0.80082in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.42976cm</Width>
+                  <Width>0.96205in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>3.41533cm</Width>
+                  <Width>2.41222in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>6.30106cm</Width>
+                  <Width>1.55101in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -1599,46 +1599,46 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>2.55006cm</Height>
+                  <Height>2.49771cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
-                        <Rectangle Name="Rectangle3">
+                        <Rectangle Name="Rectangle1">
                           <ReportItems>
                             <Tablix Name="LinesTable">
                               <TablixBody>
                                 <TablixColumns>
                                   <TablixColumn>
-                                    <Width>1.15157in</Width>
+                                    <Width>1.57517in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>0.85075in</Width>
+                                    <Width>1.05898in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>1.00158in</Width>
+                                    <Width>1.31435in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>0.82965in</Width>
+                                    <Width>0.36956in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>0.60665in</Width>
+                                    <Width>0.39467in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>1.12777in</Width>
+                                    <Width>0.88903in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>0.67846in</Width>
+                                    <Width>0.6644in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>0.72191in</Width>
+                                    <Width>0.70785in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>0.99345in</Width>
+                                    <Width>0.97939in</Width>
                                   </TablixColumn>
                                 </TablixColumns>
                                 <TablixRows>
                                   <TablixRow>
-                                    <Height>0.176in</Height>
+                                    <Height>0.201in</Height>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
@@ -1649,7 +1649,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>Item Number</Value>
+                                                    <Value>Item Number/Vendor Item No.</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>7pt</FontSize>
@@ -1659,7 +1659,7 @@
                                                   </TextRun>
                                                 </TextRuns>
                                                 <Style>
-                                                  <TextAlign>Center</TextAlign>
+                                                  <TextAlign>Left</TextAlign>
                                                 </Style>
                                               </Paragraph>
                                             </Paragraphs>
@@ -2101,53 +2101,7 @@
                                     </TablixCells>
                                   </TablixRow>
                                   <TablixRow>
-                                    <Height>0.14in</Height>
-                                    <TablixCells>
-                                      <TablixCell>
-                                        <CellContents>
-                                          <Textbox Name="PurchCommLine2">
-                                            <CanGrow>true</CanGrow>
-                                            <KeepTogether>true</KeepTogether>
-                                            <Paragraphs>
-                                              <Paragraph>
-                                                <TextRuns>
-                                                  <TextRun>
-                                                    <Value>=Fields!Desc_PurchLine.Value</Value>
-                                                    <Style>
-                                                      <FontStyle>Italic</FontStyle>
-                                                      <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>7pt</FontSize>
-                                                      <FontWeight>Bold</FontWeight>
-                                                    </Style>
-                                                  </TextRun>
-                                                </TextRuns>
-                                                <ListLevel>1</ListLevel>
-                                                <Style />
-                                              </Paragraph>
-                                            </Paragraphs>
-                                            <rd:DefaultName>PurchCommLine</rd:DefaultName>
-                                            <Style>
-                                              <Border>
-                                                <Style>None</Style>
-                                              </Border>
-                                              <VerticalAlign>Bottom</VerticalAlign>
-                                            </Style>
-                                          </Textbox>
-                                          <ColSpan>9</ColSpan>
-                                        </CellContents>
-                                      </TablixCell>
-                                      <TablixCell />
-                                      <TablixCell />
-                                      <TablixCell />
-                                      <TablixCell />
-                                      <TablixCell />
-                                      <TablixCell />
-                                      <TablixCell />
-                                      <TablixCell />
-                                    </TablixCells>
-                                  </TablixRow>
-                                  <TablixRow>
-                                    <Height>0.14985in</Height>
+                                    <Height>0.17485in</Height>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
@@ -2158,7 +2112,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!ItemNo_PurchLine.Value</Value>
+                                                    <Value>=IIf(Fields!VendorItemNo_PurchLine.Value="",Fields!ItemNo_PurchLine.Value,Fields!ItemNo_PurchLine.Value &amp; Chr(10) &amp; Chr(13) &amp; Fields!VendorItemNo_PurchLine.Value)</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>7pt</FontSize>
@@ -2166,7 +2120,7 @@
                                                   </TextRun>
                                                 </TextRuns>
                                                 <Style>
-                                                  <TextAlign>Center</TextAlign>
+                                                  <TextAlign>Left</TextAlign>
                                                 </Style>
                                               </Paragraph>
                                             </Paragraphs>
@@ -2194,7 +2148,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!iDescription.Value</Value>
+                                                    <Value>=Fields!Desc_PurchLine.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>7pt</FontSize>
@@ -2447,47 +2401,18 @@
                                     </TablixCells>
                                   </TablixRow>
                                   <TablixRow>
-                                    <Height>0.14811in</Height>
+                                    <Height>0.14in</Height>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox17">
+                                          <Textbox Name="Textbox4">
+                                            <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!VendorItemNo_PurchLine.Value</Value>
-                                                    <Style>
-                                                      <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>7pt</FontSize>
-                                                    </Style>
-                                                  </TextRun>
-                                                </TextRuns>
-                                                <ListLevel>1</ListLevel>
-                                                <Style />
-                                              </Paragraph>
-                                            </Paragraphs>
-                                            <rd:DefaultName>Textbox17</rd:DefaultName>
-                                            <Style>
-                                              <Border>
-                                                <Style>None</Style>
-                                              </Border>
-                                            </Style>
-                                          </Textbox>
-                                          <ColSpan>2</ColSpan>
-                                        </CellContents>
-                                      </TablixCell>
-                                      <TablixCell />
-                                      <TablixCell>
-                                        <CellContents>
-                                          <Textbox Name="dDescription">
-                                            <KeepTogether>true</KeepTogether>
-                                            <Paragraphs>
-                                              <Paragraph>
-                                                <TextRuns>
-                                                  <TextRun>
-                                                    <Value>=Fields!dDescription.Value</Value>
+                                                    <Value />
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>7pt</FontSize>
@@ -2497,18 +2422,11 @@
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>dDescription</rd:DefaultName>
+                                            <rd:DefaultName>Textbox4</rd:DefaultName>
                                             <Style>
                                               <Border>
-                                                <Color>Gray</Color>
                                                 <Style>None</Style>
-                                                <Width>0.25pt</Width>
                                               </Border>
-                                              <BottomBorder>
-                                                <Color>LightGrey</Color>
-                                                <Style>None</Style>
-                                                <Width>0.25pt</Width>
-                                              </BottomBorder>
                                             </Style>
                                           </Textbox>
                                           <ColSpan>5</ColSpan>
@@ -2553,9 +2471,11 @@
                                               <PaddingRight>3pt</PaddingRight>
                                             </Style>
                                           </Textbox>
-                                          <ColSpan>2</ColSpan>
+                                          <ColSpan>4</ColSpan>
                                         </CellContents>
                                       </TablixCell>
+                                      <TablixCell />
+                                      <TablixCell />
                                       <TablixCell />
                                     </TablixCells>
                                   </TablixRow>
@@ -2585,6 +2505,97 @@
                                               </Paragraph>
                                             </Paragraphs>
                                             <rd:DefaultName>PurchCommLine</rd:DefaultName>
+                                            <Style>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
+                                              <VerticalAlign>Bottom</VerticalAlign>
+                                            </Style>
+                                          </Textbox>
+                                          <ColSpan>9</ColSpan>
+                                        </CellContents>
+                                      </TablixCell>
+                                      <TablixCell />
+                                      <TablixCell />
+                                      <TablixCell />
+                                      <TablixCell />
+                                      <TablixCell />
+                                      <TablixCell />
+                                      <TablixCell />
+                                      <TablixCell />
+                                    </TablixCells>
+                                  </TablixRow>
+                                  <TablixRow>
+                                    <Height>0.14in</Height>
+                                    <TablixCells>
+                                      <TablixCell>
+                                        <CellContents>
+                                          <Textbox Name="PurchCommLine2">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value>=Fields!Desc_PurchLine.Value</Value>
+                                                    <Style>
+                                                      <FontStyle>Italic</FontStyle>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>7pt</FontSize>
+                                                      <FontWeight>Bold</FontWeight>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <ListLevel>1</ListLevel>
+                                                <Style />
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>PurchCommLine</rd:DefaultName>
+                                            <Style>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
+                                              <VerticalAlign>Bottom</VerticalAlign>
+                                            </Style>
+                                          </Textbox>
+                                          <ColSpan>9</ColSpan>
+                                        </CellContents>
+                                      </TablixCell>
+                                      <TablixCell />
+                                      <TablixCell />
+                                      <TablixCell />
+                                      <TablixCell />
+                                      <TablixCell />
+                                      <TablixCell />
+                                      <TablixCell />
+                                      <TablixCell />
+                                    </TablixCells>
+                                  </TablixRow>
+                                  <TablixRow>
+                                    <Height>0.14in</Height>
+                                    <TablixCells>
+                                      <TablixCell>
+                                        <CellContents>
+                                          <Textbox Name="Textbox82">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value />
+                                                    <Style>
+                                                      <FontStyle>Italic</FontStyle>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>7pt</FontSize>
+                                                      <FontWeight>Bold</FontWeight>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style />
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox82</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Style>None</Style>
@@ -2637,17 +2648,12 @@
                                     <TablixMembers>
                                       <TablixMember>
                                         <Visibility>
-                                          <Hidden>=IIf(Fields!Type_PurchLine.Value=0,false,true)</Hidden>
+                                          <Hidden>=IIf(Fields!No_PurchLine.Value&lt;&gt;"",false,true)</Hidden>
                                         </Visibility>
                                       </TablixMember>
                                       <TablixMember>
                                         <Visibility>
-                                          <Hidden>=IIf(Fields!Type_PurchLine.Value&gt;0,false,true)</Hidden>
-                                        </Visibility>
-                                      </TablixMember>
-                                      <TablixMember>
-                                        <Visibility>
-                                          <Hidden>=IIf(Fields!No_PurchLine.Value="",true,false)</Hidden>
+                                          <Hidden>=IIf(Fields!CustRefPo.Value="",true,false)</Hidden>
                                         </Visibility>
                                       </TablixMember>
                                       <TablixMember>
@@ -2658,15 +2664,26 @@
                                           <Hidden>=IIf((Fields!PurchCommLineText.Value&lt;&gt;"") And (Fields!No_PurchLine.Value&lt;&gt;""),false,true)</Hidden>
                                         </Visibility>
                                       </TablixMember>
+                                      <TablixMember>
+                                        <Visibility>
+                                          <Hidden>=IIf(Fields!Type_PurchLine.Value=0,false,true)</Hidden>
+                                        </Visibility>
+                                      </TablixMember>
+                                      <TablixMember>
+                                        <Visibility>
+                                          <Hidden>=IIf(Fields!No_PurchLine.Value&lt;&gt;"",false,true)</Hidden>
+                                        </Visibility>
+                                      </TablixMember>
                                     </TablixMembers>
                                   </TablixMember>
                                 </TablixMembers>
                               </TablixRowHierarchy>
                               <RepeatRowHeaders>true</RepeatRowHeaders>
                               <DataSetName>DataSet_Result</DataSetName>
+                              <Top>0in</Top>
                               <Left>0.00002in</Left>
-                              <Height>0.75396in</Height>
-                              <Width>7.96179in</Width>
+                              <Height>0.93585in</Height>
+                              <Width>7.9534in</Width>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -2684,7 +2701,6 @@
                           </Style>
                         </Rectangle>
                         <ColSpan>7</ColSpan>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
@@ -2944,11 +2960,10 @@
                 <TablixMember />
               </TablixMembers>
             </TablixRowHierarchy>
+            <KeepTogether>true</KeepTogether>
             <DataSetName>DataSet_Result</DataSetName>
-            <Top>0.01948cm</Top>
-            <Left>0.03819in</Left>
-            <Height>6.56922cm</Height>
-            <Width>20.22302cm</Width>
+            <Height>6.51687cm</Height>
+            <Width>7.9603in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -2958,10 +2973,10 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>2.59398in</Height>
+        <Height>2.5657in</Height>
         <Style />
       </Body>
-      <Width>8.00001in</Width>
+      <Width>7.97147in</Width>
       <Page>
         <PageHeader>
           <Height>1.1811in</Height>
@@ -3492,7 +3507,6 @@
             </Textbox>
             <Line Name="Line2">
               <Top>1.16022in</Top>
-              <Left>0.04657in</Left>
               <Height>0in</Height>
               <Width>7.95342in</Width>
               <ZIndex>13</ZIndex>
@@ -3538,9 +3552,8 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox7</rd:DefaultName>
-              <Top>0in</Top>
               <Height>0.72917in</Height>
-              <Width>8in</Width>
+              <Width>7.9603in</Width>
               <Style>
                 <Border>
                   <Style>None</Style>
