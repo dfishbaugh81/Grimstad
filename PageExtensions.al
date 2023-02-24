@@ -286,24 +286,6 @@ pageextension 50115 BomLinesExt extends "Production BOM Lines"
                 Visible = true;
             }
         }
-        addafter(Description)
-        {
-            field("Description 2"; Rec."Description 2")
-            {
-                ApplicationArea = Manufacturing;
-                Importance = Additional;
-                ToolTip = 'Specifies information in addition to the description.';
-                Visible = true;
-            }
-
-            field("Component Count"; Rec."Component Count")
-            {
-                ApplicationArea = Manufacturing;
-                Importance = Additional;
-                ToolTip = 'Indicates the number of components if sub-assembly.';
-                Visible = true;
-            }
-        }
     }
 }
 
@@ -1656,6 +1638,10 @@ pageextension 50149 BinContentsExt extends "Bin Contents"
                 var
                     WarEntEd: Page "Warehouse Entries - Editable";
                     UserSetup: Record "User Setup";
+                    test2: Report "Return Order";
+                    Test: Page "Warehouse Shipment";
+                    test1: Record "DSHIP Package Line Buffer";
+                    TEST3: Record "DSHIP Label Data";
                 begin
                     if UserSetup.Get(UserId()) then
                         if UserSetup."User ID" = 'BCADMIN' then

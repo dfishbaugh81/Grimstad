@@ -2112,7 +2112,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=IIf(Fields!VendorItemNo_PurchLine.Value="",Fields!ItemNo_PurchLine.Value,Fields!ItemNo_PurchLine.Value &amp; Chr(10) &amp; Chr(13) &amp; Fields!VendorItemNo_PurchLine.Value)</Value>
+                                                    <Value>=IIf(Fields!VendorItemNo_PurchLine.Value="",Fields!ItemNo_PurchLine.Value,Fields!ItemNo_PurchLine.Value  + VbCrLf + Fields!VendorItemNo_PurchLine.Value)</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>7pt</FontSize>
@@ -2137,6 +2137,7 @@
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -2680,7 +2681,6 @@
                               </TablixRowHierarchy>
                               <RepeatRowHeaders>true</RepeatRowHeaders>
                               <DataSetName>DataSet_Result</DataSetName>
-                              <Top>0in</Top>
                               <Left>0.00002in</Left>
                               <Height>0.93585in</Height>
                               <Width>7.9534in</Width>
@@ -2962,6 +2962,7 @@
             </TablixRowHierarchy>
             <KeepTogether>true</KeepTogether>
             <DataSetName>DataSet_Result</DataSetName>
+            <Top>0in</Top>
             <Height>6.51687cm</Height>
             <Width>7.9603in</Width>
             <Style>

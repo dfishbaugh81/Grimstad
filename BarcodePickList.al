@@ -189,9 +189,9 @@ report 50109 "Picking List - Barcoded"
                             Mark(true);
 
                         if "Warehouse Activity Line"."Whse. Document No." = '' then
-                            lcuBarcodeManagement.Generate128Barcode(shipBarcode, "Warehouse Activity Line"."Whse. Document No.", 128, 32)
+                            lcuBarcodeManagement.Generate128Barcode(shipBarcode, "Warehouse Activity Line"."Source No.", 128, 32)
                         else
-                            lcuBarcodeManagement.Generate128Barcode(shipBarcode, "Warehouse Activity Line"."Source No.", 128, 32);
+                            lcuBarcodeManagement.Generate128Barcode(shipBarcode, "Warehouse Activity Line"."Whse. Document No.", 128, 32);
                         lcuBarcodeManagement.Run();
                     end;
 
@@ -284,6 +284,15 @@ report 50109 "Picking List - Barcoded"
                     column(myRecShipBarCode; shipRecBarcode.Image)
                     {
                     }
+                    column(salesCommLine; salesCommLine)
+                    {
+                    }
+                    column(salesCommHeader; salesCommHeader)
+                    {
+                    }
+                    column(WhseDocNo_WhseActLine; "Whse. Document No.")
+                    {
+                    }
                     dataitem(WhseActLine2; "Warehouse Activity Line")
                     {
                         DataItemLink = "Activity Type" = FIELD("Activity Type"), "No." = FIELD("No."), "Bin Code" = FIELD("Bin Code"), "Item No." = FIELD("Item No."), "Action Type" = FIELD("Action Type"), "Variant Code" = FIELD("Variant Code"), "Unit of Measure Code" = FIELD("Unit of Measure Code"), "Due Date" = FIELD("Due Date");
@@ -312,6 +321,8 @@ report 50109 "Picking List - Barcoded"
                     trigger OnAfterGetRecord()
                     var
                         salesHeader: Record "Sales Header";
+                        salesCommentLine: Record "Sales Comment Line";
+                        salesCommentHeader: Record "Sales Comment Line";
                     begin
                         lcuBarcodeManagement.Generate128Barcode(shipRecBarcode, "Warehouse Activity Line"."Whse. Document No.", 128, 32);
                         lcuBarcodeManagement.Run();
@@ -320,6 +331,28 @@ report 50109 "Picking List - Barcoded"
                             "Qty. (Base)" := TempWhseActivLine."Qty. (Base)";
                             "Qty. to Handle" := TempWhseActivLine."Qty. to Handle";
                         end;
+
+                        clear(salesCommLine);
+                        salesCommentLine.Reset;
+                        salesCommentLine.SetRange("Document Type", salesCommentLine."Document Type"::Order);
+                        salesCommentLine.SetRange("No.", WhseActLine."Source No.");
+                        salesCommentLine.SetRange("Document Line No.", WhseActLine."Source Line No.");
+                        salesCommentLine.SetRange("Print On Pick Ticket", true);
+                        if salesCommentLine.FindFirst() then
+                            repeat
+                                salesCommLine := salesCommLine + ' ' + salesCommentLine.Comment;
+                            until salesCommentLine.Next = 0;
+
+                        clear(salesCommHeader);
+                        salesCommentHeader.Reset;
+                        salesCommentHeader.SetRange("Document Type", salesCommentHeader."Document Type"::Order);
+                        salesCommentHeader.SetRange("No.", WhseActLine."Source No.");
+                        salesCommentHeader.SetRange("Document Line No.", 0);
+                        salesCommentHeader.SetRange("Print On Pick Ticket", true);
+                        if salesCommentHeader.FindFirst() then
+                            repeat
+                                salesCommHeader := salesCommHeader + ' ' + salesCommentHeader.Comment;
+                            until salesCommentHeader.Next = 0;
 
                         salesHeader.Reset;
                         salesHeader.SetRange("Document Type", salesHeader."Document Type"::Order);
@@ -444,6 +477,8 @@ report 50109 "Picking List - Barcoded"
         shipBarcode: Record "IWX Barcode" temporary;
         shipRecBarcode: Record "IWX Barcode" temporary;
         salesPerson: Code[20];
+        salesCommLine: Text;
+        salesCommHeader: Text;
 
 
 

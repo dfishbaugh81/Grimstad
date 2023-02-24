@@ -408,12 +408,6 @@ page 50113 "Prod. BOM Lines"
                     ToolTip = 'Specifies the variant of the item on the line.';
                     Visible = false;
                 }
-                field("Component Count"; Rec."Component Count")
-                {
-                    ApplicationArea = Manufacturing;
-                    ToolTip = 'Indicates the number of components if sub-assembly.';
-                    Visible = true;
-                }
                 field(Description; Rec.Description)
                 {
                     ApplicationArea = All;

@@ -406,6 +406,15 @@ report 50102 "Sales Order Acknowledgement"
             column(SalesHeaderText; SalesHeaderText)
             {
             }
+            column(Shipping_Agent_Code; "Shipping Agent Code")
+            {
+            }
+            column(Shipping_Agent_Service_Code; "Shipping Agent Service Code")
+            {
+            }
+            column(PayAccNo; PayAccNo)
+            {
+            }
             dataitem(Line; "Sales Line")
             {
                 DataItemLink = "Document No." = FIELD("No.");
@@ -999,6 +1008,7 @@ report 50102 "Sales Order Acknowledgement"
                 ArchiveManagement: Codeunit ArchiveManagement;
                 SalesPost: Codeunit "Sales-Post";
                 SalesHeaderComment: Record "Sales Comment Line";
+                DshipPackOptions: Record "DSHIP Package Options";
             begin
                 FirstLineHasBeenOutput := false;
                 Clear(Line);
@@ -1053,6 +1063,12 @@ report 50102 "Sales Order Acknowledgement"
                     not CurrReport.UseRequestPage and SalesSetup."Archive Orders")
                 then
                     ArchiveManagement.StoreSalesDocument(Header, LogInteraction);
+
+                DshipPackOptions.Reset;
+                if DshipPackOptions.Get("No.") then
+                    PayAccNo := DshipPackOptions."Payment Account No."
+                else
+                    PayAccNo := '';
 
                 clear(SalesHeaderText);
                 SalesHeaderComment.Reset;
@@ -1302,6 +1318,7 @@ report 50102 "Sales Order Acknowledgement"
         lblComment: array[10] of text[100];
         CreatedBy: Code[50];
         SalesHeaderText: Text;
+        PayAccNo: Text[100];
 
 
     local procedure InitLogInteraction()

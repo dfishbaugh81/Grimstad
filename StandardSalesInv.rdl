@@ -3337,7 +3337,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=IIf(Fields!ItemReferenceNo_Line.Value="", Fields!ItemNo_Line.Value, Fields!ItemNo_Line.Value &amp; " " &amp; Fields!ItemReferenceNo_Line.Value)</Value>
+                                                    <Value>=IIf(Fields!ItemReferenceNo_Line.Value="", Fields!ItemNo_Line.Value, Fields!ItemNo_Line.Value  + VbCrLf + Fields!ItemReferenceNo_Line.Value)</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>7pt</FontSize>
@@ -3359,6 +3359,7 @@
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>

@@ -24,26 +24,6 @@ tableextension 50110 ItemExt extends Item
     }
 }
 
-tableextension 50111 BomLines extends "Production BOM Line"
-{
-    fields
-    {
-        field(50100; "Description 2"; Text[60])
-        {
-            Caption = 'Description 2';
-            FieldClass = FlowField;
-            CalcFormula = lookup(Item."Description 2" where("No." = field("No.")));
-
-        }
-
-        field(50101; "Component Count"; Integer)
-        {
-            Caption = 'Component Count';
-            FieldClass = FlowField;
-            CalcFormula = count("Production BOM Line" where("Production BOM No." = field("No.")));
-        }
-    }
-}
 
 tableextension 50112 SalesHeader extends "Sales Header"
 {
@@ -246,20 +226,6 @@ tableextension 50118 ProdOrder extends "Production Order"
             FieldClass = FlowField;
             CalcFormula = lookup(Item."Production BOM No." where("No." = field("Source No.")));
         }
-    }
-}
-
-tableextension 50122 ProdOrdComp extends "Prod. Order Component"
-{
-    fields
-    {
-        field(50100; "Description 2"; Text[60])
-        {
-            Caption = 'Description 2';
-            FieldClass = FlowField;
-            CalcFormula = lookup(Item."Description 2" where("No." = field("Item No.")));
-        }
-
     }
 }
 
