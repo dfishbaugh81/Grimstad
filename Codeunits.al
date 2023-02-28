@@ -390,6 +390,34 @@ codeunit 50102 toDoMgmt
 
     end;
 
+    [EventSubscriber(ObjectType::Table, Database::"Report Selection Warehouse", 'OnBeforePrintDocument', '', true, true)]
+    procedure OnBeforePrintDocument(RecVarToPrint: Variant; ShowRequestPage: Boolean; TempReportSelectionWarehouse: Record "Report Selection Warehouse"; var IsHandled: Boolean)
+    var
+        WhseActHead: Record "Warehouse Activity Header";
+        WhseActLine: Record "Warehouse Activity Line";
+        RecRef: RecordRef;
+        temptxt: Text;
+        BcPickListSales: Report "Pick - Barcoded (Sales)";
+        BcPickList: Report "Picking List - Barcoded";
+    begin
+        if TempReportSelectionWarehouse.Usage = TempReportSelectionWarehouse.Usage::Pick then begin
+            //if RecVarToPrint.IsRecord then
+            RecRef.GetTable(RecVarToPrint);
+            RecRef.SetTable(WhseActHead);
+            if WhseActHead.FindFirst() then begin
+                WhseActLine.Reset;
+                WhseActLine.SetRange("No.", WhseActHead."No.");
+                if WhseActLine.Findfirst() then begin
+                    if WhseActLine."Source Type" = 37 then
+                        Report.Run(50115, ShowRequestPage, false, RecVarToPrint)
+                    else
+                        Report.Run(50109, ShowRequestPage, false, RecVarToPrint);
+                    IsHandled := true;
+                end;
+            end;
+        end;
+    end;
+
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Req. Wksh.-Make Order", 'OnInsertPurchOrderLineOnBeforeSalesOrderLineModify', '', true, true)]
     procedure OnInsertPurchOrderLineOnBeforeSalesOrderLineModify(var PurchOrderLine: Record "Purchase Line"; var RequisitionLine: Record "Requisition Line"; var SalesOrderLine: Record "Sales Line");
     var

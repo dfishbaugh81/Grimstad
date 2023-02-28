@@ -133,15 +133,72 @@ report 50115 "Pick - Barcoded (Sales)"
                 column(myShipBarCode; shipBarcode.Image)
                 {
                 }
-
                 column(WhseDocumentNo_WhseActLine; WhseActLine."Whse. Document No.")
                 {
                 }
-
                 column(SalesPerson_WhseActLine; salesPerson)
                 {
                 }
-
+                column(ShipToAddress1; ShipToAddr[1])
+                {
+                }
+                column(ShipToAddress2; ShipToAddr[2])
+                {
+                }
+                column(ShipToAddress3; ShipToAddr[3])
+                {
+                }
+                column(ShipToAddress4; ShipToAddr[4])
+                {
+                }
+                column(ShipToAddress5; ShipToAddr[5])
+                {
+                }
+                column(ShipToAddress6; ShipToAddr[6])
+                {
+                }
+                column(ShipToAddress7; ShipToAddr[7])
+                {
+                }
+                column(ShipToAddress8; ShipToAddr[8])
+                {
+                }
+                column(CustomerAddress1; CustAddr[1])
+                {
+                }
+                column(CustomerAddress2; CustAddr[2])
+                {
+                }
+                column(CustomerAddress3; CustAddr[3])
+                {
+                }
+                column(CustomerAddress4; CustAddr[4])
+                {
+                }
+                column(CustomerAddress5; CustAddr[5])
+                {
+                }
+                column(CustomerAddress6; CustAddr[6])
+                {
+                }
+                column(CustomerAddress7; CustAddr[7])
+                {
+                }
+                column(CustomerAddress8; CustAddr[8])
+                {
+                }
+                column(CustomerNo; CustomerNo)
+                {
+                }
+                column(PaymentAccountNo; PaymentAccountNo)
+                {
+                }
+                column(ShippingAgent; ShippingAgent)
+                {
+                }
+                column(ShippingAgentService; ShippingAgentService)
+                {
+                }
                 dataitem("Warehouse Activity Line"; "Warehouse Activity Line")
                 {
                     DataItemLink = "Activity Type" = FIELD(Type), "No." = FIELD("No.");
@@ -315,7 +372,14 @@ report 50115 "Pick - Barcoded (Sales)"
                         }
 
 
+                        dataitem(SalesLine; "Sales Line")
+                        {
+                            DataItemLink = "Document No." = FIELD("Source No."), "Line No." = FIELD("Source Line No."), "No." = FIELD("Item No."), "Variant Code" = FIELD("Variant Code"), "Unit of Measure Code" = FIELD("Unit of Measure Code");
+                            DataItemLinkReference = WhseActLine;
+                            DataItemTableView = SORTING("Document Type", "Document No.", "Line No.");
 
+
+                        }
                     }
 
                     trigger OnAfterGetRecord()
@@ -323,6 +387,8 @@ report 50115 "Pick - Barcoded (Sales)"
                         salesHeader: Record "Sales Header";
                         salesCommentLine: Record "Sales Comment Line";
                         salesCommentHeader: Record "Sales Comment Line";
+                        DshipPackOptions: Record "DSHIP Package Options";
+                        test: Page "Warehouse Pick";
                     begin
                         lcuBarcodeManagement.Generate128Barcode(shipRecBarcode, "Warehouse Activity Line"."Whse. Document No.", 128, 32);
                         lcuBarcodeManagement.Run();
@@ -361,6 +427,21 @@ report 50115 "Pick - Barcoded (Sales)"
                             salesPerson := salesHeader."Salesperson Code"
                         else
                             salesPerson := '';
+
+
+                        FormatAddr.SalesHeaderBillTo(CustAddr, salesHeader);
+                        FormatAddr.SalesHeaderShipTo(ShipToAddr, CustAddr, salesHeader);
+
+                        ShippingAgent := salesHeader."Shipping Agent Code";
+                        ShippingAgentService := salesHeader."Shipping Agent Service Code";
+
+                        CustomerNo := salesHeader."Sell-to Customer No.";
+
+                        DshipPackOptions.Reset;
+                        if DshipPackOptions.Get("No.") then
+                            PaymentAccountNo := DshipPackOptions."Payment Account No."
+                        else
+                            PaymentAccountNo := '';
                     end;
 
                     trigger OnPreDataItem()
@@ -479,8 +560,14 @@ report 50115 "Pick - Barcoded (Sales)"
         salesPerson: Code[20];
         salesCommLine: Text;
         salesCommHeader: Text;
-
-
+        FormatAddr: Codeunit "Format Address";
+        CustAddr: array[8] of Text[100];
+        ShipToAddr: array[8] of Text[100];
+        CustomerNo: Code[20];
+        SalesOrderNo: Code[20];
+        ShippingAgent: Code[10];
+        ShippingAgentService: Code[10];
+        PaymentAccountNo: Text[100];
 
     protected var
         BreakbulkFilter: Boolean;
