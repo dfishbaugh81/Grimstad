@@ -19,10 +19,10 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>2.1032cm</Width>
+                  <Width>1.524cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.20985cm</Width>
+                  <Width>2.159cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>1.43663cm</Width>
@@ -31,7 +31,7 @@
                   <Width>0.86266cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.49237cm</Width>
+                  <Width>1.143cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>1.5296cm</Width>
@@ -46,19 +46,19 @@
                   <Width>1.48846cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.77385cm</Width>
+                  <Width>4.45636cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>1.20933cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.9089cm</Width>
+                  <Width>2.5908cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.14182cm</Width>
+                  <Width>0.889cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.66557cm</Width>
+                  <Width>0.5334cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>0.86683cm</Width>
@@ -73,7 +73,7 @@
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox10">
+                        <Textbox Name="Textbox3">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -83,14 +83,13 @@
                                   <Value />
                                   <Style>
                                     <FontSize>8pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox10</rd:DefaultName>
+                          <rd:DefaultName>Textbox3</rd:DefaultName>
                           <Style>
                             <Border />
                             <VerticalAlign>Middle</VerticalAlign>
@@ -355,13 +354,14 @@
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="LoctnCodeWhseActivHeader">
+                        <Textbox Name="Textbox1">
+                          <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!LoctnCode_WhseActivHeader.Value</Value>
+                                  <Value />
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -370,7 +370,7 @@
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <ZIndex>512</ZIndex>
+                          <rd:DefaultName>Textbox1</rd:DefaultName>
                           <Style>
                             <Border />
                             <VerticalAlign>Middle</VerticalAlign>
@@ -1024,7 +1024,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -1958,11 +1957,12 @@
                                   <Value>=Fields!LineNo_WhseActLine.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
-                                    <Format>d</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Left</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                           <ZIndex>278</ZIndex>
@@ -2518,13 +2518,12 @@ and Fields!No_WhseActivHeader.Value=previous(Fields!No_WhseActivHeader.Value),tr
             <PageBreak>
               <BreakLocation>End</BreakLocation>
             </PageBreak>
-            <Top>0.625in</Top>
             <Height>6.48054cm</Height>
             <Width>24.7373cm</Width>
             <Style />
           </Tablix>
         </ReportItems>
-        <Height>3.26139in</Height>
+        <Height>2.55139in</Height>
         <Style />
       </Body>
       <Width>9.76689in</Width>
@@ -2708,6 +2707,30 @@ and Fields!No_WhseActivHeader.Value=previous(Fields!No_WhseActivHeader.Value),tr
               <Width>0.45cm</Width>
               <ZIndex>6</ZIndex>
               <Style>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+            </Textbox>
+            <Textbox Name="LoctnCodeWhseActivHeader">
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=Last(Fields!LoctnCode_WhseActivHeader.Value, "DataSet_Result")</Value>
+                      <Style>
+                        <FontSize>8pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <Top>0.33307in</Top>
+              <Height>0.16654in</Height>
+              <Width>2.95276in</Width>
+              <ZIndex>7</ZIndex>
+              <Style>
+                <Border />
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
             </Textbox>

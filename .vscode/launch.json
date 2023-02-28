@@ -13,7 +13,7 @@
             "request": "launch",
             "type": "al",
             "environmentType": "Sandbox",
-            "environmentName": "Prod_ENV_Copy_2-27-23",
+            "environmentName": "DEV_PROD_COPY_2-28-23",
             "startupObjectId": 22,
             "startupObjectType": "Page",
             "breakOnError": "All",
