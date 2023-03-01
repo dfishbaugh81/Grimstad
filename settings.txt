@@ -1,0 +1,28 @@
+{
+    "workbench.colorTheme": "Visual Studio Light",
+    "workbench.iconTheme": "al",
+    "git.enableSmartCommit": true,
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "git.confirmSync": false,
+    "git.autofetch": true,
+    "security.workspace.trust.untrustedFiles": "open",
+    "CRS.FileNamePattern": "<ObjectNameShort>.<ObjectTypeShortPascalCase>.al",
+    "CRS.FileNamePatternExtensions": "<ObjectNameShort>.<ObjectTypeShortPascalCase>.al",
+    "CRS.FileNamePatternPageCustomizations": "<ObjectNameShort>.<ObjectTypeShortPascalCase>.al",
+    "CRS.OnSaveAlFileAction": "Rename",
+    "CRS.RenameWithGit": false,
+    "CRS.ExtensionObjectNamePattern": null,
+    "explorer.confirmDelete": false,
+    "al.enableCodeAnalysis": true,
+    "al.codeAnalyzers": [
+    
+    "${PerTenantExtensionCop}",
+        "${CodeCop}"
+    ],
+    "files.autoSave": "afterDelay",
+    "editor.codeActionsOnSave": {
+    
+    }
+    
+}

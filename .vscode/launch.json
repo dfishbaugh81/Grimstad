@@ -1,13 +1,7 @@
 {
     "version": "0.2.0",
     "configurations": [
-        {
-            "name": "Launch Chrome",
-            "request": "launch",
-            "type": "chrome",
-            "url": "http://localhost:8080",
-            "webRoot": "${workspaceFolder}"
-        },
+       
         {
             "name": "Microsoft cloud sandbox",
             "request": "launch",
@@ -17,6 +11,7 @@
             "startupObjectId": 22,
             "startupObjectType": "Page",
             "breakOnError": "All",
+            "tenant": "cf30cb40-6326-412f-a850-7ecf7c1b8d6a",
             "launchBrowser": true,
             "enableLongRunningSqlStatements": true,
             "enableSqlInformationDebugger": true
