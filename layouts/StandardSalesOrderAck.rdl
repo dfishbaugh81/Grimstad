@@ -2515,7 +2515,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=IIf(Fields!ItemReferenceNo.Value="", Fields!ItemNo_Line.Value, Fields!ItemNo_Line.Value + VbCrLf + Fields!ItemReferenceNo.Value)</Value>
+                                                    <Value>=IIf(Fields!ItemReferenceNo.Value="", Fields!ItemNo_Line.Value, Fields!ItemNo_Line.Value + VbCrLf + "CPN#: " + Fields!ItemReferenceNo.Value)</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>7pt</FontSize>
@@ -2540,6 +2540,7 @@
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -4129,7 +4130,7 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DataSet_Result</DataSetName>
-            <Top>0.18117cm</Top>
+            <Top>0.18116cm</Top>
             <Height>10.80529cm</Height>
             <Width>19.06986cm</Width>
             <Style>

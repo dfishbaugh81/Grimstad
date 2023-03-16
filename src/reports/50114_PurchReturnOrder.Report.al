@@ -936,13 +936,12 @@ report 50114 "Purch. Return Order"
 
     local procedure FormatDocumentFields(PurchaseHeader: Record "Purchase Header")
     begin
-        with PurchaseHeader do begin
-            FormatDocument.SetTotalLabels("Currency Code", TotalText, TotalInclVATText, TotalExclVATText);
-            FormatDocument.SetPurchaser(SalesPurchPerson, "Purchaser Code", PurchaserText);
+        FormatDocument.SetTotalLabels(PurchaseHeader."Currency Code", TotalText, TotalInclVATText, TotalExclVATText);
+        FormatDocument.SetPurchaser(SalesPurchPerson, PurchaseHeader."Purchaser Code", PurchaserText);
 
-            ReferenceText := FormatDocument.SetText("Your Reference" <> '', FieldCaption("Your Reference"));
-            VATNoText := FormatDocument.SetText("VAT Registration No." <> '', FieldCaption("VAT Registration No."));
-        end;
+        ReferenceText := FormatDocument.SetText(PurchaseHeader."Your Reference" <> '', PurchaseHeader.FieldCaption(PurchaseHeader."Your Reference"));
+        VATNoText := FormatDocument.SetText(PurchaseHeader."VAT Registration No." <> '', PurchaseHeader.FieldCaption(PurchaseHeader."VAT Registration No."));
+
     end;
 
     [IntegrationEvent(TRUE, false)]

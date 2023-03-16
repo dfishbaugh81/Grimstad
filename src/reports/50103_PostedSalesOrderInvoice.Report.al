@@ -1063,23 +1063,22 @@ report 50103 "Posted Sales Order Invoice"
                             CurrReport.Break();
                 end;
             }
-            dataitem(PaymentReportingArgument; "Payment Reporting Argument")
+            dataitem(PaymentReportingArgument; Integer)
             {
-                DataItemTableView = SORTING(Key);
-                UseTemporary = true;
-                column(PaymentServiceLogo; Logo)
+                DataItemTableView = SORTING(Number) ORDER(Ascending) WHERE(Number = FILTER(1));
+                column(PaymentServiceLogo; '')
                 {
                 }
-                column(PaymentServiceLogo_UrlText; "URL Caption")
+                column(PaymentServiceLogo_UrlText; '')
                 {
                 }
-                column(PaymentServiceLogo_Url; GetTargetURL)
+                column(PaymentServiceLogo_Url; '')
                 {
                 }
-                column(PaymentServiceText_UrlText; "URL Caption")
+                column(PaymentServiceText_UrlText; '')
                 {
                 }
-                column(PaymentServiceText_Url; GetTargetURL)
+                column(PaymentServiceText_Url; '')
                 {
                 }
             }
@@ -1261,7 +1260,7 @@ report 50103 "Posted Sales Order Invoice"
 
                 GetLineFeeNoteOnReportHist("No.");
 
-                PaymentServiceSetup.CreateReportingArgs(PaymentReportingArgument, Header);
+                //PaymentServiceSetup.CreateReportingArgs(PaymentReportingArgument, Header);
 
                 CalcFields("Amount Including VAT");
                 RemainingAmount := GetRemainingAmount;

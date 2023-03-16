@@ -1580,14 +1580,14 @@
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="ShipmentMethodDescription">
+                                          <Textbox Name="SellToCon">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!ShipmentMethodDescription.Value</Value>
+                                                    <Value>=Fields!SellToCon.Value</Value>
                                                     <Style>
                                                       <FontFamily>segoe uI</FontFamily>
                                                       <FontSize>7pt</FontSize>
@@ -1599,7 +1599,7 @@
                                                 </Style>
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>ShipmentMethodDescription</rd:DefaultName>
+                                            <rd:DefaultName>SellToCon</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Style>Solid</Style>
@@ -2433,7 +2433,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=IIf(Fields!ItemReferenceNo.Value="", Fields!ItemNo_Line.Value, Fields!ItemNo_Line.Value  + VbCrLf + Fields!ItemReferenceNo.Value)</Value>
+                                                    <Value>=IIf(Fields!ItemReferenceNo.Value="", Fields!ItemNo_Line.Value, Fields!ItemNo_Line.Value  + VbCrLf + "CPN#: " + Fields!ItemReferenceNo.Value)</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>7pt</FontSize>
@@ -2458,6 +2458,7 @@
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -3609,7 +3610,7 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DataSet_Result</DataSetName>
-            <Top>0.18112cm</Top>
+            <Top>0.18111cm</Top>
             <Height>10.64685cm</Height>
             <Width>19.05cm</Width>
             <Style>
