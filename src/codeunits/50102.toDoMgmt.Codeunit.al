@@ -510,6 +510,12 @@ codeunit 50102 "toDoMgmt"
 
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::ReportManagement, 'OnAfterSubstituteReport', '', false, false)]
+    local procedure OnSubstituteReport(ReportId: Integer; var NewReportId: Integer)
+    begin
+        if ReportId = Report::"Customer Statements" then
+            NewReportId := Report::"GrimCustStatements";
+    end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Dist. Integration", 'OnBeforeGetSpecialOrders', '', true, true)]
     procedure OnBeforeGetSpecialOrders(PurchaseHeader: Record "Purchase Header"; var IsHandled: Boolean);
