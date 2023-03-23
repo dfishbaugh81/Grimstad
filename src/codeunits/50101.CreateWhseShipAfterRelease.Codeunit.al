@@ -5,6 +5,9 @@
 
 codeunit 50101 "CreateWhseShipAfterRelease"
 {
+    var
+        myCu: Codeunit 37043356;
+        myRe: Record "EFT Transaction -CL-";
     /*CUSTOMER REQUESTED THIS FEATURE BE TURNED OFF 
     
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Release Sales Document", 'OnAfterReleaseSalesDoc', '', false, false)]

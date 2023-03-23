@@ -229,7 +229,16 @@ report 50116 SalesCreditMemo
             column(MiscAmount; MiscAmount)
             {
             }
-            column(SalesAmount; SalesAmount)
+            column(CrMemAmount; CrMemAmount)
+            {
+            }
+            column(VatAmount; VatAmount)
+            {
+            }
+            column(SubTotalTotAmount; SubTotalTotAmount)
+            {
+            }
+            column(ReStockFeeAmount; ReStockFeeAmount)
             {
             }
             column(ShipToAddress_Lbl; ShiptoAddrLbl)
@@ -1061,16 +1070,12 @@ report 50116 SalesCreditMemo
                         SalesHeaderText := SalesHeaderText + ' ' + SalesHeaderComment.Comment;
                     until SalesHeaderComment.Next() = 0;
 
-                if PstdSlsInv.Get("Applies-to Doc. No.") then begin
-                    FreightAmount := PstdSlsInv.GetFreightAmount();
-                    MiscAmount := PstdSlsInv.GetMiscAmount();
-                    SalesAmount := PstdSlsInv.GetSalesAmount();
-                end else begin
-                    FreightAmount := GetFreightAmount();
-                    MiscAmount := GetMiscAmount();
-                    SalesAmount := GetSalesAmount();
-                end;
-
+                FreightAmount := GetFreightAmount();
+                MiscAmount := GetMiscAmount();
+                CrMemAmount := GetCreMemAmount();
+                VatAmount := GetVatAmount();
+                SubTotalTotAmount := GetSubTotalTotAmount();
+                ReStockFeeAmount := GetDiscAmount();
 
                 TotalSubTotal := 0;
                 TotalInvDiscAmount := 0;
@@ -1300,10 +1305,13 @@ report 50116 SalesCreditMemo
         DisplayShipmentInformation: Boolean;
         FirstLineHasBeenOutput: Boolean;
         RemainingAmount: Decimal;
-        SalesAmount: Decimal;
+        CrMemAmount: Decimal;
         FreightAmount: Decimal;
         MiscAmount: Decimal;
+        SubTotalTotAmount: Decimal;
+        ReStockFeeAmount: Decimal;
         RemainingAmountTxt: Text;
+        VatAmount: Decimal;
         VATAmtLbl: Label 'VAT Amount';
         AlreadyPaidLbl: Label 'The invoice has been paid.';
         PartiallyPaidLbl: Label 'The invoice has been partially paid. The remaining amount is %1', Comment = '%1=an amount';

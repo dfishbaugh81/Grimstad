@@ -510,6 +510,12 @@ codeunit 50102 "toDoMgmt"
 
     end;
 
+    [EventSubscriber(ObjectType::Table, Database::Vendor, 'OnBeforeCheckOutstandingPurchaseDocuments', '', false, false)]
+    local procedure OnBeforeCheckOutstandingPurchaseDocuments(var IsHandled: Boolean; Vendor: Record Vendor)
+    begin
+        IsHandled := true;
+    end;
+
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Copy Document Mgt.", 'OnCopySalesDocLineOnBeforeCheckLocationOnWMS', '', false, false)]
     local procedure OnCopySalesDocLineOnBeforeCheckLocationOnWMS(IncludeHeader: Boolean; RecalculateLines: Boolean; var FromSalesLine: Record "Sales Line"; var IsHandled: Boolean; var ToSalesHeader: Record "Sales Header"; var ToSalesLine: Record "Sales Line")
     begin

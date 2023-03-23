@@ -37,7 +37,7 @@ tableextension 50114 "SalesCrMemHeader" extends "Sales Cr.Memo Header"
             repeat
                 fAmount := fAmount + SalesCrMemLine."Line Amount";
             until SalesCrMemLine.Next() = 0;
-        exit(fAmount);
+        exit(fAmount * -1);
     end;
 
     procedure GetMiscAmount(): Decimal
@@ -51,12 +51,13 @@ tableextension 50114 "SalesCrMemHeader" extends "Sales Cr.Memo Header"
         SalesCrMemLine.SetFilter(Description, '<>@*Freight*');
         if SalesCrMemLine.FindFirst() then
             repeat
-                mAmount := mAmount + SalesCrMemLine."Line Amount";
+                mAmount := mAmount + SalesCrMemLine."Line Amount" + SalesCrMemLine."Line Discount Amount";
+                ;
             until SalesCrMemLine.Next() = 0;
-        exit(mAmount);
+        exit(mAmount * -1);
     end;
 
-    procedure GetSalesAmount(): Decimal
+    procedure GetCreMemAmount(): Decimal
     var
         SalesCrMemLine: Record "Sales Cr.Memo Line";
         sAmount: Decimal;
@@ -66,9 +67,55 @@ tableextension 50114 "SalesCrMemHeader" extends "Sales Cr.Memo Header"
         SalesCrMemLine.SetRange(Type, SalesCrMemLine.Type::"Item");
         if SalesCrMemLine.FindFirst() then
             repeat
-                sAmount := sAmount + SalesCrMemLine.GetLineAmountExclVAT();
+                sAmount := sAmount + SalesCrMemLine.GetLineAmountExclVAT() + SalesCrMemLine."Line Discount Amount";
+                ;
+            until SalesCrMemLine.Next() = 0;
+        exit(sAmount * -1);
+    end;
+
+    procedure GetVatAmount(): Decimal
+    var
+        SalesCrMemLine: Record "Sales Cr.Memo Line";
+        sAmount: Decimal;
+    begin
+        sAmount := 0;
+        SalesCrMemLine.SetRange("Document No.", Rec."No.");
+        SalesCrMemLine.SetRange(Type, SalesCrMemLine.Type::"Item");
+        if SalesCrMemLine.FindFirst() then
+            repeat
+                sAmount := sAmount + (SalesCrMemLine."Amount Including VAT" - SalesCrMemLine.GetLineAmountExclVAT());
+            until SalesCrMemLine.Next() = 0;
+        exit(sAmount * -1);
+    end;
+
+    procedure GetDiscAmount(): Decimal
+    var
+        SalesCrMemLine: Record "Sales Cr.Memo Line";
+        sAmount: Decimal;
+    begin
+        sAmount := 0;
+        SalesCrMemLine.SetRange("Document No.", Rec."No.");
+        SalesCrMemLine.SetRange(Type, SalesCrMemLine.Type::"Item");
+        if SalesCrMemLine.FindFirst() then
+            repeat
+                sAmount := sAmount + SalesCrMemLine."Line Discount Amount";
             until SalesCrMemLine.Next() = 0;
         exit(sAmount);
+    end;
+
+    procedure GetSubTotalTotAmount(): Decimal
+    var
+        SalesCrMemLine: Record "Sales Cr.Memo Line";
+        sAmount: Decimal;
+    begin
+        sAmount := 0;
+        SalesCrMemLine.SetRange("Document No.", Rec."No.");
+        //SalesCrMemLine.SetRange(Type, SalesCrMemLine.Type::"Item");
+        if SalesCrMemLine.FindFirst() then
+            repeat
+                sAmount := sAmount + SalesCrMemLine."Amount Including VAT" + SalesCrMemLine."Line Discount Amount";
+            until SalesCrMemLine.Next() = 0;
+        exit(sAmount * -1);
     end;
 }
 

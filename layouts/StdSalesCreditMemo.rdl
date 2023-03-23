@@ -2210,7 +2210,6 @@
                                             </Style>
                                           </Textbox>
                                           <ColSpan>2</ColSpan>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell />
@@ -6055,7 +6054,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>Sales Amount</Value>
+                      <Value>Credit Amount</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -6119,7 +6118,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>Amt Paid</Value>
+                      <Value>Restocking Fee</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -6247,7 +6246,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>Total Due (USD)</Value>
+                      <Value>Total Amount to Apply</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -6262,9 +6261,9 @@
               </Paragraphs>
               <rd:DefaultName>Textbox177</rd:DefaultName>
               <Top>1.7in</Top>
-              <Left>5.6in</Left>
+              <Left>5.35694in</Left>
               <Height>0.17in</Height>
-              <Width>1in</Width>
+              <Width>1.24306in</Width>
               <ZIndex>12</ZIndex>
               <Style>
                 <Border>
@@ -6279,7 +6278,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=First(Fields!SalesAmount.Value, "DataSet_Result")</Value>
+                      <Value>=First(Fields!CrMemAmount.Value, "DataSet_Result")</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -6312,7 +6311,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Sum(Fields!AmountIncludingVAT_Line.Value, "DataSet_Result")</Value>
+                      <Value>=First(Fields!SubTotalTotAmount.Value, "DataSet_Result")</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -6345,7 +6344,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=(Sum(Fields!AmountIncludingVAT_Line.Value, "DataSet_Result")-First(Fields!RemainingAmount.Value, "DataSet_Result"))*-1</Value>
+                      <Value>=First(Fields!ReStockFeeAmount.Value, "DataSet_Result")</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -6444,7 +6443,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Sum(Fields!VATAmount_VatAmountLine.Value, "DataSet_Result")</Value>
+                      <Value>=First(Fields!VatAmount.Value, "DataSet_Result")</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -6477,7 +6476,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=First(Fields!RemainingAmount.Value, "DataSet_Result")</Value>
+                      <Value>=First(Fields!SubTotalTotAmount.Value, "DataSet_Result") + First(Fields!ReStockFeeAmount.Value, "DataSet_Result")</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>8pt</FontSize>
@@ -6842,11 +6841,29 @@ eSmc1+33wF/4JB/Df4UxINX0vT/EMioF3TRd/WvoTwF+z/4P+GCKug6FZaaF6eUuK9Sjw/UlrUlY/Gc+
         <Field Name="MiscAmountFormat">
           <DataField>MiscAmountFormat</DataField>
         </Field>
-        <Field Name="SalesAmount">
-          <DataField>SalesAmount</DataField>
+        <Field Name="CrMemAmount">
+          <DataField>CrMemAmount</DataField>
         </Field>
-        <Field Name="SalesAmountFormat">
-          <DataField>SalesAmountFormat</DataField>
+        <Field Name="CrMemAmountFormat">
+          <DataField>CrMemAmountFormat</DataField>
+        </Field>
+        <Field Name="VatAmount">
+          <DataField>VatAmount</DataField>
+        </Field>
+        <Field Name="VatAmountFormat">
+          <DataField>VatAmountFormat</DataField>
+        </Field>
+        <Field Name="SubTotalTotAmount">
+          <DataField>SubTotalTotAmount</DataField>
+        </Field>
+        <Field Name="SubTotalTotAmountFormat">
+          <DataField>SubTotalTotAmountFormat</DataField>
+        </Field>
+        <Field Name="ReStockFeeAmount">
+          <DataField>ReStockFeeAmount</DataField>
+        </Field>
+        <Field Name="ReStockFeeAmountFormat">
+          <DataField>ReStockFeeAmountFormat</DataField>
         </Field>
         <Field Name="ShipToAddress_Lbl">
           <DataField>ShipToAddress_Lbl</DataField>

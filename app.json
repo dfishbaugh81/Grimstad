@@ -2,7 +2,7 @@
   "id": "12c7ee9c-9f50-4cf8-92dd-978048f21856",
   "name": "Grimstad",
   "publisher": "Impact_Networking",
-  "version": "1.1.5.1",
+  "version": "1.1.5.4",
   "brief": "",
   "description": "",
   "privacyStatement": "",
@@ -16,7 +16,10 @@
                   ,{"id": "c670dab0-a6c8-4702-9416-3e3328c52ebb", "name": "License Plate Management", "publisher": "Insight Works", "version": "1.93.8161.6"}
                   ,{"id": "12968b6e-b233-40e8-8ebc-160ee407d489", "name": "Shop Floor Insight", "publisher": "Insight Works", "version": "7.9.8112.1"}
                   ,{"id": "ba1776ba-1198-4b4c-a61e-c4612f1880d5", "name": "IWorks Common", "publisher": "Insight Works", "version": "2.8.8308.1"}
-                  ,{"id": "a0b5e9f5-6a4a-4867-aa3e-4b87c8c1c660", "name": "Advanced Inventory Count", "publisher": "Insight Works", "version": "3.4.8315.1"}],
+                  ,{"id": "a0b5e9f5-6a4a-4867-aa3e-4b87c8c1c660", "name": "Advanced Inventory Count", "publisher": "Insight Works", "version": "3.4.8315.1"}
+                  ,{"id": "4714e6b7-6fde-4a8b-9c39-c2da3f239396", "name": "Versapay Base", "publisher": "Versapay", "version": "1.3.6.4413"}
+                  ,{"id": "0f30fcab-5ea0-4345-ba83-a32015759fbe", "name": "Versapay Payments", "publisher": "Versapay", "version": "4.3.11.4560"}
+                  ,{"id": "100ddc96-a1ad-407b-99fa-8c09afd7c039", "name": "Versapay Payments NA", "publisher": "Versapay", "version": "4.3.3.4439"}],
   "screenshots": [],
   "platform": "1.0.0.0",
   "application": "21.0.0.0",
