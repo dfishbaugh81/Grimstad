@@ -510,6 +510,12 @@ codeunit 50102 "toDoMgmt"
 
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Copy Document Mgt.", 'OnCopySalesDocLineOnBeforeCheckLocationOnWMS', '', false, false)]
+    local procedure OnCopySalesDocLineOnBeforeCheckLocationOnWMS(IncludeHeader: Boolean; RecalculateLines: Boolean; var FromSalesLine: Record "Sales Line"; var IsHandled: Boolean; var ToSalesHeader: Record "Sales Header"; var ToSalesLine: Record "Sales Line")
+    begin
+        IsHandled := true;
+    end;
+
     [EventSubscriber(ObjectType::Codeunit, Codeunit::ReportManagement, 'OnAfterSubstituteReport', '', false, false)]
     local procedure OnSubstituteReport(ReportId: Integer; var NewReportId: Integer)
     begin
