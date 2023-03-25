@@ -1,8 +1,8 @@
-pageextension 50143 "FirmPlannedProdOrderLineExt" extends "Firm Planned Prod. Order Lines"
+pageextension 50153 "ReleasedProdOrderLines" extends "Released Prod. Order Lines"
 {
     layout
     {
-        addbefore("Due Date")
+        addafter("Due Date")
         {
             field(ComponentCount; Rec.ComponentCount)
             {
@@ -10,7 +10,7 @@ pageextension 50143 "FirmPlannedProdOrderLineExt" extends "Firm Planned Prod. Or
                 Visible = true;
                 ToolTip = 'Component Count';
             }
-            field("Total Run Time";Rec."Total Run Time")
+            field("Total Run Time"; Rec."Total Run Time")
             {
                 ApplicationArea = All;
                 ToolTip = 'Total Run Time';
@@ -18,11 +18,9 @@ pageextension 50143 "FirmPlannedProdOrderLineExt" extends "Firm Planned Prod. Or
         }
         modify("Description 2")
         {
-
+            Caption = 'Description 2';
             ApplicationArea = All;
             Visible = true;
-
         }
     }
 }
-
