@@ -11,6 +11,12 @@ pageextension 50132 "PstdSalesInvoices" extends "Posted Sales Invoices"
                 ToolTip = 'Specifies the Territory for the Customer.';
                 Visible = true;
             }
+            field("Payment Method Code"; Rec."Payment Method Code")
+            {
+                ApplicationArea = All;
+                Importance = Promoted;
+                ToolTip = 'Payment Method Code';
+            }
         }
     }
 }
