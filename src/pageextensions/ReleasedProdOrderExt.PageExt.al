@@ -2,24 +2,35 @@ pageextension 50137 "ReleasedProdOrderExt" extends "Released Production Orders"
 {
     layout
     {
+        addbefore("Due Date")
+        {
+            field("IWX Sched. Original Due Date"; Rec."IWX Sched. Original Due Date")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Original Due Date';
+            }
+        }
         addafter("Due Date")
         {
             field("Finished Quantity"; Rec."Finished Quantity")
             {
                 ApplicationArea = All;
                 Visible = true;
+                ToolTip = 'Finished Quantity';
             }
 
             field("Firm Planned Order No."; Rec."Firm Planned Order No.")
             {
                 ApplicationArea = All;
                 Visible = true;
+                ToolTip = 'Firm Planned Order';
             }
 
             field("Production BOM"; Rec."Production BOM")
             {
                 ApplicationArea = All;
                 Visible = true;
+                ToolTip = 'Production BOM';
             }
         }
 
