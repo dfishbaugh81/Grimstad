@@ -1677,7 +1677,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Month(Fields!DocumentDate.Value) &amp; "/" &amp; Day(Fields!DocumentDate.Value) &amp; "/" &amp; Year(Fields!DocumentDate.Value)</Value>
+                                                    <Value>=Month(Fields!OrderDate.Value) &amp; "/" &amp; Day(Fields!OrderDate.Value) &amp; "/" &amp; Year(Fields!OrderDate.Value)</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>7pt</FontSize>
@@ -1698,6 +1698,7 @@
                                               <VerticalAlign>Middle</VerticalAlign>
                                             </Style>
                                           </Textbox>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -2540,7 +2541,6 @@
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -4130,7 +4130,7 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DataSet_Result</DataSetName>
-            <Top>0.18116cm</Top>
+            <Top>0.18115cm</Top>
             <Height>10.80529cm</Height>
             <Width>19.06986cm</Width>
             <Style>
@@ -5065,6 +5065,9 @@ eSmc1+33wF/4JB/Df4UxINX0vT/EMioF3TRd/WvoTwF+z/4P+GCKug6FZaaF6eUuK9Sjw/UlrUlY/Gc+
         </Field>
         <Field Name="DocumentDate">
           <DataField>DocumentDate</DataField>
+        </Field>
+        <Field Name="OrderDate">
+          <DataField>OrderDate</DataField>
         </Field>
         <Field Name="DocumentDate_Lbl">
           <DataField>DocumentDate_Lbl</DataField>
