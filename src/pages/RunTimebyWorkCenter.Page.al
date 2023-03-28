@@ -55,10 +55,12 @@ page 50101 "Run Time by Work Center"
             }
         }
     }
-    trigger OnFindRecord(Which: Text): Boolean begin
+    trigger OnFindRecord(Which: Text): Boolean
+    begin
         FillTempTable();
-        exit(Find(Which));
+        exit(Rec.Find(Which));
     end;
+
     local procedure FillTempTable()
     var
         RunTimeByWorkCenter: Query "Run Time By Work Center";
@@ -70,21 +72,20 @@ page 50101 "Run Time by Work Center"
         RunTimeByWorkCenter.SetFilter(No, '<>%1', '');
         RunTimeByWorkCenter.Open();
         Rec.DeleteAll();
-        while(RunTimeByWorkCenter.Read())do begin
+        while (RunTimeByWorkCenter.Read()) do begin
             Rec.Init();
-            Rec."Routing No.":=RunTimeByWorkCenter.RoutingNo;
-            Rec."Routing Reference No.":=RunTimeByWorkCenter.RoutingReferenceNo;
-            Rec."Prod. Order No.":=RunTimeByWorkCenter.ProdOrderNo;
-            Rec.Status:=RunTimeByWorkCenter.Status;
-            Rec.Type:=RunTimeByWorkCenter.Type;
-            Rec."No.":=RunTimeByWorkCenter.No;
-            if Rec.Find()then begin
-                Rec."Run Time"+=RunTimeByWorkCenter.Sum_Run_Time;
+            Rec."Routing No." := RunTimeByWorkCenter.RoutingNo;
+            Rec."Routing Reference No." := RunTimeByWorkCenter.RoutingReferenceNo;
+            Rec."Prod. Order No." := RunTimeByWorkCenter.ProdOrderNo;
+            Rec.Status := RunTimeByWorkCenter.Status;
+            Rec.Type := RunTimeByWorkCenter.Type;
+            Rec."No." := RunTimeByWorkCenter.No;
+            if Rec.Find() then begin
+                Rec."Run Time" += RunTimeByWorkCenter.Sum_Run_Time;
                 Rec.Modify();
             end
-            else
-            begin
-                Rec."Run Time":=RunTimeByWorkCenter.Sum_Run_Time;
+            else begin
+                Rec."Run Time" := RunTimeByWorkCenter.Sum_Run_Time;
                 Rec.Insert();
             end;
         end;
