@@ -1,16 +1,5 @@
-pageextension 50156 "PurchaseLines" extends "Purchase Lines"
+pageextension 50140 "purchOrdersExt" extends "Purchase Lines"
 {
-    layout
-    {
-        addbefore("Expected Receipt Date")
-        {
-            field("Order Date"; Rec."Order Date")
-            {
-                ApplicationArea = All;
-                ToolTip = 'Order Date';
-            }
-        }
-    }
     actions
     {
 
@@ -40,3 +29,4 @@ pageextension 50156 "PurchaseLines" extends "Purchase Lines"
         }
     }
 }
+

@@ -8,12 +8,6 @@ pageextension 50143 "FirmPlannedProdOrderLineExt" extends "Firm Planned Prod. Or
             {
                 ApplicationArea = All;
                 Visible = true;
-                ToolTip = 'Component Count';
-            }
-            field("Total Run Time";Rec."Total Run Time")
-            {
-                ApplicationArea = All;
-                ToolTip = 'Total Run Time';
             }
         }
         modify("Description 2")

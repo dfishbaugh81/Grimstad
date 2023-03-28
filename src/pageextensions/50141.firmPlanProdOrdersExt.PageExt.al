@@ -2,21 +2,12 @@ pageextension 50141 "firmPlanProdOrdersExt" extends "Firm Planned Prod. Orders"
 {
     layout
     {
-        addbefore("Due Date")
-        {
-            field("IWX Sched. Original Due Date"; Rec."IWX Sched. Original Due Date")
-            {
-                ApplicationArea = All;
-                ToolTip = 'Original Due Date';
-            }
-        }
         addafter("Routing No.")
         {
             field("Planned Order No."; Rec."Planned Order No.")
             {
                 ApplicationArea = All;
                 Caption = 'Orig Prod No.';
-                ToolTip = 'Orig Prod No.';
                 Visible = true;
             }
 
@@ -24,7 +15,6 @@ pageextension 50141 "firmPlanProdOrdersExt" extends "Firm Planned Prod. Orders"
             {
                 ApplicationArea = All;
                 Caption = 'Description';
-                ToolTip = 'Description';
                 Visible = true;
             }
             field("Production BOM"; Rec."Production BOM")
@@ -39,7 +29,6 @@ pageextension 50141 "firmPlanProdOrdersExt" extends "Firm Planned Prod. Orders"
             {
                 ApplicationArea = All;
                 Caption = 'Created';
-                ToolTip = 'Created';
                 Visible = true;
                 Editable = false;
             }

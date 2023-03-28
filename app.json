@@ -19,23 +19,20 @@
                   ,{"id": "a0b5e9f5-6a4a-4867-aa3e-4b87c8c1c660", "name": "Advanced Inventory Count", "publisher": "Insight Works", "version": "3.4.8315.1"}
                   ,{"id": "4714e6b7-6fde-4a8b-9c39-c2da3f239396", "name": "Versapay Base", "publisher": "Versapay", "version": "1.3.6.4413"}
                   ,{"id": "0f30fcab-5ea0-4345-ba83-a32015759fbe", "name": "Versapay Payments", "publisher": "Versapay", "version": "4.3.11.4560"}
-                  ,{"id": "100ddc96-a1ad-407b-99fa-8c09afd7c039", "name": "Versapay Payments NA", "publisher": "Versapay", "version": "4.3.3.4439"}
-                  ,{"id": "02f80526-1dda-40d6-adb3-6b8e6d0bd332", "name": "Graphical Scheduler", "publisher": "Insight Works", "version": "1.0.0.0" }
-                  ,{"id": "f94ecdf3-9cc3-4da2-bc9c-1c6f7b70a4b7", "name": "Grimstad_CustomFields", "publisher": "Impact Networking", "version": "1.0.0.0"}
-                  ,{"id": "25ebe95f-fc85-4016-b355-9f91fad16748", "name": "Release&Pick_Grimstad_1.0.0.01", "publisher": "Impact Networking", "version": "1.0.0.0"}],
+                  ,{"id": "100ddc96-a1ad-407b-99fa-8c09afd7c039", "name": "Versapay Payments NA", "publisher": "Versapay", "version": "4.3.3.4439"}],
   "screenshots": [],
   "platform": "1.0.0.0",
   "application": "21.0.0.0",
   "idRanges": [
     {
       "from": 50100,
-      "to": 50249
+      "to": 50149
     }
   ],
   "resourceExposurePolicy": {
     "allowDebugging": true,
-    "allowDownloadingSource": true,
-    "includeSourceInSymbolFile": true
+    "allowDownloadingSource": false,
+    "includeSourceInSymbolFile": false
   },
   "runtime": "10.0"
 }
