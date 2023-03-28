@@ -14,4 +14,3 @@ pageextension 50109 "ProdBOMExt" extends "Production BOM"
         }
     }
 }
-

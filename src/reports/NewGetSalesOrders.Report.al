@@ -7,7 +7,7 @@ report 50108 "New Get Sales Orders"
     {
         dataitem("Sales Line"; "Sales Line")
         {
-            DataItemTableView = WHERE("Document Type" = CONST(Order), "Purch. Order Line No." = CONST(0), "Outstanding Quantity" = FILTER(<> 0));
+            DataItemTableView = WHERE("Document Type"=CONST(Order), "Purch. Order Line No."=CONST(0), "Outstanding Quantity"=FILTER(<>0));
             RequestFilterFields = "Document No.", "Sell-to Customer No.", "No.";
             RequestFilterHeading = 'Sales Order Line';
 
@@ -15,47 +15,31 @@ report 50108 "New Get Sales Orders"
             var
                 IsHandled: Boolean;
             begin
-                IsHandled := false;
+                IsHandled:=false;
                 OnBeforeOnAfterGetRecord("Sales Line", IsHandled);
-                if IsHandled then
-                    CurrReport.Skip();
-
-                if ("Purchasing Code" = '') and (SpecOrder <> 1) then
-                    if "Drop Shipment" then begin
-                        LineCount := LineCount + 1;
-                        if not HideDialog then
-                            Window.Update(1, LineCount);
+                if IsHandled then CurrReport.Skip();
+                if("Purchasing Code" = '') and (SpecOrder <> 1)then if "Drop Shipment" then begin
+                        LineCount:=LineCount + 1;
+                        if not HideDialog then Window.Update(1, LineCount);
                         InsertReqWkshLine("Sales Line", ReqLine);
                     end;
-
-                if "Purchasing Code" <> '' then
-                    if PurchasingCode.Get("Purchasing Code") then
-                        if PurchasingCode."Drop Shipment" and (SpecOrder <> 1) then begin
-                            LineCount := LineCount + 1;
-                            if not HideDialog then
-                                Window.Update(1, LineCount);
+                if "Purchasing Code" <> '' then if PurchasingCode.Get("Purchasing Code")then if PurchasingCode."Drop Shipment" and (SpecOrder <> 1)then begin
+                            LineCount:=LineCount + 1;
+                            if not HideDialog then Window.Update(1, LineCount);
                             InsertReqWkshLine("Sales Line", ReqLine);
-                        end else
-                            if PurchasingCode."Special Order" and
-                               ("Special Order Purchase No." = '') and
-                               (SpecOrder <> 0)
-                            then begin
-                                LineCount := LineCount + 1;
-                                if not HideDialog then
-                                    Window.Update(1, LineCount);
+                        end
+                        else if PurchasingCode."Special Order" and ("Special Order Purchase No." = '') and (SpecOrder <> 0)then begin
+                                LineCount:=LineCount + 1;
+                                if not HideDialog then Window.Update(1, LineCount);
                                 InsertReqWkshLine("Sales Line", ReqLine);
                             end;
             end;
-
             trigger OnPostDataItem()
             begin
-                if not HideDialog then
-                    if LineCount = 0 then
-                        Error(Text001);
+                if not HideDialog then if LineCount = 0 then Error(Text001);
             end;
         }
     }
-
     requestpage
     {
         SaveValues = true;
@@ -67,6 +51,7 @@ report 50108 "New Get Sales Orders"
                 group(Options)
                 {
                     Caption = 'Options';
+
                     field(GetDim; GetDim)
                     {
                         ApplicationArea = Dimensions;
@@ -77,16 +62,13 @@ report 50108 "New Get Sales Orders"
                 }
             }
         }
-
         actions
         {
         }
     }
-
     labels
     {
     }
-
     trigger OnPreReport()
     begin
         OnBeforeOnPreReport(HideDialog);
@@ -95,41 +77,33 @@ report 50108 "New Get Sales Orders"
         ReqLine.SetRange("Worksheet Template Name", ReqLine."Worksheet Template Name");
         ReqLine.SetRange("Journal Batch Name", ReqLine."Journal Batch Name");
         ReqLine.LockTable();
-        if ReqLine.FindLast() then begin
+        if ReqLine.FindLast()then begin
             ReqLine.Init();
-            LineNo := ReqLine."Line No.";
+            LineNo:=ReqLine."Line No.";
         end;
-        if not HideDialog then
-            Window.Open(Text000);
+        if not HideDialog then Window.Open(Text000);
     end;
-
-    var
-        ReqWkshTmpl: Record "Req. Wksh. Template";
-        SalesHeader: Record "Sales Header";
-        PurchasingCode: Record Purchasing;
-        ItemTrackingMgt: Codeunit "Item Tracking Management";
-        LeadTimeMgt: Codeunit "Lead-Time Management";
-        UOMMgt: Codeunit "Unit of Measure Management";
-        Window: Dialog;
-        LineCount: Integer;
-        GetDim: Option Item,"Sales Line";
-        HideDialog: Boolean;
-
-        Text000: Label 'Processing sales lines  #1######';
-        Text001: Label 'There are no sales lines to retrieve.';
-
-    protected var
-        ReqWkshName: Record "Requisition Wksh. Name";
-        ReqLine: Record "Requisition Line";
-        LineNo: Integer;
-        SpecOrder: Integer;
-
+    var ReqWkshTmpl: Record "Req. Wksh. Template";
+    SalesHeader: Record "Sales Header";
+    PurchasingCode: Record Purchasing;
+    ItemTrackingMgt: Codeunit "Item Tracking Management";
+    LeadTimeMgt: Codeunit "Lead-Time Management";
+    UOMMgt: Codeunit "Unit of Measure Management";
+    Window: Dialog;
+    LineCount: Integer;
+    GetDim: Option Item, "Sales Line";
+    HideDialog: Boolean;
+    Text000: Label 'Processing sales lines  #1######';
+    Text001: Label 'There are no sales lines to retrieve.';
+    protected var ReqWkshName: Record "Requisition Wksh. Name";
+    ReqLine: Record "Requisition Line";
+    LineNo: Integer;
+    SpecOrder: Integer;
     procedure SetReqWkshLine(NewReqLine: Record "Requisition Line"; SpecialOrder: Integer)
     begin
-        ReqLine := NewReqLine;
-        SpecOrder := SpecialOrder;
+        ReqLine:=NewReqLine;
+        SpecOrder:=SpecialOrder;
     end;
-
     procedure InsertReqWkshLine(SalesLine: Record "Sales Line"; var ReqLine: Record "Requisition Line")
     var
         IsHandled: Boolean;
@@ -137,154 +111,120 @@ report 50108 "New Get Sales Orders"
         pl: Record "Purchase Line";
         slItem: Record "Item";
     begin
-        IsHandled := false;
+        IsHandled:=false;
         OnInsertReqWkshLineOnBeforeCode(ReqLine, SalesLine, SpecOrder, LineNo, ReqWkshName, GetDim, IsHandled);
-        if IsHandled then
-            exit;
-
+        if IsHandled then exit;
         ReqLine.Reset();
         ReqLine.SetCurrentKey(Type, "No.");
         ReqLine.SetRange(Type, "Sales Line".Type);
         ReqLine.SetRange("No.", "Sales Line"."No.");
         ReqLine.SetRange("Sales Order No.", "Sales Line"."Document No.");
         ReqLine.SetRange("Sales Order Line No.", "Sales Line"."Line No.");
-        if ReqLine.FindFirst() then
-            exit;
-
-        LineNo := LineNo + 10000;
+        if ReqLine.FindFirst()then exit;
+        LineNo:=LineNo + 10000;
         Clear(ReqLine);
         ReqLine.Init();
-        ReqLine."Worksheet Template Name" := ReqWkshName."Worksheet Template Name";
-        ReqLine."Journal Batch Name" := ReqWkshName.Name;
-        ReqLine."Line No." := LineNo;
+        ReqLine."Worksheet Template Name":=ReqWkshName."Worksheet Template Name";
+        ReqLine."Journal Batch Name":=ReqWkshName.Name;
+        ReqLine."Line No.":=LineNo;
         ReqLine.Validate(Type, SalesLine.Type);
-        ReqLine."Location Code" := SalesLine."Location Code";
-        ReqLine."Drop Shipment" := SalesLine."Drop Shipment";
+        ReqLine."Location Code":=SalesLine."Location Code";
+        ReqLine."Drop Shipment":=SalesLine."Drop Shipment";
         ReqLine.Validate("No.", SalesLine."No.");
-        ReqLine."Variant Code" := SalesLine."Variant Code";
+        ReqLine."Variant Code":=SalesLine."Variant Code";
         ReqLine.Validate("Location Code");
-        ReqLine."Bin Code" := SalesLine."Bin Code";
-        ReqLine.Description := SalesLine.Description;
-
+        ReqLine."Bin Code":=SalesLine."Bin Code";
+        ReqLine.Description:=SalesLine.Description;
         // Drop Shipment means replenishment by purchase only
-        if (ReqLine."Replenishment System" <> "Replenishment System"::Purchase) and
-            ReqLine."Drop Shipment"
-        then
-            ReqLine.Validate("Replenishment System", "Replenishment System"::Purchase);
-
+        if(ReqLine."Replenishment System" <> "Replenishment System"::Purchase) and ReqLine."Drop Shipment" then ReqLine.Validate("Replenishment System", "Replenishment System"::Purchase);
         OnInsertReqWkshLineOnBeforeValidateUoM(ReqLine, SalesLine, SpecOrder);
         ReqLine.Validate("Unit of Measure Code", SalesLine."Unit of Measure Code");
         ValidateRequisitionLineQuantity(ReqLine, SalesLine);
-        ReqLine."Sales Order No." := SalesLine."Document No.";
-        ReqLine."Sales Order Line No." := SalesLine."Line No.";
-        IsHandled := false;
+        ReqLine."Sales Order No.":=SalesLine."Document No.";
+        ReqLine."Sales Order Line No.":=SalesLine."Line No.";
+        IsHandled:=false;
         OnInsertReqWkshLineOnBeforeSetSellToCustomerNo(ReqLine, SalesLine, SpecOrder, IsHandled);
-        if not IsHandled then
-            ReqLine."Sell-to Customer No." := SalesLine."Sell-to Customer No.";
+        if not IsHandled then ReqLine."Sell-to Customer No.":=SalesLine."Sell-to Customer No.";
         SalesHeader.Get(1, SalesLine."Document No.");
-        if SpecOrder <> 1 then
-            ReqLine."Ship-to Code" := SalesHeader."Ship-to Code";
-        ReqLine."Item Category Code" := SalesLine."Item Category Code";
-        ReqLine.Nonstock := SalesLine.Nonstock;
-        ReqLine."Action Message" := "Action Message Type"::New;
-        ReqLine."Purchasing Code" := SalesLine."Purchasing Code";
+        if SpecOrder <> 1 then ReqLine."Ship-to Code":=SalesHeader."Ship-to Code";
+        ReqLine."Item Category Code":=SalesLine."Item Category Code";
+        ReqLine.Nonstock:=SalesLine.Nonstock;
+        ReqLine."Action Message":="Action Message Type"::New;
+        ReqLine."Purchasing Code":=SalesLine."Purchasing Code";
         // Backward Scheduling
-        ReqLine."Due Date" := SalesLine."Shipment Date";
-        ReqLine."Ending Date" := 0D;
+        ReqLine."Due Date":=SalesLine."Shipment Date";
+        ReqLine."Ending Date":=0D;
         ReqLine.CalcStartingDate('');
         ReqLine.UpdateDescription();
         ReqLine.UpdateDatetime();
-
         OnBeforeInsertReqWkshLine(ReqLine, SalesLine, SpecOrder);
-
         if ReqLine.Type = ReqLine.Type::" " then begin
             sl.Reset;
             sl.SetRange("Document Type", SalesLine."Document Type");
             sl.SetRange("Document No.", SalesLine."Document No.");
             sl.SetRange("Line No.", 0, SalesLine."Line No.");
             sl.SetRange(Type, sl.Type::Item);
-            if sl.FindLast() then begin
-                if slItem.Get(sl."No.") then begin
+            if sl.FindLast()then begin
+                if slItem.Get(sl."No.")then begin
                     ReqLine.Validate("Vendor No.", slItem."Vendor No.");
                 end;
             end;
-            ReqLine."Accept Action Message" := true;
+            ReqLine."Accept Action Message":=true;
         end;
-
-        ReqLine."Ref. Order Type" := ReqLine."Ref. Order Type"::Purchase;
-
-
-
+        ReqLine."Ref. Order Type":=ReqLine."Ref. Order Type"::Purchase;
         ReqLine.Insert();
         ItemTrackingMgt.CopyItemTracking(SalesLine.RowID1(), ReqLine.RowID1(), true);
         if GetDim = GetDim::"Sales Line" then begin
-            ReqLine."Shortcut Dimension 1 Code" := SalesLine."Shortcut Dimension 1 Code";
-            ReqLine."Shortcut Dimension 2 Code" := SalesLine."Shortcut Dimension 2 Code";
-            ReqLine."Dimension Set ID" := SalesLine."Dimension Set ID";
+            ReqLine."Shortcut Dimension 1 Code":=SalesLine."Shortcut Dimension 1 Code";
+            ReqLine."Shortcut Dimension 2 Code":=SalesLine."Shortcut Dimension 2 Code";
+            ReqLine."Dimension Set ID":=SalesLine."Dimension Set ID";
             ReqLine.Modify();
         end;
-
         OnAfterInsertReqWkshLine(ReqLine, SalesLine);
     end;
-
     local procedure ValidateRequisitionLineQuantity(var RequisitionLine: Record "Requisition Line"; SalesLine: Record "Sales Line")
     var
         IsHandled: Boolean;
     begin
-        IsHandled := false;
+        IsHandled:=false;
         OnBeforeValidateRequisitionLineQuantity(RequisitionLine, SalesLine, SpecOrder, IsHandled);
-        if IsHandled then
-            exit;
-
-        RequisitionLine.Validate(
-          Quantity,
-          Round(
-            SalesLine."Outstanding Quantity" * SalesLine."Qty. per Unit of Measure" / RequisitionLine."Qty. per Unit of Measure",
-            UOMMgt.QtyRndPrecision()));
+        if IsHandled then exit;
+        RequisitionLine.Validate(Quantity, Round(SalesLine."Outstanding Quantity" * SalesLine."Qty. per Unit of Measure" / RequisitionLine."Qty. per Unit of Measure", UOMMgt.QtyRndPrecision()));
     end;
-
     procedure InitializeRequest(NewRetrieveDimensionsFrom: Option)
     begin
-        GetDim := NewRetrieveDimensionsFrom;
+        GetDim:=NewRetrieveDimensionsFrom;
     end;
-
     [IntegrationEvent(false, false)]
     local procedure OnAfterInsertReqWkshLine(var ReqLine: Record "Requisition Line"; SalesLine: Record "Sales Line")
     begin
     end;
-
     [IntegrationEvent(false, false)]
     local procedure OnBeforeInsertReqWkshLine(var ReqLine: Record "Requisition Line"; SalesLine: Record "Sales Line"; SpecOrder: Integer)
     begin
     end;
-
     [IntegrationEvent(false, false)]
     local procedure OnBeforeOnAfterGetRecord(SalesLine: Record "Sales Line"; var IsHandled: Boolean)
     begin
     end;
-
     [IntegrationEvent(false, false)]
     local procedure OnBeforeOnPreReport(var HideDialog: Boolean)
     begin
     end;
-
     [IntegrationEvent(false, false)]
     local procedure OnBeforeValidateRequisitionLineQuantity(var ReqLine: Record "Requisition Line"; SalesLine: Record "Sales Line"; SpecOrder: Integer; var IsHandled: Boolean)
     begin
     end;
-
     [IntegrationEvent(false, false)]
     local procedure OnInsertReqWkshLineOnBeforeValidateUoM(var ReqLine: Record "Requisition Line"; SalesLine: Record "Sales Line"; SpecOrder: Integer)
     begin
     end;
-
     [IntegrationEvent(false, false)]
     local procedure OnInsertReqWkshLineOnBeforeSetSellToCustomerNo(var ReqLine: Record "Requisition Line"; SalesLine: Record "Sales Line"; SpecOrder: Integer; var IsHandled: Boolean)
     begin
     end;
-
     [IntegrationEvent(true, false)]
-    local procedure OnInsertReqWkshLineOnBeforeCode(var ReqLine: Record "Requisition Line"; SalesLine: Record "Sales Line"; SpecOrder: Integer; LineNo: Integer; ReqWkshName: Record "Requisition Wksh. Name"; GetDim: Option Item,"Sales Line"; var IsHandled: Boolean)
+    local procedure OnInsertReqWkshLineOnBeforeCode(var ReqLine: Record "Requisition Line"; SalesLine: Record "Sales Line"; SpecOrder: Integer; LineNo: Integer; ReqWkshName: Record "Requisition Wksh. Name"; GetDim: Option Item, "Sales Line"; var IsHandled: Boolean)
     begin
     end;
 }

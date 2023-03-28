@@ -14,4 +14,3 @@ pageextension 50123 "WhseShipLine" extends "Whse. Shipment Subform"
         }
     }
 }
-

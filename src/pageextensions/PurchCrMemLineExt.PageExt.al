@@ -11,4 +11,3 @@ pageextension 50120 "PurchCrMemLineExt" extends "Purch. Cr. Memo Subform"
         }
     }
 }
-

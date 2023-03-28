@@ -8,7 +8,6 @@ pageextension 50112 "CustListView" extends "Customer List"
             {
                 ApplicationArea = Basic, Suite;
             }
-
             field("Territory Code"; Rec."Territory Code")
             {
                 ApplicationArea = All;
@@ -19,4 +18,3 @@ pageextension 50112 "CustListView" extends "Customer List"
         }
     }
 }
-

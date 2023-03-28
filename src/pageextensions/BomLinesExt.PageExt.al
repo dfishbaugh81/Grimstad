@@ -14,4 +14,3 @@ pageextension 50115 "BomLinesExt" extends "Production BOM Lines"
         }
     }
 }
-

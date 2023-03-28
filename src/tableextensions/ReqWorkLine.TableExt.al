@@ -6,8 +6,7 @@ tableextension 50117 "ReqWorkLine" extends "Requisition Line"
         {
             Caption = 'Vendor Name';
             FieldClass = FlowField;
-            CalcFormula = lookup(Vendor.Name where("No." = field("Vendor No.")));
+            CalcFormula = lookup(Vendor.Name where("No."=field("Vendor No.")));
         }
     }
 }
-

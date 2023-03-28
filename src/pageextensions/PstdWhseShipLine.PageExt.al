@@ -11,4 +11,3 @@ pageextension 50125 "PstdWhseShipLine" extends "Posted Whse. Shipment Subform"
         }
     }
 }
-

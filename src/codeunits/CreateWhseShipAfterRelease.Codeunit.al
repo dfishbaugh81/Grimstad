@@ -1,14 +1,8 @@
-// Welcome to your new AL extension.
-// Remember that object names and IDs should be unique across all extensions.
-// AL snippets start with t*, like tpageext - give them a try and happy coding!
-
-
 codeunit 50101 "CreateWhseShipAfterRelease"
 {
-    var
-        myCu: Codeunit 37043356;
-        myRe: Record "EFT Transaction -CL-";
-    /*CUSTOMER REQUESTED THIS FEATURE BE TURNED OFF 
+    var myCu: Codeunit 37043356;
+    myRe: Record "EFT Transaction -CL-";
+/*CUSTOMER REQUESTED THIS FEATURE BE TURNED OFF 
     
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Release Sales Document", 'OnAfterReleaseSalesDoc', '', false, false)]
     local procedure OnAfterReleaseSalesDoc(SalesHeader: Record "Sales Header")
@@ -38,10 +32,4 @@ codeunit 50101 "CreateWhseShipAfterRelease"
             end;
         end;
     end; */
-
 }
-
-
-
-
-

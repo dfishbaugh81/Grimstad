@@ -8,10 +8,20 @@ pageextension 50145 "FirmPlanProdOrdExt" extends "Firm Planned Prod. Order"
             {
                 ApplicationArea = All;
                 Visible = true;
+                ToolTip = 'Planned Order No.';
+            }
+        }
+        addlast(factboxes)
+        {
+            part(RunTimeByWorkCenter; "Run Time by Work Center")
+            {
+                ApplicationArea = All;
+                Provider = ProdOrderLines;
+                Caption = 'Run Time by Work Center';
+                SubPageLink = "Routing No."=field("Routing No."), "Routing Reference No."=field("Routing Reference No."), Status=field(Status), "Prod. Order No."=field("Prod. Order No.");
             }
         }
     }
-
     actions
     {
         addafter("Plannin&g")
@@ -19,6 +29,8 @@ pageextension 50145 "FirmPlanProdOrdExt" extends "Firm Planned Prod. Order"
             action("Open Lines")
             {
                 ApplicationArea = Basic, Suite;
+                ToolTip = 'Open Lines';
+                Caption = 'Open Lines';
 
                 trigger OnAction()
                 var
@@ -30,4 +42,3 @@ pageextension 50145 "FirmPlanProdOrdExt" extends "Firm Planned Prod. Order"
         }
     }
 }
-

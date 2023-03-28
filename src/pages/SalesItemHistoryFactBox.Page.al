@@ -11,11 +11,11 @@ page 50112 "Sales Item History FactBox"
             repeater(Control1)
             {
                 ShowCaption = false;
+
                 field(InvoiceDate; Rec.InvoiceDate)
                 {
                     ApplicationArea = Basic, Suite;
                     ToolTip = 'Specifies the Invoice Date.';
-
                 }
                 field("Document No."; Rec."Document No.")
                 {
@@ -26,10 +26,8 @@ page 50112 "Sales Item History FactBox"
                     var
                         pstdHead: Record "Sales Invoice Header";
                     begin
-                        if pstdHead.Get(Rec."Document No.") then
-                            GoToPstdDoc(pstdHead);
+                        if pstdHead.Get(Rec."Document No.")then GoToPstdDoc(pstdHead);
                     end;
-
                 }
                 field("Sell-to Customer No."; Rec."Sell-to Customer No.")
                 {
@@ -52,8 +50,7 @@ page 50112 "Sales Item History FactBox"
                     var
                         item: Record Item;
                     begin
-                        if item.Get(Rec."No.") then
-                            ShowDetails(item);
+                        if item.Get(Rec."No.")then ShowDetails(item);
                     end;
                 }
                 field(Quantity; Rec.Quantity)
@@ -78,23 +75,16 @@ page 50112 "Sales Item History FactBox"
                     Visible = false;
                 }
             }
-
-
         }
     }
-
     actions
     {
     }
-
     local procedure ShowDetails(var item: Record Item)
     begin
         PAGE.Run(PAGE::"Item Card", item);
     end;
-
     local procedure GoToPstdDoc(var pstdHead: Record "Sales Invoice Header")
     begin
-        PAGE.Run(PAGE::"Posted Sales Invoice", pstdHead)
-    end;
+        PAGE.Run(PAGE::"Posted Sales Invoice", pstdHead)end;
 }
-

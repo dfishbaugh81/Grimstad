@@ -13,7 +13,6 @@ pageextension 50110 "RoutListView" extends "Routing List"
             }
         }
     }
-
     actions
     {
         addafter("Where-used")
@@ -27,17 +26,13 @@ pageextension 50110 "RoutListView" extends "Routing List"
                     RoutHead: Record "Routing Header";
                 begin
                     CurrPage.SetSelectionFilter(RoutHead);
-                    if RoutHead.FindFirst() then
-                        repeat
-                            RoutHead.Validate(Status, RoutHead.Status::"Under Development");
+                    if RoutHead.FindFirst()then repeat RoutHead.Validate(Status, RoutHead.Status::"Under Development");
                             RoutHead.Modify(true);
                         until RoutHead.Next() = 0;
                 end;
             }
-
             action("Status update to Cert")
             {
-
                 ApplicationArea = Basic, Suite;
 
                 trigger OnAction()
@@ -45,14 +40,11 @@ pageextension 50110 "RoutListView" extends "Routing List"
                     RoutHead: Record "Routing Header";
                 begin
                     CurrPage.SetSelectionFilter(RoutHead);
-                    if RoutHead.FindFirst() then
-                        repeat
-                            RoutHead.Validate(Status, RoutHead.Status::"Certified");
+                    if RoutHead.FindFirst()then repeat RoutHead.Validate(Status, RoutHead.Status::"Certified");
                             RoutHead.Modify(true);
                         until RoutHead.Next() = 0;
                 end;
             }
-
             action("Delete Lines")
             {
                 ApplicationArea = Basic, Suite;
@@ -63,9 +55,7 @@ pageextension 50110 "RoutListView" extends "Routing List"
                     RoutLine: Record "Routing Line";
                 begin
                     CurrPage.SetSelectionFilter(RoutHead);
-                    if RoutHead.FindFirst() then
-                        repeat
-                            RoutLine.Reset;
+                    if RoutHead.FindFirst()then repeat RoutLine.Reset;
                             RoutLine.SetRange("Routing No.", RoutHead."No.");
                             RoutLine.DeleteAll();
                         until RoutHead.Next() = 0;
@@ -74,4 +64,3 @@ pageextension 50110 "RoutListView" extends "Routing List"
         }
     }
 }
-

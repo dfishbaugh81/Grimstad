@@ -11,4 +11,3 @@ pageextension 50124 "WhseShipLines" extends "Whse. Shipment Lines"
         }
     }
 }
-

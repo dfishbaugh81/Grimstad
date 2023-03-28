@@ -4,10 +4,10 @@ pageextension 50149 "BinContentsExt" extends "Bin Contents"
     {
         addafter("Warehouse Entries")
         {
-
             action("Nav-to-Edit")
             {
                 ApplicationArea = All;
+
                 trigger OnAction()
                 var
                     WarEntEd: Page "Warehouse Entries - Editable";
@@ -17,9 +17,7 @@ pageextension 50149 "BinContentsExt" extends "Bin Contents"
                     test1: Record "DSHIP Package Line Buffer";
                     TEST3: Record "DSHIP Label Data";
                 begin
-                    if UserSetup.Get(UserId()) then
-                        if UserSetup."User ID" = 'BCADMIN' then
-                            WarEntEd.Run();
+                    if UserSetup.Get(UserId())then if UserSetup."User ID" = 'BCADMIN' then WarEntEd.Run();
                 end;
             }
         }

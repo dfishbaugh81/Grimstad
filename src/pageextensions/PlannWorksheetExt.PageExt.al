@@ -17,12 +17,9 @@ pageextension 50135 "PlannWorksheetExt" extends "Planning Worksheet"
                 Visible = true;
             }
         }
-
     }
-
     actions
     {
-
         addbefore(Action109)
         {
             action("Toggle CAM")
@@ -36,21 +33,17 @@ pageextension 50135 "PlannWorksheetExt" extends "Planning Worksheet"
                     ReqLine: Record "Requisition Line";
                     UnselectedCount: Integer;
                 begin
-                    UnselectedCount := 0;
+                    UnselectedCount:=0;
                     CurrPage.SetSelectionFilter(ReqLine);
-                    if ReqLine.FindFirst() then
-                        repeat
-                            if not ReqLine."Accept Action Message" then begin
-                                UnselectedCount := UnselectedCount + 1;
+                    if ReqLine.FindFirst()then repeat if not ReqLine."Accept Action Message" then begin
+                                UnselectedCount:=UnselectedCount + 1;
                                 ReqLine.Validate("Accept Action Message", true);
                                 ReqLine.Modify(true);
                             end;
                         until ReqLine.Next() = 0;
-                    if UnselectedCount = 0 then
-                        ReqLine.ModifyAll("Accept Action Message", false, true);
+                    if UnselectedCount = 0 then ReqLine.ModifyAll("Accept Action Message", false, true);
                 end;
             }
         }
     }
 }
-

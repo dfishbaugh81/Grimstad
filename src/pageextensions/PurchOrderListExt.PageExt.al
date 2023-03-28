@@ -16,22 +16,14 @@ pageextension 50142 "PurchOrderListExt" extends "Purchase Order List"
                     purchHeader: Record "Purchase Header";
                 begin
                     CurrPage.SetSelectionFilter(purchHeader);
-                    if purchHeader.findfirst() then
-                        repeat
-                            purchLine.Reset;
+                    if purchHeader.findfirst()then repeat purchLine.Reset;
                             purchLine.SetRange("Document Type", purchHeader."Document Type");
                             purchLine.SetRange("Document No.", purchHeader."No.");
-                            if purchLine.FindFirst() then
-                                repeat
-                                    purchLine.Delete(true);
+                            if purchLine.FindFirst()then repeat purchLine.Delete(true);
                                 until purchLine.Next() = 0;
                             purchHeader.Delete(true);
-                        until purchHeader.Next() = 0
-
-                end;
-
+                        until purchHeader.Next() = 0 end;
             }
         }
     }
 }
-

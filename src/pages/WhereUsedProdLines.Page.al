@@ -17,6 +17,7 @@ page 50111 "Where-Used Prod Lines"
             repeater(Control1)
             {
                 ShowCaption = false;
+
                 field("Production BOM No."; Rec."Production BOM No.")
                 {
                     ApplicationArea = All;
@@ -132,7 +133,6 @@ page 50111 "Where-Used Prod Lines"
             }
         }
     }
-
     actions
     {
         area(processing)
@@ -141,6 +141,7 @@ page 50111 "Where-Used Prod Lines"
             {
                 Caption = '&Component';
                 Image = Components;
+
                 action("Co&mments")
                 {
                     ApplicationArea = All;
@@ -168,24 +169,18 @@ page 50111 "Where-Used Prod Lines"
             }
         }
     }
-
-    trigger OnDeleteRecord(): Boolean
-    var
+    trigger OnDeleteRecord(): Boolean var
         todoMgt: Codeunit toDoMgmt;
         prodBom: Record "Production BOM Header";
     begin
         prodBom.Reset;
         prodBom.SetRange("No.", Rec."Production BOM No.");
-        if prodBom.FindFirst() then
-            if not todoMgt.RemoveLineFromCertProdBom(Rec."Production BOM No.", Rec."Version Code", Rec."Line No.") then
-                error('Something went wrong');
+        if prodBom.FindFirst()then if not todoMgt.RemoveLineFromCertProdBom(Rec."Production BOM No.", Rec."Version Code", Rec."Line No.")then error('Something went wrong');
     end;
-
     trigger OnNewRecord(BelowxRec: Boolean)
     begin
-        Rec.Type := xRec.Type;
+        Rec.Type:=xRec.Type;
     end;
-
     local procedure ShowComment()
     var
         ProdOrderCompComment: Record "Production BOM Comment Line";
@@ -193,34 +188,25 @@ page 50111 "Where-Used Prod Lines"
         ProdOrderCompComment.SetRange("Production BOM No.", Rec."Production BOM No.");
         ProdOrderCompComment.SetRange("BOM Line No.", Rec."Line No.");
         ProdOrderCompComment.SetRange("Version Code", Rec."Version Code");
-
         PAGE.Run(PAGE::"Prod. Order BOM Cmt. Sheet", ProdOrderCompComment);
     end;
-
     local procedure ShowWhereUsed()
     var
         Item: Record Item;
         ProdBomHeader: Record "Production BOM Header";
         ProdBOMWhereUsed: Page "Prod. BOM Where-Used";
     begin
-        if Rec.Type = Rec.Type::" " then
-            exit;
-
-        case Rec.Type of
-            Rec.Type::Item:
-                begin
-                    Item.Get(Rec."No.");
-                    ProdBOMWhereUsed.SetItem(Item, WorkDate);
-                end;
-            Rec.Type::"Production BOM":
-                begin
-                    ProdBomHeader.Get(Rec."No.");
-                    ProdBOMWhereUsed.SetProdBOM(ProdBomHeader, WorkDate);
-                end;
+        if Rec.Type = Rec.Type::" " then exit;
+        case Rec.Type of Rec.Type::Item: begin
+            Item.Get(Rec."No.");
+            ProdBOMWhereUsed.SetItem(Item, WorkDate);
+        end;
+        Rec.Type::"Production BOM": begin
+            ProdBomHeader.Get(Rec."No.");
+            ProdBOMWhereUsed.SetProdBOM(ProdBomHeader, WorkDate);
+        end;
         end;
         ProdBOMWhereUsed.RunModal();
         Clear(ProdBOMWhereUsed);
     end;
-
 }
-

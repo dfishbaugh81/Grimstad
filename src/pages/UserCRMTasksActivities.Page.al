@@ -11,8 +11,8 @@ page 50110 "User CRM Tasks Activities"
         {
             cuegroup("My CRM Tasks")
             {
-
                 Caption = 'My CRM Tasks';
+
                 field("ToDoTaskManagement.GetTotalRecCount(Rec)"; ToDoTaskManagement.GetTotalRecCount(Rec, UserId))
                 {
                     ApplicationArea = Basic, Suite;
@@ -29,19 +29,14 @@ page 50110 "User CRM Tasks Activities"
                         Rec.SetRange("Salesperson Code", UserSetup."Salespers./Purch. Code");
                         TaskList.SetTableView(Rec);
                         TaskList.RunModal();
-
                     end;
                 }
             }
         }
     }
-
     actions
     {
     }
-
-    var
-        UserTaskManagement: Codeunit "User Task Management";
-        ToDoTaskManagement: Codeunit toDoMgmt;
+    var UserTaskManagement: Codeunit "User Task Management";
+    ToDoTaskManagement: Codeunit toDoMgmt;
 }
-

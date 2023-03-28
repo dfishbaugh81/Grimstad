@@ -11,4 +11,3 @@ pageextension 50118 "SalesCrMemLineExt" extends "Sales Cr. Memo Subform"
         }
     }
 }
-

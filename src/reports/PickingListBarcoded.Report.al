@@ -8,19 +8,18 @@ report 50109 "Picking List - Barcoded"
     {
         dataitem("Warehouse Activity Header"; "Warehouse Activity Header")
         {
-            DataItemTableView = SORTING(Type, "No.") WHERE(Type = FILTER(Pick | "Invt. Pick"));
+            DataItemTableView = SORTING(Type, "No.")WHERE(Type=FILTER(Pick|"Invt. Pick"));
             RequestFilterFields = "No.", "No. Printed";
+
             column(No_WhseActivHeader; "No.")
             {
             }
-
-
             dataitem("Integer"; "Integer")
             {
-                DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                DataItemTableView = SORTING(Number)WHERE(Number=CONST(1));
+
                 column(myMediaBarcode; tbBarcode.Image)
                 {
-
                 }
                 column(CompanyName; COMPANYPROPERTY.DisplayName())
                 {
@@ -133,18 +132,15 @@ report 50109 "Picking List - Barcoded"
                 column(myShipBarCode; shipBarcode.Image)
                 {
                 }
-
                 column(WhseDocumentNo_WhseActLine; WhseActLine."Whse. Document No.")
                 {
                 }
-
                 column(SalesPerson_WhseActLine; salesPerson)
                 {
                 }
-
                 dataitem("Warehouse Activity Line"; "Warehouse Activity Line")
                 {
-                    DataItemLink = "Activity Type" = FIELD(Type), "No." = FIELD("No.");
+                    DataItemLink = "Activity Type"=FIELD(Type), "No."=FIELD("No.");
                     DataItemLinkReference = "Warehouse Activity Header";
                     DataItemTableView = SORTING("Activity Type", "No.", "Sorting Sequence No.");
 
@@ -152,69 +148,62 @@ report 50109 "Picking List - Barcoded"
                     var
                         salesHeader: Record "Sales Header";
                     begin
-                        if SumUpLines and
-                           ("Warehouse Activity Header"."Sorting Method" <>
-                            "Warehouse Activity Header"."Sorting Method"::Document)
-                        then begin
+                        if SumUpLines and ("Warehouse Activity Header"."Sorting Method" <> "Warehouse Activity Header"."Sorting Method"::Document)then begin
                             if TempWhseActivLine."No." = '' then begin
-                                TempWhseActivLine := "Warehouse Activity Line";
+                                TempWhseActivLine:="Warehouse Activity Line";
                                 TempWhseActivLine.Insert();
                                 Mark(true);
-                            end else begin
+                            end
+                            else
+                            begin
                                 TempWhseActivLine.SetSumLinesFilters("Warehouse Activity Line");
-                                if "Warehouse Activity Header"."Sorting Method" =
-                                   "Warehouse Activity Header"."Sorting Method"::"Ship-To"
-                                then begin
+                                if "Warehouse Activity Header"."Sorting Method" = "Warehouse Activity Header"."Sorting Method"::"Ship-To" then begin
                                     TempWhseActivLine.SetRange("Destination Type", "Destination Type");
-                                    TempWhseActivLine.SetRange("Destination No.", "Destination No.")
-                                end;
-                                if TempWhseActivLine.FindFirst() then begin
-                                    TempWhseActivLine."Qty. (Base)" := TempWhseActivLine."Qty. (Base)" + "Qty. (Base)";
-                                    TempWhseActivLine."Qty. to Handle" := TempWhseActivLine."Qty. to Handle" + "Qty. to Handle";
-                                    TempWhseActivLine."Source No." := '';
-                                    if "Warehouse Activity Header"."Sorting Method" <>
-                                       "Warehouse Activity Header"."Sorting Method"::"Ship-To"
-                                    then begin
-                                        TempWhseActivLine."Destination Type" := TempWhseActivLine."Destination Type"::" ";
-                                        TempWhseActivLine."Destination No." := '';
+                                    TempWhseActivLine.SetRange("Destination No.", "Destination No.")end;
+                                if TempWhseActivLine.FindFirst()then begin
+                                    TempWhseActivLine."Qty. (Base)":=TempWhseActivLine."Qty. (Base)" + "Qty. (Base)";
+                                    TempWhseActivLine."Qty. to Handle":=TempWhseActivLine."Qty. to Handle" + "Qty. to Handle";
+                                    TempWhseActivLine."Source No.":='';
+                                    if "Warehouse Activity Header"."Sorting Method" <> "Warehouse Activity Header"."Sorting Method"::"Ship-To" then begin
+                                        TempWhseActivLine."Destination Type":=TempWhseActivLine."Destination Type"::" ";
+                                        TempWhseActivLine."Destination No.":='';
                                     end;
                                     TempWhseActivLine.Modify();
-                                end else begin
-                                    TempWhseActivLine := "Warehouse Activity Line";
+                                end
+                                else
+                                begin
+                                    TempWhseActivLine:="Warehouse Activity Line";
                                     TempWhseActivLine.Insert();
                                     Mark(true);
                                 end;
                             end;
-                        end else
+                        end
+                        else
                             Mark(true);
-
-                        if "Warehouse Activity Line"."Whse. Document No." = '' then
-                            lcuBarcodeManagement.Generate128Barcode(shipBarcode, "Warehouse Activity Line"."Source No.", 128, 32)
+                        if "Warehouse Activity Line"."Whse. Document No." = '' then lcuBarcodeManagement.Generate128Barcode(shipBarcode, "Warehouse Activity Line"."Source No.", 128, 32)
                         else
                             lcuBarcodeManagement.Generate128Barcode(shipBarcode, "Warehouse Activity Line"."Whse. Document No.", 128, 32);
                         lcuBarcodeManagement.Run();
                     end;
-
                     trigger OnPostDataItem()
                     begin
                         MarkedOnly(true);
                     end;
-
                     trigger OnPreDataItem()
                     begin
                         TempWhseActivLine.SetRange("Activity Type", "Warehouse Activity Header".Type);
                         TempWhseActivLine.SetRange("No.", "Warehouse Activity Header"."No.");
                         TempWhseActivLine.DeleteAll();
-                        if BreakbulkFilter then
-                            TempWhseActivLine.SetRange("Original Breakbulk", false);
+                        if BreakbulkFilter then TempWhseActivLine.SetRange("Original Breakbulk", false);
                         Clear(TempWhseActivLine);
                     end;
                 }
                 dataitem(WhseActLine; "Warehouse Activity Line")
                 {
-                    DataItemLink = "Activity Type" = FIELD(Type), "No." = FIELD("No.");
+                    DataItemLink = "Activity Type"=FIELD(Type), "No."=FIELD("No.");
                     DataItemLinkReference = "Warehouse Activity Header";
                     DataItemTableView = SORTING("Activity Type", "No.", "Sorting Sequence No.");
+
                     column(SourceNo_WhseActLine; "Source No.")
                     {
                     }
@@ -295,9 +284,10 @@ report 50109 "Picking List - Barcoded"
                     }
                     dataitem(WhseActLine2; "Warehouse Activity Line")
                     {
-                        DataItemLink = "Activity Type" = FIELD("Activity Type"), "No." = FIELD("No."), "Bin Code" = FIELD("Bin Code"), "Item No." = FIELD("Item No."), "Action Type" = FIELD("Action Type"), "Variant Code" = FIELD("Variant Code"), "Unit of Measure Code" = FIELD("Unit of Measure Code"), "Due Date" = FIELD("Due Date");
+                        DataItemLink = "Activity Type"=FIELD("Activity Type"), "No."=FIELD("No."), "Bin Code"=FIELD("Bin Code"), "Item No."=FIELD("Item No."), "Action Type"=FIELD("Action Type"), "Variant Code"=FIELD("Variant Code"), "Unit of Measure Code"=FIELD("Unit of Measure Code"), "Due Date"=FIELD("Due Date");
                         DataItemLinkReference = WhseActLine;
                         DataItemTableView = SORTING("Activity Type", "No.", "Bin Code", "Breakbulk No.", "Action Type");
+
                         column(LotNo_WhseActLine2; "Lot No.")
                         {
                         }
@@ -313,11 +303,7 @@ report 50109 "Picking List - Barcoded"
                         column(LineNo_WhseActLine2; "Line No.")
                         {
                         }
-
-
-
                     }
-
                     trigger OnAfterGetRecord()
                     var
                         salesHeader: Record "Sales Header";
@@ -328,75 +314,54 @@ report 50109 "Picking List - Barcoded"
                         lcuBarcodeManagement.Run();
                         if SumUpLines then begin
                             TempWhseActivLine.Get("Activity Type", "No.", "Line No.");
-                            "Qty. (Base)" := TempWhseActivLine."Qty. (Base)";
-                            "Qty. to Handle" := TempWhseActivLine."Qty. to Handle";
+                            "Qty. (Base)":=TempWhseActivLine."Qty. (Base)";
+                            "Qty. to Handle":=TempWhseActivLine."Qty. to Handle";
                         end;
-
                         clear(salesCommLine);
                         salesCommentLine.Reset;
                         salesCommentLine.SetRange("Document Type", salesCommentLine."Document Type"::Order);
                         salesCommentLine.SetRange("No.", WhseActLine."Source No.");
                         salesCommentLine.SetRange("Document Line No.", WhseActLine."Source Line No.");
                         salesCommentLine.SetRange("Print On Pick Ticket", true);
-                        if salesCommentLine.FindFirst() then
-                            repeat
-                                salesCommLine := salesCommLine + ' ' + salesCommentLine.Comment;
+                        if salesCommentLine.FindFirst()then repeat salesCommLine:=salesCommLine + ' ' + salesCommentLine.Comment;
                             until salesCommentLine.Next = 0;
-
                         clear(salesCommHeader);
                         salesCommentHeader.Reset;
                         salesCommentHeader.SetRange("Document Type", salesCommentHeader."Document Type"::Order);
                         salesCommentHeader.SetRange("No.", WhseActLine."Source No.");
                         salesCommentHeader.SetRange("Document Line No.", 0);
                         salesCommentHeader.SetRange("Print On Pick Ticket", true);
-                        if salesCommentHeader.FindFirst() then
-                            repeat
-                                salesCommHeader := salesCommHeader + ' ' + salesCommentHeader.Comment;
+                        if salesCommentHeader.FindFirst()then repeat salesCommHeader:=salesCommHeader + ' ' + salesCommentHeader.Comment;
                             until salesCommentHeader.Next = 0;
-
                         salesHeader.Reset;
                         salesHeader.SetRange("Document Type", salesHeader."Document Type"::Order);
                         salesHeader.SetRange("No.", "Warehouse Activity Line"."Source No.");
-                        if salesHeader.FindFirst() then
-                            salesPerson := salesHeader."Salesperson Code"
+                        if salesHeader.FindFirst()then salesPerson:=salesHeader."Salesperson Code"
                         else
-                            salesPerson := '';
+                            salesPerson:='';
                     end;
-
                     trigger OnPreDataItem()
                     begin
                         Copy("Warehouse Activity Line");
-                        Counter := Count;
-                        if Counter = 0 then
-                            CurrReport.Break();
-
-                        if BreakbulkFilter then
-                            SetRange("Original Breakbulk", false);
+                        Counter:=Count;
+                        if Counter = 0 then CurrReport.Break();
+                        if BreakbulkFilter then SetRange("Original Breakbulk", false);
                     end;
                 }
-
             }
-
             trigger OnAfterGetRecord()
             begin
                 lcuBarcodeManagement.Generate128Barcode(tbBarcode, "Warehouse Activity Header"."No.", 128, 32);
                 lcuBarcodeManagement.Run();
-
                 GetLocation("Location Code");
-                InvtPick := Type = Type::"Invt. Pick";
-                if InvtPick then
-                    BreakbulkFilter := false
+                InvtPick:=Type = Type::"Invt. Pick";
+                if InvtPick then BreakbulkFilter:=false
                 else
-                    BreakbulkFilter := "Breakbulk Filter";
-
-
-
-                if not IsReportInPreviewMode() then
-                    CODEUNIT.Run(CODEUNIT::"Whse.-Printed", "Warehouse Activity Header");
+                    BreakbulkFilter:="Breakbulk Filter";
+                if not IsReportInPreviewMode()then CODEUNIT.Run(CODEUNIT::"Whse.-Printed", "Warehouse Activity Header");
             end;
         }
     }
-
     requestpage
     {
         SaveValues = true;
@@ -408,6 +373,7 @@ report 50109 "Picking List - Barcoded"
                 group(Options)
                 {
                     Caption = 'Options';
+
                     field(Breakbulk; BreakbulkFilter)
                     {
                         ApplicationArea = Warehouse;
@@ -431,93 +397,71 @@ report 50109 "Picking List - Barcoded"
                 }
             }
         }
-
         actions
         {
         }
-
         trigger OnInit()
         begin
-            SumUpLinesEditable := true;
-            BreakbulkEditable := true;
+            SumUpLinesEditable:=true;
+            BreakbulkEditable:=true;
         end;
-
         trigger OnOpenPage()
         begin
             if HideOptions then begin
-                BreakbulkEditable := false;
-                SumUpLinesEditable := false;
+                BreakbulkEditable:=false;
+                SumUpLinesEditable:=false;
             end;
         end;
     }
-
     labels
     {
     }
-
     trigger OnPreReport()
     begin
-        PickFilter := "Warehouse Activity Header".GetFilters();
+        PickFilter:="Warehouse Activity Header".GetFilters();
     end;
-
-    var
-        Location: Record Location;
-        TempWhseActivLine: Record "Warehouse Activity Line" temporary;
-        PickFilter: Text;
-        InvtPick: Boolean;
-        Counter: Integer;
-        CurrReportPageNoCaptionLbl: Label 'Page';
-        PickingListCaptionLbl: Label 'Picking List';
-        WhseActLineDueDateCaptionLbl: Label 'Due Date';
-        QtyHandledCaptionLbl: Label 'Qty. Handled';
-        EmptyStringCaptionLbl: Label '____________';
-        lcuBarcodeManagement: Codeunit "IWX Library - Barcode Gen";
-        WhseActsLine: Record "Warehouse Activity Line";
-        tbBarcode: Record "IWX Barcode" temporary;
-        shipBarcode: Record "IWX Barcode" temporary;
-        shipRecBarcode: Record "IWX Barcode" temporary;
-        salesPerson: Code[20];
-        salesCommLine: Text;
-        salesCommHeader: Text;
-
-
-
-    protected var
-        BreakbulkFilter: Boolean;
-        HideOptions: Boolean;
-        ShowLotSN: Boolean;
-        SumUpLines: Boolean;
-        [InDataSet]
-        BreakbulkEditable: Boolean;
-        [InDataSet]
-        SumUpLinesEditable: Boolean;
-
+    var Location: Record Location;
+    TempWhseActivLine: Record "Warehouse Activity Line" temporary;
+    PickFilter: Text;
+    InvtPick: Boolean;
+    Counter: Integer;
+    CurrReportPageNoCaptionLbl: Label 'Page';
+    PickingListCaptionLbl: Label 'Picking List';
+    WhseActLineDueDateCaptionLbl: Label 'Due Date';
+    QtyHandledCaptionLbl: Label 'Qty. Handled';
+    EmptyStringCaptionLbl: Label '____________';
+    lcuBarcodeManagement: Codeunit "IWX Library - Barcode Gen";
+    WhseActsLine: Record "Warehouse Activity Line";
+    tbBarcode: Record "IWX Barcode" temporary;
+    shipBarcode: Record "IWX Barcode" temporary;
+    shipRecBarcode: Record "IWX Barcode" temporary;
+    salesPerson: Code[20];
+    salesCommLine: Text;
+    salesCommHeader: Text;
+    protected var BreakbulkFilter: Boolean;
+    HideOptions: Boolean;
+    ShowLotSN: Boolean;
+    SumUpLines: Boolean;
+    [InDataSet]
+    BreakbulkEditable: Boolean;
+    [InDataSet]
+    SumUpLinesEditable: Boolean;
     local procedure GetLocation(LocationCode: Code[10])
     begin
-        if LocationCode = '' then
-            Location.Init()
-        else
-            if Location.Code <> LocationCode then
-                Location.Get(LocationCode);
+        if LocationCode = '' then Location.Init()
+        else if Location.Code <> LocationCode then Location.Get(LocationCode);
     end;
-
-    local procedure IsReportInPreviewMode(): Boolean
-    var
+    local procedure IsReportInPreviewMode(): Boolean var
         MailManagement: Codeunit "Mail Management";
     begin
         exit(CurrReport.Preview or MailManagement.IsHandlingGetEmailBody());
     end;
-
     procedure SetBreakbulkFilter(BreakbulkFilter2: Boolean)
     begin
-        BreakbulkFilter := BreakbulkFilter2;
+        BreakbulkFilter:=BreakbulkFilter2;
     end;
-
     procedure SetInventory(SetHideOptions: Boolean)
     begin
-        HideOptions := SetHideOptions;
+        HideOptions:=SetHideOptions;
     end;
-
-
 }
-

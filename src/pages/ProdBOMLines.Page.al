@@ -11,6 +11,7 @@ page 50113 "Prod. BOM Lines"
             repeater(Control1)
             {
                 ShowCaption = false;
+
                 field(Type; Rec.Type)
                 {
                     ApplicationArea = All;
@@ -130,4 +131,3 @@ page 50113 "Prod. BOM Lines"
         }
     }
 }
-

@@ -1,8 +1,18 @@
-pageextension 50140 "purchOrdersExt" extends "Purchase Lines"
+pageextension 50156 "PurchaseLines" extends "Purchase Lines"
 {
+    layout
+    {
+        addbefore("Expected Receipt Date")
+        {
+            field("Order Date"; Rec."Order Date")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Order Date';
+            }
+        }
+    }
     actions
     {
-
         addbefore("Show Document")
         {
             action("Validate Missing Items")
@@ -19,9 +29,7 @@ pageextension 50140 "purchOrdersExt" extends "Purchase Lines"
                     qtyValue: Decimal;
                 begin
                     CurrPage.SetSelectionFilter(purchLine);
-                    if purchLine.FindFirst() then
-                        repeat
-                            purchLine.Validate("No.", purchLine."No.");
+                    if purchLine.FindFirst()then repeat purchLine.Validate("No.", purchLine."No.");
                             purchLine.Modify(true);
                         until purchLine.Next() = 0;
                 end;
@@ -29,4 +37,3 @@ pageextension 50140 "purchOrdersExt" extends "Purchase Lines"
         }
     }
 }
-

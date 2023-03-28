@@ -2,19 +2,28 @@ pageextension 50141 "firmPlanProdOrdersExt" extends "Firm Planned Prod. Orders"
 {
     layout
     {
+        addbefore("Due Date")
+        {
+            field("IWX Sched. Original Due Date"; Rec."IWX Sched. Original Due Date")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Original Due Date';
+            }
+        }
         addafter("Routing No.")
         {
             field("Planned Order No."; Rec."Planned Order No.")
             {
                 ApplicationArea = All;
                 Caption = 'Orig Prod No.';
+                ToolTip = 'Orig Prod No.';
                 Visible = true;
             }
-
             field("Description 2"; Rec."Description 2")
             {
                 ApplicationArea = All;
                 Caption = 'Description';
+                ToolTip = 'Description';
                 Visible = true;
             }
             field("Production BOM"; Rec."Production BOM")
@@ -29,6 +38,7 @@ pageextension 50141 "firmPlanProdOrdersExt" extends "Firm Planned Prod. Orders"
             {
                 ApplicationArea = All;
                 Caption = 'Created';
+                ToolTip = 'Created';
                 Visible = true;
                 Editable = false;
             }
@@ -52,7 +62,6 @@ pageextension 50141 "firmPlanProdOrdersExt" extends "Firm Planned Prod. Orders"
                     prodOrder.DeleteAll();
                 end;
             }
-
             action("Refresh Production Orders")
             {
                 ApplicationArea = All;
@@ -71,7 +80,6 @@ pageextension 50141 "firmPlanProdOrdersExt" extends "Firm Planned Prod. Orders"
                     REPORT.RunModal(REPORT::"Refresh Production Order", false, true, ProdOrderToRefresh);
                 end;
             }
-
             action("Release All")
             {
                 ApplicationArea = All;
@@ -85,14 +93,11 @@ pageextension 50141 "firmPlanProdOrdersExt" extends "Firm Planned Prod. Orders"
                     prodMan: Codeunit "Prod. Order Status Management";
                 begin
                     CurrPage.SetSelectionFilter(prodOrder);
-                    if prodOrder.FindFirst() then
-                        repeat
-                            prodMan.ChangeProdOrderStatus(prodOrder, Rec.Status::Released, WorkDate(), false);
+                    if prodOrder.FindFirst()then repeat prodMan.ChangeProdOrderStatus(prodOrder, Rec.Status::Released, WorkDate(), false);
                             Commit;
                         until prodOrder.Next() = 0;
                 end;
             }
-
             action("Release All & Pick")
             {
                 ApplicationArea = All;
@@ -106,19 +111,15 @@ pageextension 50141 "firmPlanProdOrdersExt" extends "Firm Planned Prod. Orders"
                     prodMan: Codeunit "Prod. Order Status Management";
                 begin
                     CurrPage.SetSelectionFilter(prodOrder);
-                    if prodOrder.FindFirst() then
-                        repeat
-                            prodMan.ChangeProdOrderStatus(prodOrder, Rec.Status::Released, WorkDate(), false);
+                    if prodOrder.FindFirst()then repeat prodMan.ChangeProdOrderStatus(prodOrder, Rec.Status::Released, WorkDate(), false);
                             Commit;
                             relProdOrd.Reset;
                             relProdOrd.SetRange("Firm Planned Order No.", prodOrder."No.");
                             relProdOrd.SetHideValidationDialog(true);
-                            if relProdOrd.FindFirst() then
-                                relProdOrd.CreatePick(UserId, 0, false, false, false);
+                            if relProdOrd.FindFirst()then relProdOrd.CreatePick(UserId, 0, false, false, false);
                         until prodOrder.Next() = 0;
                 end;
             }
-
             action("Production &BOM")
             {
                 ApplicationArea = All;
@@ -132,17 +133,12 @@ pageextension 50141 "firmPlanProdOrdersExt" extends "Firm Planned Prod. Orders"
                     prodBomHeader: Record "Production BOM Header";
                     item: Record Item;
                 begin
-
-                    if item.Get(Rec."Source No.") then
-                        if prodBomHeader.Get(item."Production BOM No.") then begin
+                    if item.Get(Rec."Source No.")then if prodBomHeader.Get(item."Production BOM No.")then begin
                             prodBom.SetRecord(prodBomHeader);
                             prodBom.RunModal();
                         end;
-
-
                 end;
             }
         }
     }
 }
-

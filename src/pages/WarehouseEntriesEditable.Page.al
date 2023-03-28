@@ -7,7 +7,7 @@ page 50115 "Warehouse Entries - Editable"
     ModifyAllowed = true;
     PageType = List;
     SourceTable = "Warehouse Entry";
-    Permissions = tabledata "Warehouse Entry" = RIMD;
+    Permissions = tabledata "Warehouse Entry"=RIMD;
 
     layout
     {
@@ -16,6 +16,7 @@ page 50115 "Warehouse Entries - Editable"
             repeater(Control1)
             {
                 ShowCaption = false;
+
                 field("Entry Type"; Rec."Entry Type")
                 {
                     ApplicationArea = All;
@@ -51,7 +52,6 @@ page 50115 "Warehouse Entries - Editable"
                     ToolTip = 'Specifies the lot number assigned to the warehouse entry.';
                     Visible = true;
                 }
-
                 field("Expiration Date"; Rec."Expiration Date")
                 {
                     ApplicationArea = All;
@@ -216,15 +216,11 @@ page 50115 "Warehouse Entries - Editable"
             }
         }
     }
-
     actions
     {
     }
-
     trigger OnOpenPage()
     begin
-
-        //SetPackageTrackingVisibility();
+    //SetPackageTrackingVisibility();
     end;
-
 }

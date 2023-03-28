@@ -10,57 +10,55 @@ report 50113 "Sales Return Auth."
     {
         dataitem("Sales Header"; "Sales Header")
         {
-            DataItemTableView = SORTING("Document Type", "No.") WHERE("Document Type" = CONST("Return Order"));
+            DataItemTableView = SORTING("Document Type", "No.")WHERE("Document Type"=CONST("Return Order"));
             PrintOnlyIfDetail = true;
             RequestFilterFields = "No.", "Sell-to Customer No.", "Bill-to Customer No.", "Ship-to Code", "No. Printed";
             RequestFilterHeading = 'Return Order';
+
             column(Sales_Header_Document_Type; "Document Type")
             {
             }
             column(Sales_Header_No_; "No.")
             {
             }
-
             dataitem("Sales Line"; "Sales Line")
             {
-                DataItemLink = "Document No." = FIELD("No.");
-                DataItemTableView = SORTING("Document Type", "Document No.", "Line No.") WHERE("Document Type" = CONST("Return Order"));
+                DataItemLink = "Document No."=FIELD("No.");
+                DataItemTableView = SORTING("Document Type", "Document No.", "Line No.")WHERE("Document Type"=CONST("Return Order"));
+
                 dataitem(SalesLineComments; "Sales Comment Line")
                 {
-                    DataItemLink = "No." = FIELD("Document No."), "Document Line No." = FIELD("Line No.");
-                    DataItemTableView = SORTING("Document Type", "No.", "Document Line No.", "Line No.") WHERE("Document Type" = CONST("Return Order"), "Print On Return Authorization" = CONST(true));
+                    DataItemLink = "No."=FIELD("Document No."), "Document Line No."=FIELD("Line No.");
+                    DataItemTableView = SORTING("Document Type", "No.", "Document Line No.", "Line No.")WHERE("Document Type"=CONST("Return Order"), "Print On Return Authorization"=CONST(true));
 
                     trigger OnAfterGetRecord()
                     begin
                         TempSalesLine.Init();
-                        TempSalesLine."Document Type" := "Sales Header"."Document Type";
-                        TempSalesLine."Document No." := "Sales Header"."No.";
-                        TempSalesLine."Line No." := HighestLineNo + 10;
-                        HighestLineNo := TempSalesLine."Line No.";
-
-                        if StrLen(Comment) <= MaxStrLen(TempSalesLine.Description) then begin
-                            TempSalesLine.Description := Comment;
-                            TempSalesLine."Description 2" := '';
-                        end else begin
-                            SpacePointer := MaxStrLen(TempSalesLine.Description) + 1;
-                            while (SpacePointer > 1) and (Comment[SpacePointer] <> ' ') do
-                                SpacePointer := SpacePointer - 1;
-                            if SpacePointer = 1 then
-                                SpacePointer := MaxStrLen(TempSalesLine.Description) + 1;
-                            TempSalesLine.Description := CopyStr(Comment, 1, SpacePointer - 1);
-                            TempSalesLine."Description 2" := CopyStr(CopyStr(Comment, SpacePointer + 1), 1, MaxStrLen(TempSalesLine."Description 2"));
+                        TempSalesLine."Document Type":="Sales Header"."Document Type";
+                        TempSalesLine."Document No.":="Sales Header"."No.";
+                        TempSalesLine."Line No.":=HighestLineNo + 10;
+                        HighestLineNo:=TempSalesLine."Line No.";
+                        if StrLen(Comment) <= MaxStrLen(TempSalesLine.Description)then begin
+                            TempSalesLine.Description:=Comment;
+                            TempSalesLine."Description 2":='';
+                        end
+                        else
+                        begin
+                            SpacePointer:=MaxStrLen(TempSalesLine.Description) + 1;
+                            while(SpacePointer > 1) and (Comment[SpacePointer] <> ' ')do SpacePointer:=SpacePointer - 1;
+                            if SpacePointer = 1 then SpacePointer:=MaxStrLen(TempSalesLine.Description) + 1;
+                            TempSalesLine.Description:=CopyStr(Comment, 1, SpacePointer - 1);
+                            TempSalesLine."Description 2":=CopyStr(CopyStr(Comment, SpacePointer + 1), 1, MaxStrLen(TempSalesLine."Description 2"));
                         end;
                         TempSalesLine.Insert();
                     end;
                 }
-
                 trigger OnAfterGetRecord()
                 begin
-                    TempSalesLine := "Sales Line";
+                    TempSalesLine:="Sales Line";
                     TempSalesLine.Insert();
-                    HighestLineNo := "Line No.";
+                    HighestLineNo:="Line No.";
                 end;
-
                 trigger OnPreDataItem()
                 begin
                     TempSalesLine.Reset();
@@ -69,50 +67,49 @@ report 50113 "Sales Return Auth."
             }
             dataitem("Sales Comment Line"; "Sales Comment Line")
             {
-                DataItemLink = "No." = FIELD("No.");
-                DataItemTableView = SORTING("Document Type", "No.", "Document Line No.", "Line No.") WHERE("Document Type" = CONST("Return Order"), "Print On Return Authorization" = CONST(true), "Document Line No." = CONST(0));
+                DataItemLink = "No."=FIELD("No.");
+                DataItemTableView = SORTING("Document Type", "No.", "Document Line No.", "Line No.")WHERE("Document Type"=CONST("Return Order"), "Print On Return Authorization"=CONST(true), "Document Line No."=CONST(0));
 
                 trigger OnAfterGetRecord()
                 begin
                     if "Document Line No." > 0 then begin
                         TempSalesLine.Init();
-                        TempSalesLine."Document Type" := "Sales Header"."Document Type";
-                        TempSalesLine."Document No." := "Sales Header"."No.";
-                        TempSalesLine."Line No." := HighestLineNo + 1000;
-                        HighestLineNo := TempSalesLine."Line No.";
-
-                        if StrLen(Comment) <= MaxStrLen(TempSalesLine.Description) then begin
-                            TempSalesLine.Description := Comment;
-                            TempSalesLine."Description 2" := '';
-                        end else begin
-                            SpacePointer := MaxStrLen(TempSalesLine.Description) + 1;
-                            while (SpacePointer > 1) and (Comment[SpacePointer] <> ' ') do
-                                SpacePointer := SpacePointer - 1;
-                            if SpacePointer = 1 then
-                                SpacePointer := MaxStrLen(TempSalesLine.Description) + 1;
-                            TempSalesLine.Description := CopyStr(Comment, 1, SpacePointer - 1);
-                            TempSalesLine."Description 2" := CopyStr(CopyStr(Comment, SpacePointer + 1), 1, MaxStrLen(TempSalesLine."Description 2"));
+                        TempSalesLine."Document Type":="Sales Header"."Document Type";
+                        TempSalesLine."Document No.":="Sales Header"."No.";
+                        TempSalesLine."Line No.":=HighestLineNo + 1000;
+                        HighestLineNo:=TempSalesLine."Line No.";
+                        if StrLen(Comment) <= MaxStrLen(TempSalesLine.Description)then begin
+                            TempSalesLine.Description:=Comment;
+                            TempSalesLine."Description 2":='';
+                        end
+                        else
+                        begin
+                            SpacePointer:=MaxStrLen(TempSalesLine.Description) + 1;
+                            while(SpacePointer > 1) and (Comment[SpacePointer] <> ' ')do SpacePointer:=SpacePointer - 1;
+                            if SpacePointer = 1 then SpacePointer:=MaxStrLen(TempSalesLine.Description) + 1;
+                            TempSalesLine.Description:=CopyStr(Comment, 1, SpacePointer - 1);
+                            TempSalesLine."Description 2":=CopyStr(CopyStr(Comment, SpacePointer + 1), 1, MaxStrLen(TempSalesLine."Description 2"));
                         end;
                         TempSalesLine.Insert();
                     end;
                 end;
-
                 trigger OnPreDataItem()
                 begin
                     TempSalesLine.Init();
-                    TempSalesLine."Document Type" := "Sales Header"."Document Type";
-                    TempSalesLine."Document No." := "Sales Header"."No.";
-                    TempSalesLine."Line No." := HighestLineNo + 1000;
-                    HighestLineNo := TempSalesLine."Line No.";
-
+                    TempSalesLine."Document Type":="Sales Header"."Document Type";
+                    TempSalesLine."Document No.":="Sales Header"."No.";
+                    TempSalesLine."Line No.":=HighestLineNo + 1000;
+                    HighestLineNo:=TempSalesLine."Line No.";
                 end;
             }
             dataitem(CopyLoop; "Integer")
             {
                 DataItemTableView = SORTING(Number);
+
                 dataitem(PageLoop; "Integer")
                 {
-                    DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                    DataItemTableView = SORTING(Number)WHERE(Number=CONST(1));
+
                     column(CompanyAddress_1_; CompanyAddress[1])
                     {
                     }
@@ -281,6 +278,7 @@ report 50113 "Sales Return Auth."
                     dataitem(SalesLine; "Integer")
                     {
                         DataItemTableView = SORTING(Number);
+
                         column(TempSalesLine__No__; TempSalesLine."No.")
                         {
                         }
@@ -289,7 +287,7 @@ report 50113 "Sales Return Auth."
                         }
                         column(TempSalesLine_Quantity; TempSalesLine.Quantity)
                         {
-                            DecimalPlaces = 0 : 5;
+                        DecimalPlaces = 0: 5;
                         }
                         column(TempSalesLine_Description_________TempSalesLine__Description_2_; TempSalesLine.Description + ' ' + TempSalesLine."Description 2")
                         {
@@ -314,83 +312,65 @@ report 50113 "Sales Return Auth."
                         }
                         trigger OnAfterGetRecord()
                         begin
-                            OnLineNumber := OnLineNumber + 1;
-                            if OnLineNumber = 1 then
-                                TempSalesLine.Find('-')
+                            OnLineNumber:=OnLineNumber + 1;
+                            if OnLineNumber = 1 then TempSalesLine.Find('-')
                             else
                                 TempSalesLine.Next();
-
                             if TempSalesLine.Type = TempSalesLine.Type::" " then begin
-                                TempSalesLine."No." := '';
-                                TempSalesLine."Unit of Measure" := '';
-                                TempSalesLine."Line Amount" := 0;
-                                TempSalesLine."Inv. Discount Amount" := 0;
-                                TempSalesLine.Quantity := 0;
-                            end else
-                                if TempSalesLine.Type = TempSalesLine.Type::"G/L Account" then
-                                    TempSalesLine."No." := '';
-
+                                TempSalesLine."No.":='';
+                                TempSalesLine."Unit of Measure":='';
+                                TempSalesLine."Line Amount":=0;
+                                TempSalesLine."Inv. Discount Amount":=0;
+                                TempSalesLine.Quantity:=0;
+                            end
+                            else if TempSalesLine.Type = TempSalesLine.Type::"G/L Account" then TempSalesLine."No.":='';
                         end;
-
                         trigger OnPreDataItem()
                         begin
-                            NumberOfLines := TempSalesLine.Count();
+                            NumberOfLines:=TempSalesLine.Count();
                             SetRange(Number, 1, NumberOfLines);
-                            OnLineNumber := 0;
+                            OnLineNumber:=0;
                         end;
                     }
                 }
-
                 trigger OnAfterGetRecord()
                 begin
                     if CopyNo = NoLoops then begin
-                        if not CurrReport.Preview then
-                            SalesPrinted.Run("Sales Header");
+                        if not CurrReport.Preview then SalesPrinted.Run("Sales Header");
                         CurrReport.Break();
                     end;
-                    CopyNo := CopyNo + 1;
+                    CopyNo:=CopyNo + 1;
                     if CopyNo = 1 then // Original
-                        Clear(CopyTxt)
+ Clear(CopyTxt)
                     else
-                        CopyTxt := Text000;
+                        CopyTxt:=Text000;
                 end;
-
                 trigger OnPreDataItem()
                 begin
-                    NoLoops := 1 + Abs(NoCopies);
-                    if NoLoops <= 0 then
-                        NoLoops := 1;
-                    CopyNo := 0;
+                    NoLoops:=1 + Abs(NoCopies);
+                    if NoLoops <= 0 then NoLoops:=1;
+                    CopyNo:=0;
                 end;
             }
-
             trigger OnAfterGetRecord()
             var
                 SalesHeaderComment: Record "Sales Comment Line";
             begin
-                if PrintCompany then
-                    if RespCenter.Get("Responsibility Center") then begin
+                if PrintCompany then if RespCenter.Get("Responsibility Center")then begin
                         FormatAddress.RespCenter(CompanyAddress, RespCenter);
-                        CompanyInformation."Phone No." := RespCenter."Phone No.";
-                        CompanyInformation."Fax No." := RespCenter."Fax No.";
+                        CompanyInformation."Phone No.":=RespCenter."Phone No.";
+                        CompanyInformation."Fax No.":=RespCenter."Fax No.";
                     end;
-                CurrReport.Language := Language.GetLanguageIdOrDefault("Language Code");
-
-                if "Salesperson Code" = '' then
-                    Clear(SalesPurchPerson)
+                CurrReport.Language:=Language.GetLanguageIdOrDefault("Language Code");
+                if "Salesperson Code" = '' then Clear(SalesPurchPerson)
                 else
                     SalesPurchPerson.Get("Salesperson Code");
-
-                if "Payment Terms Code" = '' then
-                    Clear(PaymentTerms)
+                if "Payment Terms Code" = '' then Clear(PaymentTerms)
                 else
                     PaymentTerms.Get("Payment Terms Code");
-
-                if "Shipment Method Code" = '' then
-                    Clear(ShipmentMethod)
+                if "Shipment Method Code" = '' then Clear(ShipmentMethod)
                 else
                     ShipmentMethod.Get("Shipment Method Code");
-
                 FormatAddress.SalesHeaderSellTo(BillToAddress, "Sales Header");
                 FormatAddress.SalesHeaderShipTo(ShipToAddress, ShipToAddress, "Sales Header");
                 clear(SalesHeaderText);
@@ -399,35 +379,23 @@ report 50113 "Sales Return Auth."
                 SalesHeaderComment.SetRange("No.", "No.");
                 SalesHeaderComment.SetRange("Document Line No.", 0);
                 SalesHeaderComment.SetRange("Print On Return Authorization", true);
-                if SalesHeaderComment.FindFirst() then
-                    repeat
-                        SalesHeaderText := SalesHeaderText + ' ' + SalesHeaderComment.Comment;
+                if SalesHeaderComment.FindFirst()then repeat SalesHeaderText:=SalesHeaderText + ' ' + SalesHeaderComment.Comment;
                     until SalesHeaderComment.Next() = 0;
-
-                if LogInteraction then
-                    if not CurrReport.Preview then begin
-                        if "Bill-to Contact No." <> '' then
-                            SegManagement.LogDocument(
-                              18, "No.", 0, 0, DATABASE::Contact, "Bill-to Contact No.",
-                              "Salesperson Code", "Campaign No.", "Posting Description", '')
+                if LogInteraction then if not CurrReport.Preview then begin
+                        if "Bill-to Contact No." <> '' then SegManagement.LogDocument(18, "No.", 0, 0, DATABASE::Contact, "Bill-to Contact No.", "Salesperson Code", "Campaign No.", "Posting Description", '')
                         else
-                            SegManagement.LogDocument(
-                              18, "No.", 0, 0, DATABASE::Customer, "Bill-to Customer No.",
-                              "Salesperson Code", "Campaign No.", "Posting Description", '');
+                            SegManagement.LogDocument(18, "No.", 0, 0, DATABASE::Customer, "Bill-to Customer No.", "Salesperson Code", "Campaign No.", "Posting Description", '');
                     end;
             end;
-
             trigger OnPreDataItem()
             begin
                 CompanyInformation.Get();
-                if PrintCompany then
-                    FormatAddress.Company(CompanyAddress, CompanyInformation)
+                if PrintCompany then FormatAddress.Company(CompanyAddress, CompanyInformation)
                 else
                     Clear(CompanyAddress);
             end;
         }
     }
-
     requestpage
     {
         SaveValues = true;
@@ -439,6 +407,7 @@ report 50113 "Sales Return Auth."
                 group(Options)
                 {
                     Caption = 'Options';
+
                     field(NoCopies; NoCopies)
                     {
                         ApplicationArea = Basic, Suite;
@@ -461,80 +430,71 @@ report 50113 "Sales Return Auth."
                 }
             }
         }
-
         actions
         {
         }
-
         trigger OnInit()
         begin
-            LogInteractionEnable := true;
+            LogInteractionEnable:=true;
         end;
-
         trigger OnOpenPage()
         begin
             /* reactivate when HQ comes up with a code number for return authorizations
             LogInteraction := SegManagement.FindInteractTmplCode(2) <> '';
             */
-            LogInteractionEnable := LogInteraction;
-
+            LogInteractionEnable:=LogInteraction;
         end;
     }
-
     labels
     {
     }
-
-    var
-        ShipmentMethod: Record "Shipment Method";
-        PaymentTerms: Record "Payment Terms";
-        SalesPurchPerson: Record "Salesperson/Purchaser";
-        CompanyInformation: Record "Company Information";
-        TempSalesLine: Record "Sales Line" temporary;
-        RespCenter: Record "Responsibility Center";
-        Language: Codeunit Language;
-        CompanyAddress: array[8] of Text[100];
-        BillToAddress: array[8] of Text[100];
-        ShipToAddress: array[8] of Text[100];
-        CopyTxt: Text[10];
-        PrintCompany: Boolean;
-        NoCopies: Integer;
-        NoLoops: Integer;
-        CopyNo: Integer;
-        NumberOfLines: Integer;
-        OnLineNumber: Integer;
-        HighestLineNo: Integer;
-        SpacePointer: Integer;
-        SalesPrinted: Codeunit "Sales-Printed";
-        FormatAddress: Codeunit "Format Address";
-        SegManagement: Codeunit SegManagement;
-        Text000: Label 'COPY';
-        LogInteraction: Boolean;
-        TaxRegNo: Text[30];
-        TaxRegLabel: Text[30];
-        [InDataSet]
-        LogInteractionEnable: Boolean;
-        SoldCaptionLbl: Label 'Sold';
-        To_CaptionLbl: Label 'To:';
-        Ship_DateCaptionLbl: Label 'Ship Date';
-        Customer_IDCaptionLbl: Label 'Customer ID';
-        P_O__NumberCaptionLbl: Label 'P.O. Number';
-        SalesPersonCaptionLbl: Label 'SalesPerson';
-        ShipCaptionLbl: Label 'Ship';
-        To_Caption_Control89Lbl: Label 'To:';
-        RETURN_AUTHORIZATIONCaptionLbl: Label 'RETURN AUTHORIZATION';
-        Return_Authorization_Number_CaptionLbl: Label 'Return Authorization Number:';
-        Return_Authorization_Date_CaptionLbl: Label 'Return Authorization Date:';
-        Page_CaptionLbl: Label 'Page:';
-        Ship_ViaCaptionLbl: Label 'Ship Via';
-        P_O__DateCaptionLbl: Label 'P.O. Date';
-        Item_No_CaptionLbl: Label 'Item No.';
-        UnitCaptionLbl: Label 'Unit';
-        DescriptionCaptionLbl: Label 'Description';
-        QuantityCaptionLbl: Label 'Quantity';
-        SalesHeaderText: Text;
-        ItemReferenceNo: Code[50];
-        FooterStatement: Label 'Ongoing price increases and surcharges may affect the final invoiced cost of this product. Customers will be notified before final shipment. Listed promise dates are an estimate and are subject to change due to supply chain volatility. For a copy of the J.M. Grimstad Inc. Terms & Conditions of Sale visit: http://www.grimstad.com/terms';
-
+    var ShipmentMethod: Record "Shipment Method";
+    PaymentTerms: Record "Payment Terms";
+    SalesPurchPerson: Record "Salesperson/Purchaser";
+    CompanyInformation: Record "Company Information";
+    TempSalesLine: Record "Sales Line" temporary;
+    RespCenter: Record "Responsibility Center";
+    Language: Codeunit Language;
+    CompanyAddress: array[8]of Text[100];
+    BillToAddress: array[8]of Text[100];
+    ShipToAddress: array[8]of Text[100];
+    CopyTxt: Text[10];
+    PrintCompany: Boolean;
+    NoCopies: Integer;
+    NoLoops: Integer;
+    CopyNo: Integer;
+    NumberOfLines: Integer;
+    OnLineNumber: Integer;
+    HighestLineNo: Integer;
+    SpacePointer: Integer;
+    SalesPrinted: Codeunit "Sales-Printed";
+    FormatAddress: Codeunit "Format Address";
+    SegManagement: Codeunit SegManagement;
+    Text000: Label 'COPY';
+    LogInteraction: Boolean;
+    TaxRegNo: Text[30];
+    TaxRegLabel: Text[30];
+    [InDataSet]
+    LogInteractionEnable: Boolean;
+    SoldCaptionLbl: Label 'Sold';
+    To_CaptionLbl: Label 'To:';
+    Ship_DateCaptionLbl: Label 'Ship Date';
+    Customer_IDCaptionLbl: Label 'Customer ID';
+    P_O__NumberCaptionLbl: Label 'P.O. Number';
+    SalesPersonCaptionLbl: Label 'SalesPerson';
+    ShipCaptionLbl: Label 'Ship';
+    To_Caption_Control89Lbl: Label 'To:';
+    RETURN_AUTHORIZATIONCaptionLbl: Label 'RETURN AUTHORIZATION';
+    Return_Authorization_Number_CaptionLbl: Label 'Return Authorization Number:';
+    Return_Authorization_Date_CaptionLbl: Label 'Return Authorization Date:';
+    Page_CaptionLbl: Label 'Page:';
+    Ship_ViaCaptionLbl: Label 'Ship Via';
+    P_O__DateCaptionLbl: Label 'P.O. Date';
+    Item_No_CaptionLbl: Label 'Item No.';
+    UnitCaptionLbl: Label 'Unit';
+    DescriptionCaptionLbl: Label 'Description';
+    QuantityCaptionLbl: Label 'Quantity';
+    SalesHeaderText: Text;
+    ItemReferenceNo: Code[50];
+    FooterStatement: Label 'Ongoing price increases and surcharges may affect the final invoiced cost of this product. Customers will be notified before final shipment. Listed promise dates are an estimate and are subject to change due to supply chain volatility. For a copy of the J.M. Grimstad Inc. Terms & Conditions of Sale visit: http://www.grimstad.com/terms';
 }
-

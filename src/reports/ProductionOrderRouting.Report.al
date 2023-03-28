@@ -13,14 +13,16 @@ report 50101 "Production Order Routing"
         {
             dataitem("Prod. Order Line"; "Prod. Order Line")
             {
-                DataItemLink = "Prod. Order No." = field("No.");
+                DataItemLink = "Prod. Order No."=field("No.");
+
                 dataitem("Prod. Order Comment Line"; "Prod. Order Comment Line")
                 {
-                    DataItemLink = "Prod. Order No." = field("Prod. Order No."), "Line No." = field("Line No.");
+                    DataItemLink = "Prod. Order No."=field("Prod. Order No."), "Line No."=field("Line No.");
+
                     column(fldCOmment; "Prod. Order Comment Line".Comment)
                     {
                     }
-                    column(xSection2; 'Integer')
+                    column(xSection2;'Integer')
                     {
                     }
                     column(Prod__Order_Comment_Line_Status; "Prod. Order Comment Line".Status)
@@ -33,14 +35,14 @@ report 50101 "Production Order Routing"
                     {
                     }
                 }
-
                 dataitem("Prod. Order Component"; "Prod. Order Component")
                 {
-                    DataItemLink = "Prod. Order No." = field("Prod. Order No."), "Prod. Order Line No." = field("Line No.");
+                    DataItemLink = "Prod. Order No."=field("Prod. Order No."), "Prod. Order Line No."=field("Line No.");
+
                     column(Prod_Comp_Item_Number; "Prod. Order Component"."Item No.")
                     {
                     }
-                    column(xSection3; 'Integer')
+                    column(xSection3;'Integer')
                     {
                     }
                     column(Prod_Comp_Description; "Prod. Order Component".Description)
@@ -67,10 +69,12 @@ report 50101 "Production Order Routing"
                 }
                 dataitem("Prod. Order Routing Line"; "Prod. Order Routing Line")
                 {
-                    DataItemLink = "Prod. Order No." = field("Prod. Order No."), "Routing Reference No." = field("Line No.");
+                    DataItemLink = "Prod. Order No."=field("Prod. Order No."), "Routing Reference No."=field("Line No.");
+
                     dataitem("Prod. Order Rtng Comment Line"; "Prod. Order Rtng Comment Line")
                     {
-                        DataItemLink = "Prod. Order No." = field("Prod. Order No."), "Routing No." = field("Routing No."), "Routing Reference No." = field("Routing Reference No."), "Operation No." = field("Operation No.");
+                        DataItemLink = "Prod. Order No."=field("Prod. Order No."), "Routing No."=field("Routing No."), "Routing Reference No."=field("Routing Reference No."), "Operation No."=field("Operation No.");
+
                         column(fldRtngComment; "Prod. Order Rtng Comment Line".Comment)
                         {
                         }
@@ -84,7 +88,7 @@ report 50101 "Production Order Routing"
                         {
                         }
                     }
-                    column(xSection4; 'Integer')
+                    column(xSection4;'Integer')
                     {
                     }
                     column(Prod__Order_Routing_Line__Operation_No__; "Prod. Order Routing Line"."Operation No.")
@@ -99,16 +103,16 @@ report 50101 "Production Order Routing"
                     column(Prod_Routing_Est_Time; "Prod. Order Routing Line"."Maximum Process Time")
                     {
                     }
-                    column(Prod_Routing_BarcodeText; 'Text')
+                    column(Prod_Routing_BarcodeText;'Text')
                     {
                     }
-                    column(Prod_Routing_SetupBarcodeText; 'Text')
+                    column(Prod_Routing_SetupBarcodeText;'Text')
                     {
                     }
-                    column(Prod_Routing_BarcodeBlob; 'Blob')
+                    column(Prod_Routing_BarcodeBlob;'Blob')
                     {
                     }
-                    column(Prod_Routing_SetupBarcodeBlob; 'Blob')
+                    column(Prod_Routing_SetupBarcodeBlob;'Blob')
                     {
                     }
                     column(Prod__Order_Routing_Line_Status; "Prod. Order Routing Line".Status)
@@ -127,10 +131,10 @@ report 50101 "Production Order Routing"
                 column(fldProdOrderNo; "Prod. Order Line"."Prod. Order No.")
                 {
                 }
-                column(xSection1; 'Integer')
+                column(xSection1;'Integer')
                 {
                 }
-                column(fldSectionator; 'Integer')
+                column(fldSectionator;'Integer')
                 {
                 }
                 column(Prod_Order_Source_No; "Prod. Order Line"."Item No.")
@@ -142,7 +146,7 @@ report 50101 "Production Order Routing"
                 column(Prod_Order_Quantity; "Prod. Order Line".Quantity)
                 {
                 }
-                column(Prod_Order_Est_Weight; 'Decimal')
+                column(Prod_Order_Est_Weight;'Decimal')
                 {
                 }
                 column(Prod_Order_Start_Date; "Prod. Order Line"."Starting Date")
@@ -157,7 +161,7 @@ report 50101 "Production Order Routing"
                 column(Prod_Order_Description2; "Prod. Order Line"."Description 2")
                 {
                 }
-                column(fldBarcode; 'Blob')
+                column(fldBarcode;'Blob')
                 {
                 }
                 column(Production_Order_Status; "Prod. Order Line".Status)
@@ -172,27 +176,26 @@ report 50101 "Production Order Routing"
             }
         }
     }
-    var
-        recItem: Record Item;
-        iSection: Integer;
-        sOperBarcode: Text;
-        sSetupBarcode: Text;
-        codToolNo: Code[20];
-        sToolDescription: Text;
-        codPersonNo: Code[20];
-        sPersonDescription: Text;
-        codQualityMeasure: Code[50];
-        sQualityDescription: Text;
-        sQualityText: Text;
-        recTools: Record "Prod. Order Routing Tool";
-        recPersonnel: Record "Prod. Order Routing Personnel";
-        recQualityMeasures: Record "Prod. Order Rtng Qlty Meas.";
-        iIndex: Integer;
-        tcQualityText: Label 'QC Test';
-        cuBarcodeMgmt: codeunit "SFI Barcode Mgmt";
-        trecRoutingBarcode: Record "SFI TempBlob" temporary;
-        trecRoutingSetupBarcode: Record "SFI TempBlob" temporary;
-        iBarcodeWidth: Integer;
-        iBarcodeHeight: Integer;
-        bIsAzureBarcode: Boolean;
+    var recItem: Record Item;
+    iSection: Integer;
+    sOperBarcode: Text;
+    sSetupBarcode: Text;
+    codToolNo: Code[20];
+    sToolDescription: Text;
+    codPersonNo: Code[20];
+    sPersonDescription: Text;
+    codQualityMeasure: Code[50];
+    sQualityDescription: Text;
+    sQualityText: Text;
+    recTools: Record "Prod. Order Routing Tool";
+    recPersonnel: Record "Prod. Order Routing Personnel";
+    recQualityMeasures: Record "Prod. Order Rtng Qlty Meas.";
+    iIndex: Integer;
+    tcQualityText: Label 'QC Test';
+    cuBarcodeMgmt: codeunit "SFI Barcode Mgmt";
+    trecRoutingBarcode: Record "SFI TempBlob" temporary;
+    trecRoutingSetupBarcode: Record "SFI TempBlob" temporary;
+    iBarcodeWidth: Integer;
+    iBarcodeHeight: Integer;
+    bIsAzureBarcode: Boolean;
 }

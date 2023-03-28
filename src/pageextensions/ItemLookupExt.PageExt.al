@@ -11,7 +11,6 @@ pageextension 50122 "ItemLookupExt" extends "Item Lookup"
                 ToolTip = 'Specifies information in addition to the description.';
                 Visible = true;
             }
-
             field(Manufacturer; Rec.Manufacturer)
             {
                 ApplicationArea = All;
@@ -22,4 +21,3 @@ pageextension 50122 "ItemLookupExt" extends "Item Lookup"
         }
     }
 }
-

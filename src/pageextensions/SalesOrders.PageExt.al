@@ -20,7 +20,6 @@ pageextension 50131 "SalesOrders" extends "Sales Order List"
             }
         }
     }
-
     actions
     {
         addbefore("Pla&nning")
@@ -48,12 +47,10 @@ pageextension 50131 "SalesOrders" extends "Sales Order List"
                     test: Record "Routing Comment Line";
                 begin
                     CurrPage.SetSelectionFilter(salesHeader);
-                    i := 0;
-                    iTotal := salesHeader.Count();
+                    i:=0;
+                    iTotal:=salesHeader.Count();
                     dialWindow.Open(Text000 + '\\' + Text001);
-                    if salesHeader.FindFirst() then
-                        repeat
-                            i := i + 1;
+                    if salesHeader.FindFirst()then repeat i:=i + 1;
                             dialWindow.Update(1, salesHeader."No.");
                             dialWindow.Update(2, Round(i / iTotal * 100, 1, '>'));
                             salesLine.Reset;
@@ -62,22 +59,20 @@ pageextension 50131 "SalesOrders" extends "Sales Order List"
                             salesLine.SetFilter(Description, '%1', '');
                             salesLine.SetRange(Type, salesLine.Type::Item);
                             salesLine.SetFilter("No.", '<>%1', '');
-                            if salesLine.FindFirst() then
-                                repeat
-                                    clear(poLineNo);
+                            if salesLine.FindFirst()then repeat clear(poLineNo);
                                     clear(poOrderNo);
-                                    dShip := false;
+                                    dShip:=false;
                                     if salesLine."Drop Shipment" then begin
-                                        poOrderNo := salesLine."Purchase Order No.";
-                                        poLineNo := salesLine."Purch. Order Line No.";
-                                        dShip := true;
-                                        salesLine."Drop Shipment" := false;
-                                        salesLine."Purchase Order No." := '';
-                                        salesLine."Purch. Order Line No." := 0;
+                                        poOrderNo:=salesLine."Purchase Order No.";
+                                        poLineNo:=salesLine."Purch. Order Line No.";
+                                        dShip:=true;
+                                        salesLine."Drop Shipment":=false;
+                                        salesLine."Purchase Order No.":='';
+                                        salesLine."Purch. Order Line No.":=0;
                                         salesLine.Modify(true);
                                     end;
-                                    priceValue := salesLine."Unit Price";
-                                    qtyValue := salesLine.Quantity;
+                                    priceValue:=salesLine."Unit Price";
+                                    qtyValue:=salesLine.Quantity;
                                     salesLine.Validate("No.", salesLine."No.");
                                     salesLine.Modify(true);
                                     salesLine.Validate(Quantity, qtyValue);
@@ -87,13 +82,11 @@ pageextension 50131 "SalesOrders" extends "Sales Order List"
                                     salesLine.Validate("Drop Shipment", dShip);
                                     salesLine.Validate("Purchase Order No.", poOrderNo);
                                     salesLine.Validate("Purch. Order Line No.", poLineNo);
-
                                     salesLine.Modify(true);
                                 until salesLine.Next() = 0;
                         until salesHeader.Next() = 0;
                 end;
             }
-
             action("Delete Sales Orders")
             {
                 ApplicationArea = All;
@@ -111,9 +104,7 @@ pageextension 50131 "SalesOrders" extends "Sales Order List"
                     salesHeader.DeleteAllSalesLines();
                     salesHeader.DeleteAll();
                 end;
-
             }
         }
     }
 }
-

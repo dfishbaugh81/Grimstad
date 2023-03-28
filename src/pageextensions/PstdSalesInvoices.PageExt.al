@@ -20,4 +20,3 @@ pageextension 50132 "PstdSalesInvoices" extends "Posted Sales Invoices"
         }
     }
 }
-

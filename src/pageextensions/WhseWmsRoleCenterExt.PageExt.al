@@ -11,4 +11,3 @@ pageextension 50116 "WhseWmsRoleCenterExt" extends "Sales & Relationship Mgr. RC
         }
     }
 }
-

@@ -12,6 +12,7 @@ page 50114 "Prod. Order Lines"
             {
                 IndentationColumn = DescriptionIndent;
                 IndentationControls = Description;
+
                 field(Status; Rec.Status)
                 {
                     ApplicationArea = Manufacturing;
@@ -214,19 +215,15 @@ page 50114 "Prod. Order Lines"
                     ToolTip = 'Specifies the code for Shortcut Dimension 2, which is one of two global dimension codes that you set up in the General Ledger Setup window.';
                     Visible = false;
                 }
-
             }
         }
     }
-
-    var
-        ItemAvailFormsMgt: Codeunit "Item Availability Forms Mgt";
-        [InDataSet]
-        DescriptionIndent: Integer;
-        StartingTime: Time;
-        EndingTime: Time;
-        StartingDate: Date;
-        EndingDate: Date;
-        DateAndTimeFieldVisible: Boolean;
-
+    var ItemAvailFormsMgt: Codeunit "Item Availability Forms Mgt";
+    [InDataSet]
+    DescriptionIndent: Integer;
+    StartingTime: Time;
+    EndingTime: Time;
+    StartingDate: Date;
+    EndingDate: Date;
+    DateAndTimeFieldVisible: Boolean;
 }

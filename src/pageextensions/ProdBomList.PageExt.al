@@ -1,6 +1,5 @@
 pageextension 50121 "ProdBomList" extends "Production BOM List"
 {
-
     layout
     {
         modify("Description 2")
@@ -11,9 +10,6 @@ pageextension 50121 "ProdBomList" extends "Production BOM List"
             Visible = true;
         }
     }
-
-
-
     actions
     {
         addafter("Where-used")
@@ -29,13 +25,10 @@ pageextension 50121 "ProdBomList" extends "Production BOM List"
                 begin
                     CurrPage.SetSelectionFilter(prodBom);
                     prodBom.ModifyAll(Status, prodBom.Status::"Under Development", true);
-
                 end;
             }
-
             action("Status update to Cert")
             {
-
                 ApplicationArea = Basic, Suite;
 
                 trigger OnAction()
@@ -48,7 +41,6 @@ pageextension 50121 "ProdBomList" extends "Production BOM List"
                     prodBom.ModifyAll(Status, prodBom.Status::Certified, true);
                 end;
             }
-
             action("Delete Lines")
             {
                 ApplicationArea = Basic, Suite;
@@ -60,19 +52,15 @@ pageextension 50121 "ProdBomList" extends "Production BOM List"
                     genCodeUnit: Codeunit toDoMgmt;
                 begin
                     CurrPage.SetSelectionFilter(prodBom);
-                    if prodBom.FindFirst() then
-                        repeat
-                            prodBomLine.Reset;
+                    if prodBom.FindFirst()then repeat prodBomLine.Reset;
                             prodBomLine.SetRange("Production BOM No.", prodBom."No.");
                             prodBomLine.DeleteAll();
                             genCodeUnit.RemoveItemAssociatedWithBom(prodBom."No.");
                         until prodBom.Next() = 0;
-
                     prodBom.DeleteAll(true);
                     commit;
                 end;
             }
-
             action("Open Lines")
             {
                 ApplicationArea = Basic, Suite;
@@ -87,4 +75,3 @@ pageextension 50121 "ProdBomList" extends "Production BOM List"
         }
     }
 }
-

@@ -1,7 +1,6 @@
 report 50111 "GrimCustStatements"
 {
     DefaultLayout = RDLC;
-
     RDLCLayout = './layouts/GrimCustStatements.rdl';
     ApplicationArea = Basic, Suite;
     UsageCategory = Documents;
@@ -12,6 +11,7 @@ report 50111 "GrimCustStatements"
         {
             DataItemTableView = SORTING("No.");
             RequestFilterFields = "No.", "Print Statements", "Date Filter";
+
             column(Customer_No_; "No.")
             {
             }
@@ -23,7 +23,8 @@ report 50111 "GrimCustStatements"
             }
             dataitem(HeaderFooter; "Integer")
             {
-                DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                DataItemTableView = SORTING(Number)WHERE(Number=CONST(1));
+
                 column(CompanyInformation_Picture; CompanyInformation.Picture)
                 {
                 }
@@ -57,7 +58,6 @@ report 50111 "GrimCustStatements"
                 column(Customer__No__; Customer."No.")
                 {
                 }
-
                 column(CustomerAddress_1_; CustomerAddress[1])
                 {
                 }
@@ -97,13 +97,13 @@ report 50111 "GrimCustStatements"
                 column(StatementStyle_Int; StatementStyle_Int)
                 {
                 }
-                column(printfooter3ornot; (AgingMethod <> AgingMethod::None) and StatementComplete)
+                column(printfooter3ornot;(AgingMethod <> AgingMethod::None) and StatementComplete)
                 {
                 }
                 column(DebitBalance; DebitBalance)
                 {
                 }
-                column(CreditBalance; -CreditBalance)
+                column(CreditBalance;-CreditBalance)
                 {
                 }
                 column(BalanceToPrint; BalanceToPrint)
@@ -112,7 +112,7 @@ report 50111 "GrimCustStatements"
                 column(DebitBalance_Control22; DebitBalance)
                 {
                 }
-                column(CreditBalance_Control23; -CreditBalance)
+                column(CreditBalance_Control23;-CreditBalance)
                 {
                 }
                 column(BalanceToPrint_Control24; BalanceToPrint)
@@ -219,30 +219,26 @@ report 50111 "GrimCustStatements"
                 }
                 dataitem("Cust. Ledger Entry"; "Cust. Ledger Entry")
                 {
-                    DataItemLink = "Customer No." = FIELD("No."), "Global Dimension 1 Code" = FIELD("Global Dimension 1 Filter"), "Global Dimension 2 Code" = FIELD("Global Dimension 2 Filter");
+                    DataItemLink = "Customer No."=FIELD("No."), "Global Dimension 1 Code"=FIELD("Global Dimension 1 Filter"), "Global Dimension 2 Code"=FIELD("Global Dimension 2 Filter");
                     DataItemLinkReference = Customer;
-                    DataItemTableView = SORTING("Customer No.", Open) WHERE(Open = CONST(true));
+                    DataItemTableView = SORTING("Customer No.", Open)WHERE(Open=CONST(true));
 
                     trigger OnAfterGetRecord()
                     begin
                         SetRange("Date Filter", 0D, ToDate);
                         CalcFields("Remaining Amount");
-                        if "Remaining Amount" <> 0 then
-                            InsertTemp("Cust. Ledger Entry");
+                        if "Remaining Amount" <> 0 then InsertTemp("Cust. Ledger Entry");
                     end;
-
                     trigger OnPreDataItem()
                     begin
-                        if (AgingMethod = AgingMethod::None) and (StatementStyle = StatementStyle::Balance) then
-                            CurrReport.Break();    // Optimization
-
+                        if(AgingMethod = AgingMethod::None) and (StatementStyle = StatementStyle::Balance)then CurrReport.Break(); // Optimization
                         // Find ledger entries which are open and posted before the statement date.
                         SetRange("Posting Date", 0D, ToDate);
                     end;
                 }
                 dataitem(AfterStmntDateEntry; "Cust. Ledger Entry")
                 {
-                    DataItemLink = "Customer No." = FIELD("No."), "Global Dimension 1 Code" = FIELD("Global Dimension 1 Filter"), "Global Dimension 2 Code" = FIELD("Global Dimension 2 Filter");
+                    DataItemLink = "Customer No."=FIELD("No."), "Global Dimension 1 Code"=FIELD("Global Dimension 1 Filter"), "Global Dimension 2 Code"=FIELD("Global Dimension 2 Filter");
                     DataItemLinkReference = Customer;
                     DataItemTableView = SORTING("Customer No.", "Posting Date");
 
@@ -250,17 +246,12 @@ report 50111 "GrimCustStatements"
                     begin
                         EntryApplicationMgt.GetAppliedCustEntries(TempAppliedCustLedgEntry, AfterStmntDateEntry, false);
                         TempAppliedCustLedgEntry.SetRange("Posting Date", 0D, ToDate);
-                        if TempAppliedCustLedgEntry.Find('-') then
-                            repeat
-                                InsertTemp(TempAppliedCustLedgEntry);
+                        if TempAppliedCustLedgEntry.Find('-')then repeat InsertTemp(TempAppliedCustLedgEntry);
                             until TempAppliedCustLedgEntry.Next() = 0;
                     end;
-
                     trigger OnPreDataItem()
                     begin
-                        if (AgingMethod = AgingMethod::None) and (StatementStyle = StatementStyle::Balance) then
-                            CurrReport.Break();    // Optimization
-
+                        if(AgingMethod = AgingMethod::None) and (StatementStyle = StatementStyle::Balance)then CurrReport.Break(); // Optimization
                         // Find ledger entries which are posted after the statement date and eliminate
                         // their application to ledger entries posted before the statement date.
                         SetFilter("Posting Date", '%1..', ToDate + 1);
@@ -268,7 +259,8 @@ report 50111 "GrimCustStatements"
                 }
                 dataitem("Balance Forward"; "Integer")
                 {
-                    DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                    DataItemTableView = SORTING(Number)WHERE(Number=CONST(1));
+
                     column(FromDate___1; FromDate - 1)
                     {
                     }
@@ -284,21 +276,19 @@ report 50111 "GrimCustStatements"
                     column(Bal_FwdCaption; Bal_FwdCaptionLbl)
                     {
                     }
-
                     trigger OnAfterGetRecord()
                     begin
-                        if StatementStyle <> StatementStyle::Balance then
-                            CurrReport.Break();
+                        if StatementStyle <> StatementStyle::Balance then CurrReport.Break();
                     end;
-
                     trigger OnPreDataItem()
                     begin
-                        StatementStyle_Int := StatementStyle;
+                        StatementStyle_Int:=StatementStyle;
                     end;
                 }
                 dataitem(OpenItem; "Integer")
                 {
                     DataItemTableView = SORTING(Number);
+
                     column(TempCustLedgEntry__Document_No__; TempCustLedgEntry."Document No.")
                     {
                     }
@@ -314,7 +304,7 @@ report 50111 "GrimCustStatements"
                     column(TempCustLedgEntry__Remaining_Amount_; TempCustLedgEntry."Remaining Amount")
                     {
                     }
-                    column(TempCustLedgEntry__Remaining_Amount__Control47; -TempCustLedgEntry."Remaining Amount")
+                    column(TempCustLedgEntry__Remaining_Amount__Control47;-TempCustLedgEntry."Remaining Amount")
                     {
                     }
                     column(BalanceToPrint_Control48; BalanceToPrint)
@@ -323,59 +313,34 @@ report 50111 "GrimCustStatements"
                     column(OpenItem_Number; Number)
                     {
                     }
-
                     trigger OnAfterGetRecord()
                     begin
-                        if Number = 1 then
-                            TempCustLedgEntry.Find('-')
+                        if Number = 1 then TempCustLedgEntry.Find('-')
                         else
                             TempCustLedgEntry.Next();
-
                         TempCustLedgEntry.CalcFields("Remaining Amount");
-                        if TempCustLedgEntry."Currency Code" <> Customer."Currency Code" then
-                            TempCustLedgEntry."Remaining Amount" :=
-                              Round(
-                                CurrExchRate.ExchangeAmtFCYToFCY(
-                                  TempCustLedgEntry."Posting Date",
-                                  TempCustLedgEntry."Currency Code",
-                                  Customer."Currency Code",
-                                  TempCustLedgEntry."Remaining Amount"),
-                                Currency."Amount Rounding Precision");
-
+                        if TempCustLedgEntry."Currency Code" <> Customer."Currency Code" then TempCustLedgEntry."Remaining Amount":=Round(CurrExchRate.ExchangeAmtFCYToFCY(TempCustLedgEntry."Posting Date", TempCustLedgEntry."Currency Code", Customer."Currency Code", TempCustLedgEntry."Remaining Amount"), Currency."Amount Rounding Precision");
                         if AgingMethod <> AgingMethod::None then begin
-                            case AgingMethod of
-                                AgingMethod::"Due Date":
-                                    AgingDate := TempCustLedgEntry."Due Date";
-                                AgingMethod::"Trans Date":
-                                    AgingDate := TempCustLedgEntry."Posting Date";
-                                AgingMethod::"Doc Date":
-                                    AgingDate := TempCustLedgEntry."Document Date";
+                            case AgingMethod of AgingMethod::"Due Date": AgingDate:=TempCustLedgEntry."Due Date";
+                            AgingMethod::"Trans Date": AgingDate:=TempCustLedgEntry."Posting Date";
+                            AgingMethod::"Doc Date": AgingDate:=TempCustLedgEntry."Document Date";
                             end;
-                            i := 0;
-                            while AgingDate < PeriodEndingDate[i + 1] do
-                                i := i + 1;
-                            if i = 0 then
-                                i := 1;
-                            AmountDue[i] := TempCustLedgEntry."Remaining Amount";
-                            TempAmountDue[i] := TempAmountDue[i] + AmountDue[i];
+                            i:=0;
+                            while AgingDate < PeriodEndingDate[i + 1]do i:=i + 1;
+                            if i = 0 then i:=1;
+                            AmountDue[i]:=TempCustLedgEntry."Remaining Amount";
+                            TempAmountDue[i]:=TempAmountDue[i] + AmountDue[i];
                         end;
-
                         if StatementStyle = StatementStyle::"Open Item" then begin
-                            BalanceToPrint := BalanceToPrint + TempCustLedgEntry."Remaining Amount";
-                            if TempCustLedgEntry."Remaining Amount" >= 0 then
-                                DebitBalance := DebitBalance + TempCustLedgEntry."Remaining Amount"
+                            BalanceToPrint:=BalanceToPrint + TempCustLedgEntry."Remaining Amount";
+                            if TempCustLedgEntry."Remaining Amount" >= 0 then DebitBalance:=DebitBalance + TempCustLedgEntry."Remaining Amount"
                             else
-                                CreditBalance := CreditBalance + TempCustLedgEntry."Remaining Amount";
+                                CreditBalance:=CreditBalance + TempCustLedgEntry."Remaining Amount";
                         end;
                     end;
-
                     trigger OnPreDataItem()
                     begin
-                        if (not TempCustLedgEntry.Find('-')) or
-                           ((StatementStyle = StatementStyle::Balance) and
-                            (AgingMethod = AgingMethod::None))
-                        then
-                            CurrReport.Break();
+                        if(not TempCustLedgEntry.Find('-')) or ((StatementStyle = StatementStyle::Balance) and (AgingMethod = AgingMethod::None))then CurrReport.Break();
                         SetRange(Number, 1, TempCustLedgEntry.Count);
                         TempCustLedgEntry.SetCurrentKey("Customer No.", "Posting Date");
                         TempCustLedgEntry.SetRange("Date Filter", 0D, ToDate);
@@ -383,9 +348,10 @@ report 50111 "GrimCustStatements"
                 }
                 dataitem(CustLedgerEntry4; "Cust. Ledger Entry")
                 {
-                    DataItemLink = "Customer No." = FIELD("No.");
+                    DataItemLink = "Customer No."=FIELD("No.");
                     DataItemLinkReference = Customer;
                     DataItemTableView = SORTING("Customer No.", "Posting Date");
+
                     column(CustLedgerEntry4__Document_No__; "Document No.")
                     {
                     }
@@ -401,7 +367,7 @@ report 50111 "GrimCustStatements"
                     column(CustLedgerEntry4_Amount; Amount)
                     {
                     }
-                    column(Amount; -Amount)
+                    column(Amount;-Amount)
                     {
                     }
                     column(BalanceToPrint_Control55; BalanceToPrint)
@@ -413,153 +379,125 @@ report 50111 "GrimCustStatements"
                     column(CustLedgerEntry4_Customer_No_; "Customer No.")
                     {
                     }
-
                     trigger OnAfterGetRecord()
                     begin
                         CalcFields(Amount, "Amount (LCY)");
-                        if (Customer."Currency Code" = '') and ("Cust. Ledger Entry"."Currency Code" = '') then
-                            Amount := "Amount (LCY)"
+                        if(Customer."Currency Code" = '') and ("Cust. Ledger Entry"."Currency Code" = '')then Amount:="Amount (LCY)"
                         else
-                            Amount :=
-                              Round(
-                                CurrExchRate.ExchangeAmtFCYToFCY(
-                                  "Posting Date",
-                                  "Currency Code",
-                                  Customer."Currency Code",
-                                  Amount),
-                                Currency."Amount Rounding Precision");
-
-                        BalanceToPrint := BalanceToPrint + Amount;
-                        if Amount >= 0 then
-                            DebitBalance := DebitBalance + Amount
+                            Amount:=Round(CurrExchRate.ExchangeAmtFCYToFCY("Posting Date", "Currency Code", Customer."Currency Code", Amount), Currency."Amount Rounding Precision");
+                        BalanceToPrint:=BalanceToPrint + Amount;
+                        if Amount >= 0 then DebitBalance:=DebitBalance + Amount
                         else
-                            CreditBalance := CreditBalance + Amount;
+                            CreditBalance:=CreditBalance + Amount;
                     end;
-
                     trigger OnPreDataItem()
                     begin
-                        if StatementStyle <> StatementStyle::Balance then
-                            CurrReport.Break();
+                        if StatementStyle <> StatementStyle::Balance then CurrReport.Break();
                         SetRange("Posting Date", FromDate, ToDate);
                     end;
                 }
                 dataitem(EndOfCustomer; "Integer")
                 {
-                    DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                    DataItemTableView = SORTING(Number)WHERE(Number=CONST(1));
+
                     column(StatementComplete; StatementComplete)
                     {
                     }
                     column(EndOfCustomer_Number; Number)
                     {
                     }
-
                     trigger OnAfterGetRecord()
                     begin
-                        StatementComplete := true;
-                        if UpdateNumbers and (not CurrReport.Preview) then begin
+                        StatementComplete:=true;
+                        if UpdateNumbers and (not CurrReport.Preview)then begin
                             Customer.Modify(); // just update the Last Statement No
                             Commit();
                         end;
                     end;
                 }
-
                 trigger OnPreDataItem()
                 begin
-                    AgingMethod_Int := AgingMethod;
+                    AgingMethod_Int:=AgingMethod;
                 end;
             }
-
             trigger OnAfterGetRecord()
             begin
-                CurrReport.Language := Language.GetLanguageIdOrDefault("Language Code");
-
-                DebitBalance := 0;
-                CreditBalance := 0;
+                CurrReport.Language:=Language.GetLanguageIdOrDefault("Language Code");
+                DebitBalance:=0;
+                CreditBalance:=0;
                 Clear(AmountDue);
                 Clear(TempAmountDue);
-                Print := false;
+                Print:=false;
                 if AllHavingBalance then begin
                     SetRange("Date Filter", 0D, ToDate);
                     CalcFields("Net Change");
-                    Print := "Net Change" <> 0;
+                    Print:="Net Change" <> 0;
                 end;
-                if (not Print) and AllHavingEntries then begin
+                if(not Print) and AllHavingEntries then begin
                     "Cust. Ledger Entry".Reset();
                     if StatementStyle = StatementStyle::Balance then begin
                         "Cust. Ledger Entry".SetCurrentKey("Customer No.", "Posting Date");
                         "Cust. Ledger Entry".SetRange("Posting Date", FromDate, ToDate);
-                    end else begin
+                    end
+                    else
+                    begin
                         "Cust. Ledger Entry".SetCurrentKey("Customer No.", Open);
                         "Cust. Ledger Entry".SetRange("Posting Date", 0D, ToDate);
                         "Cust. Ledger Entry".SetRange(Open, true);
                     end;
                     "Cust. Ledger Entry".SetRange("Customer No.", "No.");
-                    Print := "Cust. Ledger Entry".Find('-');
+                    Print:="Cust. Ledger Entry".Find('-');
                 end;
-                if not Print then
-                    CurrReport.Skip();
-
+                if not Print then CurrReport.Skip();
                 TempCustLedgEntry.DeleteAll();
-
-                AgingDaysText := '';
+                AgingDaysText:='';
                 if AgingMethod <> AgingMethod::None then begin
-                    AgingHead[1] := CurrentTxt;
-                    PeriodEndingDate[1] := ToDate;
+                    AgingHead[1]:=CurrentTxt;
+                    PeriodEndingDate[1]:=ToDate;
                     if AgingMethod = AgingMethod::"Due Date" then begin
-                        PeriodEndingDate[2] := PeriodEndingDate[1];
-                        for i := 3 to 4 do
-                            PeriodEndingDate[i] := CalcDate(PeriodCalculation, PeriodEndingDate[i - 1]);
-                        AgingDaysText := DaysOverdueTxt;
-                        AgingHead[2] := StrSubstNo(UpToDaysTxt, PeriodEndingDate[1] - PeriodEndingDate[3]);
-                    end else begin
-                        for i := 2 to 4 do
-                            PeriodEndingDate[i] := CalcDate(PeriodCalculation, PeriodEndingDate[i - 1]);
-                        AgingDaysText := DaysOldTxt;
-                        AgingHead[2] :=
-                          StrSubstNo(FromToDaysTxt, PeriodEndingDate[1] - PeriodEndingDate[2] + 1, PeriodEndingDate[1] - PeriodEndingDate[3]);
+                        PeriodEndingDate[2]:=PeriodEndingDate[1];
+                        for i:=3 to 4 do PeriodEndingDate[i]:=CalcDate(PeriodCalculation, PeriodEndingDate[i - 1]);
+                        AgingDaysText:=DaysOverdueTxt;
+                        AgingHead[2]:=StrSubstNo(UpToDaysTxt, PeriodEndingDate[1] - PeriodEndingDate[3]);
+                    end
+                    else
+                    begin
+                        for i:=2 to 4 do PeriodEndingDate[i]:=CalcDate(PeriodCalculation, PeriodEndingDate[i - 1]);
+                        AgingDaysText:=DaysOldTxt;
+                        AgingHead[2]:=StrSubstNo(FromToDaysTxt, PeriodEndingDate[1] - PeriodEndingDate[2] + 1, PeriodEndingDate[1] - PeriodEndingDate[3]);
                     end;
-                    PeriodEndingDate[5] := 0D;
-                    AgingHead[3] :=
-                      StrSubstNo(FromToDaysTxt, PeriodEndingDate[1] - PeriodEndingDate[3] + 1, PeriodEndingDate[1] - PeriodEndingDate[4]);
-                    AgingHead[4] := StrSubstNo(OverDaysTxt, PeriodEndingDate[1] - PeriodEndingDate[4]);
+                    PeriodEndingDate[5]:=0D;
+                    AgingHead[3]:=StrSubstNo(FromToDaysTxt, PeriodEndingDate[1] - PeriodEndingDate[3] + 1, PeriodEndingDate[1] - PeriodEndingDate[4]);
+                    AgingHead[4]:=StrSubstNo(OverDaysTxt, PeriodEndingDate[1] - PeriodEndingDate[4]);
                 end;
-
                 if "Currency Code" = '' then begin
                     Clear(Currency);
-                    CurrencyDesc := '';
-                end else begin
+                    CurrencyDesc:='';
+                end
+                else
+                begin
                     Currency.Get("Currency Code");
-                    CurrencyDesc := StrSubstNo(CurrencyDescTxt, Currency.Description);
+                    CurrencyDesc:=StrSubstNo(CurrencyDescTxt, Currency.Description);
                 end;
-
                 if StatementStyle = StatementStyle::Balance then begin
                     SetRange("Date Filter", 0D, FromDate - 1);
                     CalcFields("Net Change (LCY)");
-                    if "Currency Code" = '' then
-                        BalanceToPrint := "Net Change (LCY)"
+                    if "Currency Code" = '' then BalanceToPrint:="Net Change (LCY)"
                     else
-                        BalanceToPrint := CurrExchRate.ExchangeAmtFCYToFCY(FromDate - 1, '', "Currency Code", "Net Change (LCY)");
+                        BalanceToPrint:=CurrExchRate.ExchangeAmtFCYToFCY(FromDate - 1, '', "Currency Code", "Net Change (LCY)");
                     SetRange("Date Filter");
-                end else
-                    BalanceToPrint := 0;
-
-                // Update Statement Number so it can be printed on the document. However, defer actually updating the customer file until the statement is complete.
-                if "Last Statement No." >= 9999 then
-                    "Last Statement No." := 1
+                end
                 else
-                    "Last Statement No." := "Last Statement No." + 1;
+                    BalanceToPrint:=0;
+                // Update Statement Number so it can be printed on the document. However, defer actually updating the customer file until the statement is complete.
+                if "Last Statement No." >= 9999 then "Last Statement No.":=1
+                else
+                    "Last Statement No.":="Last Statement No." + 1;
                 //CurrReport.PageNo := 1;
-
                 FormatAddress.Customer(CustomerAddress, Customer);
-                StatementComplete := false;
-
-                if LogInteraction then
-                    if not CurrReport.Preview then
-                        SegManagement.LogDocument(
-                          7, Format("Last Statement No."), 0, 0, DATABASE::Customer, "No.", "Salesperson Code",
-                          '', StrSubstNo(LastStmtNoTxt, "Last Statement No."), '');
+                StatementComplete:=false;
+                if LogInteraction then if not CurrReport.Preview then SegManagement.LogDocument(7, Format("Last Statement No."), 0, 0, DATABASE::Customer, "No.", "Salesperson Code", '', StrSubstNo(LastStmtNoTxt, "Last Statement No."), '');
             end;
-
             trigger OnPreDataItem()
             begin
                 // remove user-entered date filter; info now in FromDate & ToDate
@@ -567,7 +505,6 @@ report 50111 "GrimCustStatements"
             end;
         }
     }
-
     requestpage
     {
         SaveValues = true;
@@ -579,6 +516,7 @@ report 50111 "GrimCustStatements"
                 group(Options)
                 {
                     Caption = 'Options';
+
                     field(AllHavingEntries; AllHavingEntries)
                     {
                         ApplicationArea = Basic, Suite;
@@ -625,8 +563,7 @@ report 50111 "GrimCustStatements"
 
                         trigger OnValidate()
                         begin
-                            if (AgingMethod <> AgingMethod::None) and (Format(PeriodCalculation) = '') then
-                                Error(AgingPeriodLengthErr);
+                            if(AgingMethod <> AgingMethod::None) and (Format(PeriodCalculation) = '')then Error(AgingPeriodLengthErr);
                         end;
                     }
                     field(LogInteraction; LogInteraction)
@@ -639,6 +576,7 @@ report 50111 "GrimCustStatements"
                     group(OutputOptions)
                     {
                         Caption = 'Output Options';
+
                         field(ReportOutput; SupportedOutputMethod)
                         {
                             ApplicationArea = Basic, Suite;
@@ -660,6 +598,7 @@ report 50111 "GrimCustStatements"
                     {
                         Caption = 'Email Options';
                         Visible = ShowPrintIfEmailIsMissing;
+
                         field(PrintMissingAddresses; PrintIfEmailIsMissing)
                         {
                             ApplicationArea = Basic, Suite;
@@ -670,222 +609,176 @@ report 50111 "GrimCustStatements"
                 }
             }
         }
-
         actions
         {
         }
-
         trigger OnInit()
         begin
-            LogInteractionEnable := true;
+            LogInteractionEnable:=true;
         end;
-
         trigger OnOpenPage()
         begin
-            if (not AllHavingEntries) and (not AllHavingBalance) then
-                AllHavingBalance := true;
-
-            LogInteraction := SegManagement.FindInteractTmplCode(7) <> '';
-            LogInteractionEnable := LogInteraction;
+            if(not AllHavingEntries) and (not AllHavingBalance)then AllHavingBalance:=true;
+            LogInteraction:=SegManagement.FindInteractTmplCode(7) <> '';
+            LogInteractionEnable:=LogInteraction;
             MapOutputMethod();
         end;
     }
-
     labels
     {
     }
-
     trigger OnPreReport()
     var
         i: integer;
     begin
-        if (not AllHavingEntries) and (not AllHavingBalance) then
-            Error(EntriesOrBalanceErr);
-        if UpdateNumbers and CurrReport.Preview then
-            Error(UpdStmtNmbrsPrintErr);
-        FromDate := Customer.GetRangeMin("Date Filter");
-        ToDate := Customer.GetRangeMax("Date Filter");
-
-        if (StatementStyle = StatementStyle::Balance) and (FromDate = ToDate) then
-            Error(DateFilterRangeErr);
-
-        if (AgingMethod <> AgingMethod::None) and (Format(PeriodCalculation) = '') then
-            Error(AgingPeriodLengthErr);
-
-        if Format(PeriodCalculation) <> '' then
-            Evaluate(PeriodCalculation, StrSubstNo(PeriodCalcTxt, PeriodCalculation));
-
+        if(not AllHavingEntries) and (not AllHavingBalance)then Error(EntriesOrBalanceErr);
+        if UpdateNumbers and CurrReport.Preview then Error(UpdStmtNmbrsPrintErr);
+        FromDate:=Customer.GetRangeMin("Date Filter");
+        ToDate:=Customer.GetRangeMax("Date Filter");
+        if(StatementStyle = StatementStyle::Balance) and (FromDate = ToDate)then Error(DateFilterRangeErr);
+        if(AgingMethod <> AgingMethod::None) and (Format(PeriodCalculation) = '')then Error(AgingPeriodLengthErr);
+        if Format(PeriodCalculation) <> '' then Evaluate(PeriodCalculation, StrSubstNo(PeriodCalcTxt, PeriodCalculation));
         //if PrintCompany then begin
         CompanyInformation.Get();
         FormatAddress.Company(CompanyAddress, CompanyInformation);
-        for i := 1 to 8
-                do begin
+        for i:=1 to 8 do begin
             if CompanyAddress[i] = '' then begin
-                CompanyAddress[i] := 'No. ' + CompanyInformation."Phone No.";
+                CompanyAddress[i]:='No. ' + CompanyInformation."Phone No.";
                 exit;
             end;
         end;
         //end else
         //Clear(CompanyAddress);
-
         SalesSetup.Get();
-
-        case SalesSetup."Logo Position on Documents" of
-            SalesSetup."Logo Position on Documents"::"No Logo":
-                ;
-            SalesSetup."Logo Position on Documents"::Left:
-                CompanyInformation.CalcFields(Picture);
-            SalesSetup."Logo Position on Documents"::Center:
-                begin
-                    CompanyInfo1.Get();
-                    CompanyInfo1.CalcFields(Picture);
-                end;
-            SalesSetup."Logo Position on Documents"::Right:
-                begin
-                    CompanyInfo2.Get();
-                    CompanyInfo2.CalcFields(Picture);
-                end;
+        case SalesSetup."Logo Position on Documents" of SalesSetup."Logo Position on Documents"::"No Logo": ;
+        SalesSetup."Logo Position on Documents"::Left: CompanyInformation.CalcFields(Picture);
+        SalesSetup."Logo Position on Documents"::Center: begin
+            CompanyInfo1.Get();
+            CompanyInfo1.CalcFields(Picture);
+        end;
+        SalesSetup."Logo Position on Documents"::Right: begin
+            CompanyInfo2.Get();
+            CompanyInfo2.CalcFields(Picture);
+        end;
         end;
     end;
-
-    var
-        CompanyInformation: Record "Company Information";
-        CompanyInfo1: Record "Company Information";
-        CompanyInfo2: Record "Company Information";
-        SalesSetup: Record "Sales & Receivables Setup";
-        Currency: Record Currency;
-        CurrExchRate: Record "Currency Exchange Rate";
-        Language: Codeunit Language;
-        TempAppliedCustLedgEntry: Record "Cust. Ledger Entry" temporary;
-        FormatAddress: Codeunit "Format Address";
-        EntryApplicationMgt: Codeunit "Entry Application Management";
-        SegManagement: Codeunit SegManagement;
-        StatementStyle: Option "Open Item",Balance;
-        AllHavingEntries: Boolean;
-        AllHavingBalance: Boolean;
-        UpdateNumbers: Boolean;
-        AgingMethod: Option "None","Due Date","Trans Date","Doc Date";
-        PrintCompany: Boolean;
-        PeriodCalculation: DateFormula;
-        Print: Boolean;
-        FromDate: Date;
-        ToDate: Date;
-        AgingDate: Date;
-        LogInteraction: Boolean;
-        CustomerAddress: array[8] of Text[100];
-        CompanyAddress: array[8] of Text[100];
-        BalanceToPrint: Decimal;
-        DebitBalance: Decimal;
-        CreditBalance: Decimal;
-        AgingHead: array[4] of Text[20];
-        AmountDue: array[4] of Decimal;
-        AgingDaysText: Text[20];
-        PeriodEndingDate: array[5] of Date;
-        StatementComplete: Boolean;
-        i: Integer;
-        CurrencyDesc: Text[80];
-        EntriesOrBalanceErr: Label 'You must select either All with Entries or All with Balance.';
-        UpdStmtNmbrsPrintErr: Label 'You must print statements if you want to update statement numbers.';
-        DateFilterRangeErr: Label 'You must enter a range of dates (not just one date) in the Date Filter if you want to print Balance Forward Statements.';
-        AgingPeriodLengthErr: Label 'You must enter a Length of Aging Periods if you select aging.';
-        CurrentTxt: Label 'Current';
-        DaysOverdueTxt: Label 'Days overdue:';
-        UpToDaysTxt: Label 'Up To %1 Days', Comment = '%1 = a number of days overdue';
-        FromToDaysTxt: Label '%1 - %2 Days', Comment = '%1, %2 = a number of days overdue';
-        DaysOldTxt: Label 'Days old:';
-        OverDaysTxt: Label 'Over %1 Days', Comment = '%1 = a number of days overdue';
-        LastStmtNoTxt: Label 'Statement %1', Comment = '%1 = Customer''s Last Statement No.';
-        CurrencyDescTxt: Label '(All amounts are in %1)', Comment = '%1 = Currency name';
-        TempAmountDue: array[4] of Decimal;
-        AgingMethod_Int: Integer;
-        StatementStyle_Int: Integer;
-        [InDataSet]
-        LogInteractionEnable: Boolean;
-        PeriodCalcTxt: Label '-%1', Comment = '%1 = length of Aging Periods, dateformula';
-        STATEMENTCaptionLbl: Label 'CUSTOMER STATEMENT', Comment = 'Page title.';
-        Statement_Date_CaptionLbl: Label 'Statement Date:';
-        Account_Number_CaptionLbl: Label 'Account Number:';
-        Page_CaptionLbl: Label 'Page:';
-        RETURN_THIS_PORTION_OF_STATEMENT_WITH_YOUR_PAYMENT_CaptionLbl: Label 'Remit To Address:';
-        AddressRemit1: Label 'PO Box 88801';
-        AddressRemit2: Label 'Milwaukee, WI 53288-8801';
-        Amount_RemittedCaptionLbl: Label 'Amount Remitted';
-        TempCustLedgEntry__Document_No__CaptionLbl: Label 'Document';
-        TempCustLedgEntry__Posting_Date_CaptionLbl: Label 'Date';
-        GetTermsString_TempCustLedgEntry_CaptionLbl: Label 'Terms';
-        TempCustLedgEntry__Document_Type_CaptionLbl: Label 'Code';
-        TempCustLedgEntry__Remaining_Amount_CaptionLbl: Label 'Debits';
-        TempCustLedgEntry__Remaining_Amount__Control47CaptionLbl: Label 'Credits';
-        BalanceToPrint_Control48CaptionLbl: Label 'Balance';
-        Statement_BalanceCaptionLbl: Label 'Statement Balance';
-        Statement_BalanceCaption_Control25Lbl: Label 'Statement Balance';
-        Statement_Aging_CaptionLbl: Label 'Statement Aging:';
-        Aged_amounts_CaptionLbl: Label 'Aged amounts:';
-        Balance_ForwardCaptionLbl: Label 'Balance Forward';
-        Bal_FwdCaptionLbl: Label 'Bal Fwd';
-        SupportedOutputMethod: Option Print,Preview,PDF,Email,Excel,XML;
-        ChosenOutputMethod: Integer;
-        PrintIfEmailIsMissing: Boolean;
-        [InDataSet]
-        ShowPrintIfEmailIsMissing: Boolean;
-
-    protected var
-        TempCustLedgEntry: Record "Cust. Ledger Entry" temporary;
-
-    procedure GetTermsString(var CustLedgerEntry: Record "Cust. Ledger Entry"): Text[250]
-    var
+    var CompanyInformation: Record "Company Information";
+    CompanyInfo1: Record "Company Information";
+    CompanyInfo2: Record "Company Information";
+    SalesSetup: Record "Sales & Receivables Setup";
+    Currency: Record Currency;
+    CurrExchRate: Record "Currency Exchange Rate";
+    Language: Codeunit Language;
+    TempAppliedCustLedgEntry: Record "Cust. Ledger Entry" temporary;
+    FormatAddress: Codeunit "Format Address";
+    EntryApplicationMgt: Codeunit "Entry Application Management";
+    SegManagement: Codeunit SegManagement;
+    StatementStyle: Option "Open Item", Balance;
+    AllHavingEntries: Boolean;
+    AllHavingBalance: Boolean;
+    UpdateNumbers: Boolean;
+    AgingMethod: Option "None", "Due Date", "Trans Date", "Doc Date";
+    PrintCompany: Boolean;
+    PeriodCalculation: DateFormula;
+    Print: Boolean;
+    FromDate: Date;
+    ToDate: Date;
+    AgingDate: Date;
+    LogInteraction: Boolean;
+    CustomerAddress: array[8]of Text[100];
+    CompanyAddress: array[8]of Text[100];
+    BalanceToPrint: Decimal;
+    DebitBalance: Decimal;
+    CreditBalance: Decimal;
+    AgingHead: array[4]of Text[20];
+    AmountDue: array[4]of Decimal;
+    AgingDaysText: Text[20];
+    PeriodEndingDate: array[5]of Date;
+    StatementComplete: Boolean;
+    i: Integer;
+    CurrencyDesc: Text[80];
+    EntriesOrBalanceErr: Label 'You must select either All with Entries or All with Balance.';
+    UpdStmtNmbrsPrintErr: Label 'You must print statements if you want to update statement numbers.';
+    DateFilterRangeErr: Label 'You must enter a range of dates (not just one date) in the Date Filter if you want to print Balance Forward Statements.';
+    AgingPeriodLengthErr: Label 'You must enter a Length of Aging Periods if you select aging.';
+    CurrentTxt: Label 'Current';
+    DaysOverdueTxt: Label 'Days overdue:';
+    UpToDaysTxt: Label 'Up To %1 Days', Comment = '%1 = a number of days overdue';
+    FromToDaysTxt: Label '%1 - %2 Days', Comment = '%1, %2 = a number of days overdue';
+    DaysOldTxt: Label 'Days old:';
+    OverDaysTxt: Label 'Over %1 Days', Comment = '%1 = a number of days overdue';
+    LastStmtNoTxt: Label 'Statement %1', Comment = '%1 = Customer''s Last Statement No.';
+    CurrencyDescTxt: Label '(All amounts are in %1)', Comment = '%1 = Currency name';
+    TempAmountDue: array[4]of Decimal;
+    AgingMethod_Int: Integer;
+    StatementStyle_Int: Integer;
+    [InDataSet]
+    LogInteractionEnable: Boolean;
+    PeriodCalcTxt: Label '-%1', Comment = '%1 = length of Aging Periods, dateformula';
+    STATEMENTCaptionLbl: Label 'CUSTOMER STATEMENT', Comment = 'Page title.';
+    Statement_Date_CaptionLbl: Label 'Statement Date:';
+    Account_Number_CaptionLbl: Label 'Account Number:';
+    Page_CaptionLbl: Label 'Page:';
+    RETURN_THIS_PORTION_OF_STATEMENT_WITH_YOUR_PAYMENT_CaptionLbl: Label 'Remit To Address:';
+    AddressRemit1: Label 'PO Box 88801';
+    AddressRemit2: Label 'Milwaukee, WI 53288-8801';
+    Amount_RemittedCaptionLbl: Label 'Amount Remitted';
+    TempCustLedgEntry__Document_No__CaptionLbl: Label 'Document';
+    TempCustLedgEntry__Posting_Date_CaptionLbl: Label 'Date';
+    GetTermsString_TempCustLedgEntry_CaptionLbl: Label 'Terms';
+    TempCustLedgEntry__Document_Type_CaptionLbl: Label 'Code';
+    TempCustLedgEntry__Remaining_Amount_CaptionLbl: Label 'Debits';
+    TempCustLedgEntry__Remaining_Amount__Control47CaptionLbl: Label 'Credits';
+    BalanceToPrint_Control48CaptionLbl: Label 'Balance';
+    Statement_BalanceCaptionLbl: Label 'Statement Balance';
+    Statement_BalanceCaption_Control25Lbl: Label 'Statement Balance';
+    Statement_Aging_CaptionLbl: Label 'Statement Aging:';
+    Aged_amounts_CaptionLbl: Label 'Aged amounts:';
+    Balance_ForwardCaptionLbl: Label 'Balance Forward';
+    Bal_FwdCaptionLbl: Label 'Bal Fwd';
+    SupportedOutputMethod: Option Print, Preview, PDF, Email, Excel, XML;
+    ChosenOutputMethod: Integer;
+    PrintIfEmailIsMissing: Boolean;
+    [InDataSet]
+    ShowPrintIfEmailIsMissing: Boolean;
+    protected var TempCustLedgEntry: Record "Cust. Ledger Entry" temporary;
+    procedure GetTermsString(var CustLedgerEntry: Record "Cust. Ledger Entry"): Text[250]var
         SalesInvHeader: Record "Sales Invoice Header";
         PaymentTerms: Record "Payment Terms";
     begin
-        if (CustLedgerEntry."Document No." = '') or (CustLedgerEntry."Document Type" <> CustLedgerEntry."Document Type"::Invoice) then
-            exit('');
-
-        if SalesInvHeader.ReadPermission then
-            if SalesInvHeader.Get(CustLedgerEntry."Document No.") then begin
-                if PaymentTerms.Get(SalesInvHeader."Payment Terms Code") then begin
-                    if PaymentTerms.Description <> '' then
-                        exit(PaymentTerms.Description);
-
+        if(CustLedgerEntry."Document No." = '') or (CustLedgerEntry."Document Type" <> CustLedgerEntry."Document Type"::Invoice)then exit('');
+        if SalesInvHeader.ReadPermission then if SalesInvHeader.Get(CustLedgerEntry."Document No.")then begin
+                if PaymentTerms.Get(SalesInvHeader."Payment Terms Code")then begin
+                    if PaymentTerms.Description <> '' then exit(PaymentTerms.Description);
                     exit(SalesInvHeader."Payment Terms Code");
                 end;
                 exit(SalesInvHeader."Payment Terms Code");
             end;
-
-
         if Customer."Payment Terms Code" <> '' then begin
-            if PaymentTerms.Get(Customer."Payment Terms Code") then begin
-                if PaymentTerms.Description <> '' then
-                    exit(PaymentTerms.Description);
-
+            if PaymentTerms.Get(Customer."Payment Terms Code")then begin
+                if PaymentTerms.Description <> '' then exit(PaymentTerms.Description);
                 exit(Customer."Payment Terms Code");
             end;
             exit(Customer."Payment Terms Code");
         end;
-
         exit('');
     end;
-
     local procedure InsertTemp(var CustLedgEntry: Record "Cust. Ledger Entry")
     begin
-        if TempCustLedgEntry.Get(CustLedgEntry."Entry No.") then
-            exit;
-        TempCustLedgEntry := CustLedgEntry;
+        if TempCustLedgEntry.Get(CustLedgEntry."Entry No.")then exit;
+        TempCustLedgEntry:=CustLedgEntry;
         TempCustLedgEntry.Insert();
-
     end;
-
     local procedure MapOutputMethod()
     var
         CustomLayoutReporting: Codeunit "Custom Layout Reporting";
     begin
-        ShowPrintIfEmailIsMissing := (SupportedOutputMethod = SupportedOutputMethod::Email);
+        ShowPrintIfEmailIsMissing:=(SupportedOutputMethod = SupportedOutputMethod::Email);
         // Map the supported option (shown on the page) to the list of supported output methods
         // Most output methods map directly - Word/XML do not, however.
-        case SupportedOutputMethod of
-            SupportedOutputMethod::XML:
-                ChosenOutputMethod := CustomLayoutReporting.GetXMLOption();
-            else
-                ChosenOutputMethod := SupportedOutputMethod;
+        case SupportedOutputMethod of SupportedOutputMethod::XML: ChosenOutputMethod:=CustomLayoutReporting.GetXMLOption();
+        else
+            ChosenOutputMethod:=SupportedOutputMethod;
         end;
     end;
 }

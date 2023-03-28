@@ -11,7 +11,6 @@ pageextension 50126 "CustCardView" extends "Customer Card"
                 ToolTip = 'Specifies the Territory for the Customer.';
                 Visible = true;
             }
-
             field(ASN; Rec.ASN)
             {
                 ApplicationArea = All;
@@ -22,4 +21,3 @@ pageextension 50126 "CustCardView" extends "Customer Card"
         }
     }
 }
-

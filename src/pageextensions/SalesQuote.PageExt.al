@@ -14,4 +14,3 @@ pageextension 50128 "SalesQuote" extends "Sales Quote"
         }
     }
 }
-

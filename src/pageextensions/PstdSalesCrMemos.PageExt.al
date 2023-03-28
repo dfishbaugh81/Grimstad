@@ -14,4 +14,3 @@ pageextension 50133 "PstdSalesCrMemos" extends "Posted Sales Credit Memos"
         }
     }
 }
-
