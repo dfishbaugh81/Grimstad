@@ -1,4 +1,4 @@
-report 50106 "GrimstadCustomerStatement"
+report 50106 GrimstadCustomerStatement
 {
     RDLCLayout = './layouts/GrimstadCustStatement.rdl';
     //WordLayout = './GrimstadCustStatement.docx';
