@@ -1599,7 +1599,7 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>2.49771cm</Height>
+                  <Height>2.23313cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -2572,7 +2572,7 @@
                                     </TablixCells>
                                   </TablixRow>
                                   <TablixRow>
-                                    <Height>0.14in</Height>
+                                    <Height>0.07056in</Height>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
@@ -2681,7 +2681,7 @@
                               <RepeatRowHeaders>true</RepeatRowHeaders>
                               <DataSetName>DataSet_Result</DataSetName>
                               <Left>0.00002in</Left>
-                              <Height>0.93585in</Height>
+                              <Height>0.86641in</Height>
                               <Width>7.9534in</Width>
                               <Style>
                                 <Border>
@@ -2901,7 +2901,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!TotalInclVAT.Value</Value>
+                                  <Value>=Last(Fields!TotalInclVAT.Value, "DataSet_Result")</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -2927,7 +2927,6 @@
                             <rd:FormatSymbolCulture>en-US</rd:FormatSymbolCulture>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -2962,8 +2961,7 @@
             </TablixRowHierarchy>
             <KeepTogether>true</KeepTogether>
             <DataSetName>DataSet_Result</DataSetName>
-            <Top>0in</Top>
-            <Height>6.51687cm</Height>
+            <Height>6.25229cm</Height>
             <Width>7.9603in</Width>
             <Style>
               <Border>
@@ -2974,10 +2972,10 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>2.5657in</Height>
+        <Height>2.46153in</Height>
         <Style />
       </Body>
-      <Width>7.97147in</Width>
+      <Width>8in</Width>
       <Page>
         <PageHeader>
           <Height>1.1811in</Height>
@@ -3553,6 +3551,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox7</rd:DefaultName>
+              <Top>0in</Top>
               <Height>0.72917in</Height>
               <Width>7.9603in</Width>
               <Style>
@@ -3805,6 +3804,12 @@ eSmc1+33wF/4JB/Df4UxINX0vT/EMioF3TRd/WvoTwF+z/4P+GCKug6FZaaF6eUuK9Sjw/UlrUlY/Gc+
         </Field>
         <Field Name="Total_Lbl">
           <DataField>Total_Lbl</DataField>
+        </Field>
+        <Field Name="TotalInclVAT">
+          <DataField>TotalInclVAT</DataField>
+        </Field>
+        <Field Name="TotalInclVATFormat">
+          <DataField>TotalInclVATFormat</DataField>
         </Field>
         <Field Name="PaymentTermsDesc_Lbl">
           <DataField>PaymentTermsDesc_Lbl</DataField>
@@ -4180,12 +4185,6 @@ eSmc1+33wF/4JB/Df4UxINX0vT/EMioF3TRd/WvoTwF+z/4P+GCKug6FZaaF6eUuK9Sjw/UlrUlY/Gc+
         </Field>
         <Field Name="InvDiscAmt_PurchLineFormat">
           <DataField>InvDiscAmt_PurchLineFormat</DataField>
-        </Field>
-        <Field Name="TotalInclVAT">
-          <DataField>TotalInclVAT</DataField>
-        </Field>
-        <Field Name="TotalInclVATFormat">
-          <DataField>TotalInclVATFormat</DataField>
         </Field>
         <Field Name="DirectUniCost_Lbl">
           <DataField>DirectUniCost_Lbl</DataField>
