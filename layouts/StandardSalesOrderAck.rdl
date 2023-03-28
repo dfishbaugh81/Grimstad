@@ -1698,7 +1698,6 @@
                                               <VerticalAlign>Middle</VerticalAlign>
                                             </Style>
                                           </Textbox>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -1930,7 +1929,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!Shipping_Agent_Code.Value &amp; " " &amp; Fields!Shipping_Agent_Service_Code.Value &amp; " " &amp; Fields!PayAccNo.Value</Value>
+                                                    <Value>=Fields!Shipping_Agent_Code.Value &amp; " " &amp; Fields!Shipping_Agent_Service_Code.Value &amp; " " &amp; Fields!PayAccNo.Value &amp; " " &amp; Fields!ShipmentMethodDescription.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>7pt</FontSize>
@@ -1953,6 +1952,7 @@
                                                 <Color>LightGrey</Color>
                                                 <Style>None</Style>
                                               </Border>
+                                              <VerticalAlign>Bottom</VerticalAlign>
                                               <PaddingLeft>5pt</PaddingLeft>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
@@ -4130,7 +4130,7 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DataSet_Result</DataSetName>
-            <Top>0.18115cm</Top>
+            <Top>0.18113cm</Top>
             <Height>10.80529cm</Height>
             <Width>19.06986cm</Width>
             <Style>
