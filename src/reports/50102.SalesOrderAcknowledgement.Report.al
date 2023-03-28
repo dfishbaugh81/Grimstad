@@ -256,9 +256,6 @@ report 50102 "Sales Order Acknowledgement"
             column(DocumentDate; Format("Document Date", 0, 4))
             {
             }
-            column(OrderDate; Format("Order Date", 0, 4))
-            {
-            }
             column(DocumentDate_Lbl; FieldCaption("Document Date"))
             {
             }
