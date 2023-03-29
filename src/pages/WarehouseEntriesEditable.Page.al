@@ -7,7 +7,7 @@ page 50115 "Warehouse Entries - Editable"
     ModifyAllowed = true;
     PageType = List;
     SourceTable = "Warehouse Entry";
-    Permissions = tabledata "Warehouse Entry"=RIMD;
+    Permissions = tabledata "Warehouse Entry" = RIMD;
 
     layout
     {
@@ -92,7 +92,7 @@ page 50115 "Warehouse Entries - Editable"
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the quantity of the entry, in the base unit of measure.';
-                    Visible = false;
+                    Visible = true;
                 }
                 field("Unit of Measure Code"; Rec."Unit of Measure Code")
                 {
@@ -221,6 +221,6 @@ page 50115 "Warehouse Entries - Editable"
     }
     trigger OnOpenPage()
     begin
-    //SetPackageTrackingVisibility();
+        //SetPackageTrackingVisibility();
     end;
 }
