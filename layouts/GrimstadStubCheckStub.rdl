@@ -882,10 +882,11 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>="[" + Cstr(Choose(80,Split(Cstr(ReportItems!FooterInfo.Value), Chr(177)))) + "]"</Value>
+                      <Value>=Cstr(Choose(80,Split(Cstr(ReportItems!FooterInfo.Value), Chr(177))))</Value>
                       <Style>
-                        <FontFamily>IDAutomationSec1B</FontFamily>
-                        <FontWeight>Normal</FontWeight>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontWeight>SemiBold</FontWeight>
+                        <TextDecoration>None</TextDecoration>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -999,10 +1000,11 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>="[" + Cstr(Choose(81,Split(Cstr(ReportItems!FooterInfo.Value), Chr(177)))) + "]"</Value>
+                      <Value>=Cstr(Choose(81,Split(Cstr(ReportItems!FooterInfo.Value), Chr(177))))</Value>
                       <Style>
-                        <FontFamily>IDAutomationSec1B</FontFamily>
-                        <FontWeight>Normal</FontWeight>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontWeight>SemiBold</FontWeight>
+                        <TextDecoration>None</TextDecoration>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -1055,10 +1057,11 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>="[" + Cstr(Choose(97,Split(Cstr(ReportItems!FooterInfo.Value), Chr(177)))) + "]"</Value>
+                      <Value>=Cstr(Choose(97,Split(Cstr(ReportItems!FooterInfo.Value), Chr(177))))</Value>
                       <Style>
-                        <FontFamily>IDAutomationSec1B</FontFamily>
-                        <FontWeight>Normal</FontWeight>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontWeight>SemiBold</FontWeight>
+                        <TextDecoration>None</TextDecoration>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -1077,6 +1080,7 @@
                 <Border>
                   <Style>None</Style>
                 </Border>
+                <VerticalAlign>Top</VerticalAlign>
               </Style>
             </Textbox>
             <Textbox Name="textbox98">
@@ -1354,7 +1358,9 @@
                   <TextRuns>
                     <TextRun>
                       <Value>=Cstr(Choose(98,Split(Cstr(ReportItems!FooterInfo.Value), Chr(177))))</Value>
-                      <Style />
+                      <Style>
+                        <TextDecoration>None</TextDecoration>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style>
@@ -1368,7 +1374,11 @@
               <Width>6.77953in</Width>
               <ZIndex>18</ZIndex>
               <DataElementOutput>NoOutput</DataElementOutput>
-              <Style />
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+              </Style>
             </Textbox>
             <Textbox Name="textbox2">
               <KeepTogether>true</KeepTogether>
